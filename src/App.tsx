@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
+import './App.css';
+
+// Import your components here
+import Home from './containers/Home';
+import About from './containers/About';
+import TopBar from "./components/TopBar.tsx";
+import LeftDrawer from "./components/LeftDrawer.tsx";
+import Login from "./containers/Login.tsx";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
+    const toggleDrawer = () => {
+        setDrawerOpen(!drawerOpen);
+    };
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    useEffect(() => {
+
+        if (!userIsLoggedIn && location.pathname !== '/login') {
+            navigate('/login');
+        }
+        console.log("something changed")
+    }, [location, navigate,userIsLoggedIn]);
+
+    const handleLogout = () => {
+        setUserIsLoggedIn(false);
+    };
+
+    return (
+        <>
+            {location.pathname !== '/login' && <TopBar toggleDrawer={toggleDrawer} handleLogout={handleLogout}/>}
+            <LeftDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer}/>
+            <Routes>
+                <Route path="/" element={<Home userIsLoggedIn={userIsLoggedIn}/>}/>
+                <Route path="/login" element={<Login setUserIsLoggedIn={setUserIsLoggedIn}/>}/>
+                <Route path="/about" element={<About/>}/>
+            </Routes>
+        </>
+    );
 }
 
-export default App
+export default App;

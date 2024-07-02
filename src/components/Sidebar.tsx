@@ -1,23 +1,21 @@
+// src/components/Sidebar.tsx
 import {List, ListItem, Typography} from "@mui/material";
-import Drawer from "../styled-components/LeftDrawer.tsx";
 import {useNavigate} from "react-router-dom";
+import SidebarContainer from "../styled-components/Sidebar.tsx";
 
-
-interface LeftDrawerProps {
-    drawerOpen: boolean;
-    toggleDrawer: () => void;
+interface SidebarProps {
+    className?: string;
 }
 
-const LeftDrawer = ({ drawerOpen, toggleDrawer}: LeftDrawerProps) => {
+const Sidebar = ({className}:SidebarProps) => {
     const navigate = useNavigate();
 
     const handleOnclick = (path: string) => {
         navigate(path);
-        toggleDrawer();
     }
 
     return (
-        <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
+        <SidebarContainer className={className} >
             <Typography variant="h6" component="div" sx={{ padding: '10px' }}>
                 Navigate
             </Typography>
@@ -29,8 +27,8 @@ const LeftDrawer = ({ drawerOpen, toggleDrawer}: LeftDrawerProps) => {
                     About
                 </ListItem>
             </List>
-        </Drawer>
+        </SidebarContainer>
     )
 }
 
-export default LeftDrawer;
+export default Sidebar;

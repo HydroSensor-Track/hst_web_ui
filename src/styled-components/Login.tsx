@@ -5,7 +5,7 @@ const LoginPage = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f2f2f2;
+  background-color: ${(props) => props.theme.colors.background};
 `;
 
 const LoginForm = styled.form`
@@ -14,27 +14,27 @@ const LoginForm = styled.form`
   width: 300px;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
-  background-color: #fff;
+  box-shadow: 0px 0px 2px 0px ${(props) => props.theme.colors.border};
+  background-color: ${(props) => props.theme.colors.componentBackground};
 `;
 
 const LoginInput = styled.input`
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ddd;
+  border: 1px solid ${(props) => props.theme.colors.border};
 `;
 
 const LoginButton = styled.button`
   padding: 10px;
   border-radius: 5px;
   border: none;
-  color: #fff;
-  background-color: #007bff;
+  color: ${(props) => props.theme.colors.text};
+  background-color: ${(props) => props.theme.colors.primary};
   cursor: pointer;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: ${(props) => props.theme.colors.primary_faded};
   }
 `;
 

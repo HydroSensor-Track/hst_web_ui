@@ -3,20 +3,16 @@ import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
 import './App.css';
 
 // Import your components here
-import Home from './containers/Home';
-import About from './containers/About';
-import TopBar from "./components/TopBar.tsx";
-import LeftDrawer from "./components/LeftDrawer.tsx";
 import Login from "./containers/Login.tsx";
+import AuthenticatedApp from "./containers/AuthenticatedApp.tsx";
+import {ThemeProvider} from "styled-components";
+import theme from "./config/Theme.tsx";
+
 
 function App() {
-    const [drawerOpen, setDrawerOpen] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
     const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
-    const toggleDrawer = () => {
-        setDrawerOpen(!drawerOpen);
-    };
 
     useEffect(() => {
 
@@ -31,15 +27,12 @@ function App() {
     };
 
     return (
-        <>
-            {location.pathname !== '/login' && <TopBar toggleDrawer={toggleDrawer} handleLogout={handleLogout}/>}
-            <LeftDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer}/>
+        <ThemeProvider theme={theme}>
             <Routes>
-                <Route path="/" element={<Home userIsLoggedIn={userIsLoggedIn}/>}/>
                 <Route path="/login" element={<Login setUserIsLoggedIn={setUserIsLoggedIn}/>}/>
-                <Route path="/about" element={<About/>}/>
+                {userIsLoggedIn && <Route path="/*" element={<AuthenticatedApp handleLogout={handleLogout} userIsLoggedIn={userIsLoggedIn}/>}/>}
             </Routes>
-        </>
+        </ThemeProvider>
     );
 }
 

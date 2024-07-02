@@ -17,14 +17,28 @@ const Sidebar = ({className}:SidebarProps) => {
     return (
         <SidebarContainer className={className} >
             <Typography variant="h6" component="div" sx={{ padding: '10px' }}>
-                Navigate
+                HydroSensor
             </Typography>
             <List>
-                <ListItem button onClick={ () => handleOnclick('/')}  sx={{ fontSize: '18px', color: '#f80000', margin: '10px 0' }}>
-                    Home
+                <ListItem button onClick={ () => handleOnclick('/')}>
+                    Dashboard
                 </ListItem>
-                <ListItem button onClick={ () => handleOnclick('/about')} sx={{ fontSize: '18px', color: '#f80000', margin: '10px 0' }}>
-                    About
+                <ListItem button onClick={ () => handleOnclick('/about')}>
+                    Tickets
+                </ListItem>
+                <ListItem button onClick={ () => handleOnclick('/about')}>
+                    Notifications
+                </ListItem>
+                <ListItem button onClick={ () => handleOnclick('/about')}>
+                    Backoffice
+                </ListItem>
+            </List>
+            <List>
+                <ListItem button onClick={ () => handleOnclick('/about')}>
+                    Configuración
+                </ListItem>
+                <ListItem button onClick={ () => handleOnclick('/about')}>
+                    Salir
                 </ListItem>
             </List>
         </SidebarContainer>

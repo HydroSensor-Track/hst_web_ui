@@ -6,7 +6,7 @@ import {
   LoginInput,
   LoginButton,
 } from "../styled-components/Login.tsx";
-
+import LogoAndTitle from "../components/LogoAndTitle.tsx";
 const Login = ({
   setUserIsLoggedIn,
 }: {
@@ -28,6 +28,7 @@ const Login = ({
 
   return (
     <LoginPage>
+      <LogoAndTitle/>
       <LoginForm onSubmit={handleSubmit}>
         <LoginInput
           type="text"

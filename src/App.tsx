@@ -7,7 +7,7 @@ import Login from "./containers/Login.tsx";
 import AuthenticatedApp from "./containers/AuthenticatedApp.tsx";
 import {ThemeProvider} from "styled-components";
 import theme from "./config/Theme.tsx";
-
+import "./config/i18n.js";
 
 function App() {
     const location = useLocation();

@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const LoginPage = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -37,5 +38,7 @@ const LoginButton = styled.button`
     background-color: ${(props) => props.theme.colors.primary_faded};
   }
 `;
+
+
 
 export { LoginPage, LoginForm, LoginInput, LoginButton };

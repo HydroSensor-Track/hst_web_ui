@@ -9,7 +9,7 @@ const LogoAndTitle = ({column = true, logoSize}: {column?:boolean, logoSize?:str
     const { t } = useTranslation();
     const {logoWidth, fontSize} = getLogoAndFontSize(logoSize);
     return (
-        <CenteredDiv column={column}>
+        <CenteredDiv $column={column}>
           <Logo style={{"width": logoWidth}}/>
           <Title style={{"fontSize": fontSize}}>{t('title')}</Title>
 

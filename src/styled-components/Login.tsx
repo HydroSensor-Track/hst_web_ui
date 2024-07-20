@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const LoginPage = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -15,30 +14,28 @@ const LoginForm = styled.form`
   width: 300px;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0px 0px 2px 0px ${(props) => props.theme.colors.border};
-  background-color: ${(props) => props.theme.colors.componentBackground};
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+  background-color: ${(props) => props.theme.colors.componentBackground}
 `;
 
 const LoginInput = styled.input`
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid ${(props) => props.theme.colors.border};
+  border: 1px solid ${(props) => props.theme.colors.text};
 `;
 
 const LoginButton = styled.button`
   padding: 10px;
   border-radius: 5px;
   border: none;
-  color: ${(props) => props.theme.colors.text};
-  background-color: ${(props) => props.theme.colors.primary};
+  color: #${(props) => props.theme.colors.text}
+  background-color: ${(props) => props.theme.colors.primary}
   cursor: pointer;
 
   &:hover {
     background-color: ${(props) => props.theme.colors.primary_faded};
   }
 `;
-
-
 
 export { LoginPage, LoginForm, LoginInput, LoginButton };

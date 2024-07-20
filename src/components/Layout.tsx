@@ -3,14 +3,13 @@ import React from 'react';
 import {StyledGrid, StyledTopBar, StyledSideBar, MainContent} from "../styled-components/StyledGrid.tsx";
 
 interface LayoutProps {
-    handleLogout: () => void;
     children: React.ReactNode;
 }
 
-const Layout = ({handleLogout, children}: LayoutProps) => {
+const Layout = ({children}: LayoutProps) => {
     return (
         <StyledGrid>
-            <StyledTopBar handleLogout={handleLogout} />
+            <StyledTopBar />
             <MainContent style={{gridArea: 'main'}}>
                 {children}
             </MainContent>

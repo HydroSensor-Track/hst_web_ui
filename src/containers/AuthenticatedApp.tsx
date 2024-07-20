@@ -3,12 +3,12 @@ import About from './About';
 import {Route, Routes} from "react-router-dom";
 import Layout from "../components/Layout.tsx";
 
-const AuthenticatedApp = ({handleLogout, userIsLoggedIn}: {handleLogout: () => void, userIsLoggedIn: boolean}) => {
+const AuthenticatedApp = () => {
 
     return (
-        <Layout handleLogout={handleLogout}>
+        <Layout >
             <Routes>
-                <Route path="/" element={<Home userIsLoggedIn={userIsLoggedIn}/>}/>
+                <Route path="/" element={<Home/>}/>
                 <Route path="/about" element={<About/>}/>
             </Routes>
         </Layout>

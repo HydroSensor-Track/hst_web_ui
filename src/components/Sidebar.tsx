@@ -20,7 +20,7 @@ const Sidebar = ({className}:SidebarProps) => {
         <SidebarContainer className={className} >
             <LogoAndTitle column={false} logoSize={"medium"}/>
             <List>
-                <ListItem button onClick={ () => handleOnclick('/')}>
+                <ListItem button onClick={ () => handleOnclick('/')} >
                     {t('dashboard')}
                 </ListItem>
                 <ListItem button onClick={ () => handleOnclick('/about')}>

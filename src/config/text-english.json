@@ -1,0 +1,12 @@
+{
+  "welcome": "Welcome to React",
+  "login": "Login",
+  "logout": "Logout",
+  "title": "HydroSensor-Track",
+  "dashboard": "Dashboard",
+  "tickets": "Tickets",
+  "notifications": "Notifications",
+  "backoffice": "Backoffice",
+  "settings": "Settings",
+  "homeTitle": "Home"
+}

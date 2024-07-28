@@ -1,46 +1,27 @@
-import { useState, useEffect } from 'react';
-import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
-import './App.css';
-
-// Import your components here
-import Home from './containers/Home';
-import About from './containers/About';
-import TopBar from "./components/TopBar.tsx";
-import LeftDrawer from "./components/LeftDrawer.tsx";
+// src/App.js
+import React from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import AuthenticatedApp from "./containers/AuthenticatedApp.tsx";
 import Login from "./containers/Login.tsx";
 
 function App() {
-    const [drawerOpen, setDrawerOpen] = useState(false);
-    const location = useLocation();
-    const navigate = useNavigate();
-    const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
-    const toggleDrawer = () => {
-        setDrawerOpen(!drawerOpen);
-    };
+    const { isLoading, isAuthenticated, error, user, loginWithRedirect, logout } =
+        useAuth0();
 
-    useEffect(() => {
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+    if (error) {
+        return <div>Oops... {error.message}</div>;
+    }
 
-        if (!userIsLoggedIn && location.pathname !== '/login') {
-            navigate('/login');
-        }
-        console.log("something changed")
-    }, [location, navigate,userIsLoggedIn]);
-
-    const handleLogout = () => {
-        setUserIsLoggedIn(false);
-    };
-
-    return (
-        <>
-            {location.pathname !== '/login' && <TopBar toggleDrawer={toggleDrawer} handleLogout={handleLogout}/>}
-            <LeftDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer}/>
-            <Routes>
-                <Route path="/" element={<Home userIsLoggedIn={userIsLoggedIn}/>}/>
-                <Route path="/login" element={<Login setUserIsLoggedIn={setUserIsLoggedIn}/>}/>
-                <Route path="/about" element={<About/>}/>
-            </Routes>
-        </>
-    );
+    if (isAuthenticated) {
+        return (
+            <AuthenticatedApp/>
+        );
+    } else {
+        return <Login/>;
+    }
 }
 
 export default App;

@@ -1,14 +1,16 @@
-import { AppBar, IconButton, Toolbar, Typography, Menu, MenuItem } from "@mui/material";
+import { IconButton, Toolbar, Typography, Menu, MenuItem } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import React from "react";
+import {AppBarContainer} from "../styled-components/AppBar.tsx";
+import {useTranslation} from "react-i18next";
+import {useAuth0} from "@auth0/auth0-react";
 
 interface TopBarProps {
-    toggleDrawer: () => void;
-    handleLogout: () => void;
+    className?: string;
 }
 
-const TopBar = ({toggleDrawer, handleLogout}: TopBarProps) => {
+const TopBar = ({className}: TopBarProps) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -20,14 +22,18 @@ const TopBar = ({toggleDrawer, handleLogout}: TopBarProps) => {
         setAnchorEl(null);
     };
 
+    const {logout} = useAuth0();
+
+    const {t} = useTranslation();
+
     return (
-        <AppBar position="static">
+        <AppBarContainer position="static" className={className}>
             <Toolbar>
-                <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer}>
+                <IconButton edge="start" color="inherit" aria-label="menu">
                     <MenuIcon/>
                 </IconButton>
                 <Typography variant="h6" component="div">
-                    My Application
+                    {t('dashboard')}
                 </Typography>
                 <IconButton
                     aria-label="more"
@@ -48,10 +54,13 @@ const TopBar = ({toggleDrawer, handleLogout}: TopBarProps) => {
                 >
                     <MenuItem onClick={handleClose}>Option 1</MenuItem>
                     <MenuItem onClick={handleClose}>Option 2</MenuItem>
-                    <MenuItem onClick={handleLogout}>Log out</MenuItem>
+                    <MenuItem onClick={
+                        () => {
+                            logout({logoutParams: {returnTo: window.location.origin}});                        }
+                    }>Log out</MenuItem>
                 </Menu>
             </Toolbar>
-        </AppBar>
+        </AppBarContainer>
     );
 }
 export default TopBar;

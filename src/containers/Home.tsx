@@ -1,10 +1,17 @@
-const Home = ({userIsLoggedIn}: {userIsLoggedIn:boolean}) => {
+import {HomeButton, HomeContainer, HomeText} from "../styled-components/Home.tsx";
+import {useTranslation} from "react-i18next";
+import {RootState} from "../redux/store.ts";
+import {useSelector} from "react-redux";
+
+const Home = () => {
+
+    const {t} = useTranslation();
+    const isAuthenticatedState = useSelector((state: RootState) => state.auth.isAuthenticated);
     return (
-        <div>
-            <h1>Home Page</h1>
-            <p>This is the home page of our application.</p>
-            <button onClick={() => userIsLoggedIn ? console.log('Yes'): console.log('No')}>Am I logged in ?</button>
-        </div>
+        <HomeContainer>
+            <HomeText>{t('homeTitle')}</HomeText>
+            <HomeButton onClick={() => isAuthenticatedState ? console.log('Yes'): console.log('No')}>Am I logged in ?</HomeButton>
+        </HomeContainer>
     );
 };
 

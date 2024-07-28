@@ -1,0 +1,12 @@
+{
+  "welcome": "Bienvenido a React",
+  "login": "Iniciar sesión",
+  "logout": "Cerrar sesión",
+  "title": "HydroSensor-Track",
+  "dashboard": "Tablero",
+  "tickets": "Tickets",
+  "notifications": "Notificaciones",
+  "backoffice": "Backoffice",
+  "settings": "Configuración",
+  "homeTitle": "Pagina principal"
+}

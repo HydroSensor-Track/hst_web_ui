@@ -1,14 +1,14 @@
-import {AppBar} from "@mui/material";
 import styled from "styled-components";
 
-
-const AppBarContainer = styled(AppBar)`
+const StyledTopBar = styled.div`
   && {
     background-color: ${(props) => props.theme.colors.componentBackground};
     color: ${(props) => props.theme.colors.text};
-    justify-content: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1vh 2vw;
   }
 `;
 
-export {AppBarContainer};
-
+export { StyledTopBar };

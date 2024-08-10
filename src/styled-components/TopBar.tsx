@@ -11,4 +11,10 @@ const StyledTopBar = styled.div`
   }
 `;
 
-export { StyledTopBar };
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: ${(props) => props.theme.sizes.buttonGap};
+`;
+
+export { StyledTopBar, ButtonContainer };

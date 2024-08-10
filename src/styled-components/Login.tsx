@@ -34,7 +34,7 @@ const LoginButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: ${(props) => props.theme.colors.primary_faded};
+    background-color: ${(props) => props.theme.colors.primaryFaded};
   }
 `;
 

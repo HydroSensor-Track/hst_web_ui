@@ -8,5 +8,7 @@
   "notifications": "Notificaciones",
   "backoffice": "Backoffice",
   "settings": "Configuración",
-  "homeTitle": "Pagina principal"
+  "homeTitle": "Pagina principal",
+  "createGraph": "Crear gráfico",
+  "downloadReport": "Descargar reporte"
 }

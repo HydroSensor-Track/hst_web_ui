@@ -1,6 +1,6 @@
 const theme = {
   colors: {
-    primary: "#0070f3",
+    primary: "#14B5F9",
     secondary: "#1a202c",
     accent: "#f56565",
     background: "#0B0C0C",
@@ -10,7 +10,7 @@ const theme = {
     componentBackground: "#232327",
     sideBarBackground: "#637782",
     border: "#d2d6dc",
-    primary_faded: "#103e75",
+    primaryFaded: "#103e75",
     text_faded: "#718096",
     buttonDisabled: "#718096",
     // Add more colors as needed
@@ -19,7 +19,9 @@ const theme = {
     titleFontSize: "1.5rem",
     textFontSize: "1rem",
     topBarHeight: "10vh",
-    buttonFontSize: "1rem",
+    buttonFontSize: "0.8rem",
+    buttonGap: "2vh",
+    iconSize: "2rem",
   },
 };
 

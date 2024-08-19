@@ -1,8 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface AuthState {
-    isAuthenticated: boolean;
-}
+import { AuthState } from '../../interfaces/redux';
 
 const initialState: AuthState = {
     isAuthenticated: false,

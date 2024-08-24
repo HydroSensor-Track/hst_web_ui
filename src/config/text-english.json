@@ -8,5 +8,7 @@
   "notifications": "Notifications",
   "backoffice": "Backoffice",
   "settings": "Settings",
-  "homeTitle": "Home"
+  "homeTitle": "Home",
+  "createGrapgh": "Create graph",
+  "downloadReport": "Download report"
 }

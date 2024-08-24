@@ -3,10 +3,12 @@
   "login": "Iniciar sesión",
   "logout": "Cerrar sesión",
   "title": "HydroSensor-Track",
-  "dashboard": "Tablero",
+  "dashboard": "Dashboard",
   "tickets": "Tickets",
   "notifications": "Notificaciones",
   "backoffice": "Backoffice",
   "settings": "Configuración",
-  "homeTitle": "Pagina principal"
+  "homeTitle": "Pagina principal",
+  "createGraph": "Crear gráfico",
+  "downloadReport": "Descargar reporte"
 }

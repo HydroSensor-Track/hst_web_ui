@@ -8,5 +8,16 @@
   "notifications": "Notifications",
   "backoffice": "Backoffice",
   "settings": "Settings",
-  "homeTitle": "Home"
+  "homeTitle": "Home",
+  "filters": "Filters",
+  "location": "Location",
+  "brand": "Brand",
+  "model": "Model",
+  "level": "Level",
+  "battery": "Battery",
+  "signal": "Signal",
+  "hour": "Hour",
+  "latitude": "Latitude",
+  "longitude": "Longitude",
+  "sensorId": "Sensor ID"
 }

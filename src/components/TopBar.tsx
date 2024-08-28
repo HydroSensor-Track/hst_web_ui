@@ -9,11 +9,20 @@ interface TopBarProps {
   className?: string;
 }
 
+const titleMappings: Record<string, string> = {
+  "/": "dashboard",
+  "/tickets": "tickets",
+  "/notifications": "notifications",
+  "/backoffice": "backoffice"
+};
+
+
 const TopBar = ({ className }: TopBarProps) => {
   const { t } = useTranslation();
   const location = useLocation();
   let buttons = undefined;
-  if (location.pathname === "/") {
+  const title = titleMappings[location.pathname] || "dashboard";
+  if (title === "dashboard") {
     buttons = (
       <ButtonContainer>
         <Button label={t("downloadReport")} icon={<Icon name="download" />} />
@@ -24,7 +33,7 @@ const TopBar = ({ className }: TopBarProps) => {
 
   return (
     <StyledTopBar className={className}>
-      <NormalTitle>{t("dashboard")}</NormalTitle>
+      <NormalTitle>{t(title)}</NormalTitle>
       {buttons}
     </StyledTopBar>
   );

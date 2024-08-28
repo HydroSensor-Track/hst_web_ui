@@ -19,5 +19,7 @@
   "hour": "Hour",
   "latitude": "Latitude",
   "longitude": "Longitude",
-  "sensorId": "Sensor ID"
+  "sensorId": "Sensor ID",
+  "createGrapgh": "Create graph",
+  "downloadReport": "Download report"
 }

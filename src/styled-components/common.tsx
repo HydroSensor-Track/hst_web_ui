@@ -7,4 +7,13 @@ export const CenteredDiv = styled.div<{$column?:boolean}>`
     justify-content: center;
 `;
 
+export const StyledLoading = styled.div`
+    background-color: ${(props) => props.theme.colors.background};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+`;
+
 

@@ -1,11 +1,13 @@
 import React from "react";
+import {StyledLoading} from "../styled-components/common.tsx";
 const loadingImg =
     "https://cdn.auth0.com/blog/auth0-react-sample/assets/loading.svg";
 
 const Loading = () => (
-    <div className="spinner">
+    <StyledLoading>
         <img src={loadingImg} alt="Loading..." />
-    </div>
+    </StyledLoading>
+
 );
 
 export default Loading;

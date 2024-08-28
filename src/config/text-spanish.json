@@ -3,7 +3,7 @@
   "login": "Iniciar sesión",
   "logout": "Cerrar sesión",
   "title": "HydroSensor-Track",
-  "dashboard": "Tablero",
+  "dashboard": "Dashboard",
   "tickets": "Tickets",
   "notifications": "Notificaciones",
   "backoffice": "Backoffice",
@@ -19,5 +19,7 @@
   "hour": "Hora",
   "latitude": "Latitud",
   "longitude": "Longitud",
-  "sensorId": "ID del sensor"
+  "sensorId": "ID del sensor",
+  "createGraph": "Crear gráfico",
+  "downloadReport": "Descargar reporte"
 }

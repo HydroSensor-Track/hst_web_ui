@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { ListItem } from "@mui/material";
 
-const SidebarContainer = styled.div`
+export const SidebarContainer = styled.div`
   background-color: ${(props) => props.theme.colors.sideBarBackground};
   color: ${(props) => props.theme.colors.text};
   display: flex;
@@ -8,4 +9,23 @@ const SidebarContainer = styled.div`
   justify-content: space-between;
 `;
 
-export default SidebarContainer;
+export const StyledListItem = styled(ListItem)`
+  && {
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: ${(props) => props.theme.colors.text};
+    padding: 10px 20px;
+    font-size: 1rem;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    &.active {
+      color: ${(props) => props.theme.colors.primary};
+      font-weight: bold;
+    }
+  }
+`;

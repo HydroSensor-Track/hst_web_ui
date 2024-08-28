@@ -9,6 +9,17 @@
   "backoffice": "Backoffice",
   "settings": "Configuración",
   "homeTitle": "Pagina principal",
+  "filters": "Filtros",
+  "location": "Ubicación",
+  "brand": "Modelo",
+  "model": "Modelo",
+  "level": "Nivel",
+  "battery": "Batería",
+  "signal": "Señal",
+  "hour": "Hora",
+  "latitude": "Latitud",
+  "longitude": "Longitud",
+  "sensorId": "ID del sensor",
   "createGraph": "Crear gráfico",
   "downloadReport": "Descargar reporte"
 }

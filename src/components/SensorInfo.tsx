@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import { SensorInfo } from '../interfaces/sensorInfo';
 import {
     LocationContainer,
@@ -21,6 +23,7 @@ export const SensorInfoComponent: React.FC<SensorInfo> = ({
     longitud,
     name,
 }) => {
+    const { t } = useTranslation();
     return (
         <LocationContainer>
             <LocationTitle>{name}</LocationTitle>
@@ -29,11 +32,11 @@ export const SensorInfoComponent: React.FC<SensorInfo> = ({
                 <LocationValue>{id}</LocationValue>
             </LocationInfo>
             <LocationInfo>
-                <LocationLabel>Marca:</LocationLabel>
+                <LocationLabel>{t('brand')}:</LocationLabel>
                 <LocationValue>{marca}</LocationValue>
             </LocationInfo>
             <LocationInfo>
-                <LocationLabel>Modelo:</LocationLabel>
+                <LocationLabel>{t('model')}:</LocationLabel>
                 <LocationValue>{modelo}</LocationValue>
             </LocationInfo>
             <LocationInfo>
@@ -41,27 +44,27 @@ export const SensorInfoComponent: React.FC<SensorInfo> = ({
                 <LocationValue>{serie}</LocationValue>
             </LocationInfo>
             <LocationInfo>
-                <LocationLabel>Nivel:</LocationLabel>
+                <LocationLabel>{t('level')}:</LocationLabel>
                 <LocationValue>{nivel}</LocationValue>
             </LocationInfo>
             <LocationInfo>
-                <LocationLabel>Bateria:</LocationLabel>
-                <LocationBattery>{bateria}%</LocationBattery>
+                <LocationLabel>{t('battery')}:</LocationLabel>
+                <LocationBattery>{bateria / 10}%</LocationBattery>
             </LocationInfo>
             <LocationInfo>
-                <LocationLabel>Señal:</LocationLabel>
+                <LocationLabel>{t('signal')}:</LocationLabel>
                 <LocationValue>{senal}</LocationValue>
             </LocationInfo>
             <LocationInfo>
-                <LocationLabel>Hora:</LocationLabel>
+                <LocationLabel>{t('hour')}:</LocationLabel>
                 <LocationValue>{hora}</LocationValue>
             </LocationInfo>
             <LocationInfo>
-                <LocationLabel>Latitud:</LocationLabel>
+                <LocationLabel>{t('latitude')}:</LocationLabel>
                 <LocationValue>{latitud}</LocationValue>
             </LocationInfo>
             <LocationInfo>
-                <LocationLabel>Longitud:</LocationLabel>
+                <LocationLabel>{t('longitude')}:</LocationLabel>
                 <LocationValue>{longitud}</LocationValue>
             </LocationInfo>
         </LocationContainer>

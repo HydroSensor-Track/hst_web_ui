@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 export const HomeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 10px;
 `;
 
 export const HomeText = styled.h1`
@@ -26,17 +27,22 @@ export const HomeButton = styled.button`
   }
 `;
 
+export const ContentContainer = styled.div`
+  flex: 3;
+`;
+
 export const FilterContainer = styled.div`
-  background-color: #111;
-  color: #fff;
-  padding: 20px;
+  background-color: ${(props) => props.theme.colors.componentBackground};
+  color: ${(props) => props.theme.colors.text};
+  padding: 10px;
   border-radius: 5px;
   display: flex;
-  align-items: center;
+  align-items: right;
   margin-bottom: 10px;
   flex-direction: column;
   margin-top: 20px;
   gap: 10px;
+  width: 35%;
 `;
 
 export const FilterTitle = styled.h1`
@@ -56,6 +62,12 @@ export const Label = styled.label`
 
 export const Select = styled.select`
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid ${(props) => props.theme.colors.border};
   border-radius: 4px;
+`;
+
+export const ChartsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 2.2;
 `;

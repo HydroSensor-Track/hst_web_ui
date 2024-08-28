@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 export const LocationContainer = styled.div`
-  background-color: #111;
-  color: #fff;
-  padding: 20px;
+  background-color: ${(props) => props.theme.colors.componentBackground};
+  color: ${(props) => props.theme.colors.text};
+  padding: 10px;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 35%;
 `;
 
 export const LocationTitle = styled.h1`

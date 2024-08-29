@@ -4,7 +4,6 @@ export interface Ticket {
     fecha: string;
     estado: string;
     ubicacion: string;
-    punto: number;
     sensor: string;
     responsable: string;
     descripcion: string;

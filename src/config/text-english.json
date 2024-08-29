@@ -20,6 +20,7 @@
   "latitude": "Latitude",
   "longitude": "Longitude",
   "sensorId": "Sensor ID",
-  "createGrapgh": "Create graph",
-  "downloadReport": "Download report"
+  "createGraph": "Create graph",
+  "downloadReport": "Download report",
+  "createTicket": "Create ticket"
 }

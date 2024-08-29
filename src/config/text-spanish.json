@@ -21,5 +21,6 @@
   "longitude": "Longitud",
   "sensorId": "ID del sensor",
   "createGraph": "Crear gráfico",
-  "downloadReport": "Descargar reporte"
+  "downloadReport": "Descargar reporte",
+  "createTicket": "Crear ticket"
 }

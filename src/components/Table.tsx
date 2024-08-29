@@ -1,71 +1,56 @@
-
-import React from "react";
 import { StyledTable } from "../styled-components/Table";
-import { Ticket } from "../interfaces/tickets";
+import { ReactElement } from 'react';
 
-// TODO: Hacer que no reciba directamente Ticket si no un objeto y mapearlo
 
-interface TableProps {
-    data: Ticket[]
+export interface ColumnProps<T> {
+  key: string;
+  title: string | ReactElement;
+  render?: (column: ColumnProps<T>, item: T) => ReactElement;
 }
 
-const Table: React.FC<TableProps> = ({ data }) => {
-    // const theme = useTheme();
+type Props<T> = {
+    columns: Array<ColumnProps<T>>;
+    data?: T[];
+};
+  
+const Table = <T,>({ data, columns }: Props<T>) => {
+const headers = columns.map((column, index) => {
     return (
-        <StyledTable>
-            <thead>
-                <tr>
-                    <th>Ticket</th>
-                    <th>Fecha</th>
-                    <th>Estado</th>
-                    <th>Ubicación</th>
-                    <th>Punto</th>
-                    <th>Sensor</th>
-                    <th>Responsable</th>
-                    <th>Descripción</th>
-                </tr>
-            </thead>
-            <tbody>
-                {data.map(ticket => (
-                    <tr key={ticket.id}>
-                        <td>{ticket.id}</td>
-                        <td>{ticket.fecha}</td>
-                        <td>{ticket.estado}</td>
-                        <td>{ticket.ubicacion}</td>
-                        <td>{ticket.punto}</td>
-                        <td>{ticket.sensor}</td>
-                        <td>{ticket.responsable}</td>
-                        <td>{ticket.descripcion}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </StyledTable>
-    )
-}
+    <th key={`headCell-${index}`} className="!z-0">
+        {column.title}
+    </th>
+    );
+});
 
-// const Button: React.FC<ButtonProps> = ({
-//   icon = null,
-//   label,
-//   onClick,
-//   type = "button",
-//   disabled = false,
-//   className,
-// }) => {
-//   const theme = useTheme();
-//   return (
-//     <StyledButton
-//       type={type}
-//       onClick={onClick}
-//       disabled={disabled}
-//       className={className}
-//     >
-//       {React.cloneElement(icon as React.ReactElement, {
-//         style: { fontSize: theme.sizes.iconSize },
-//       })}
-//       {label}
-//     </StyledButton>
-//   );
-// };
+const rows = !data?.length ? (
+    <tr>
+    <td colSpan={columns.length} className="text-center">
+        No data
+    </td>
+    </tr>
+) : (
+    data?.map((row, index) => {
+    return (
+        <tr key={`row-${index}`}>
+        {columns.map((column, index2) => {
+             const value = column.render
+             ? column.render(column, row as T)
+             : (row[column.key as keyof typeof row] as string);
+            return <td key={`cell-${index2}`}>{value}</td>;
+        })}
+        </tr>
+    );
+    })
+);
+
+return (
+    <StyledTable>
+        <thead>
+            <tr>{headers}</tr>
+        </thead>
+        <tbody>{rows}</tbody>
+    </StyledTable>
+);
+};
 
 export default Table;
-

@@ -9,32 +9,57 @@ interface TopBarProps {
   className?: string;
 }
 
-const titleMappings: Record<string, string> = {
-  "/": "dashboard",
-  "/tickets": "tickets",
-  "/notifications": "notifications",
-  "/backoffice": "backoffice"
+interface SectionProps {
+  title: string;
+  buttons?: {label: string, icon_name: string}[]
+}
+
+const titleMappings: Record<string, SectionProps> = {
+  "/": {
+    title:"dashboard", 
+    buttons: [
+      {
+        label: "downloadReport", 
+        icon_name: "download" 
+      }, 
+      {
+        label: "createGraph", 
+        icon_name: "eastArrow" 
+      }
+    ]
+  },
+  "/tickets": {
+    title:"tickets", 
+    buttons: [
+      {
+        label: "createTicket", 
+        icon_name: "add" 
+      }
+    ]
+  },
+  "/notifications": {
+    title:"notifications"
+  },
+  "/backoffice": {
+    title:"backoffice"
+  }
 };
 
 
 const TopBar = ({ className }: TopBarProps) => {
   const { t } = useTranslation();
   const location = useLocation();
-  let buttons = undefined;
-  const title = titleMappings[location.pathname] || "dashboard";
-  if (title === "dashboard") {
-    buttons = (
-      <ButtonContainer>
-        <Button label={t("downloadReport")} icon={<Icon name="download" />} />
-        <Button label={t("createGraph")} icon={<Icon name="eastArrow" />} />
-      </ButtonContainer>
-    );
-  }
-
+  const section = titleMappings[location.pathname] || "dashboard";
   return (
     <StyledTopBar className={className}>
-      <NormalTitle>{t(title)}</NormalTitle>
-      {buttons}
+      <NormalTitle>{t(section.title)}</NormalTitle>
+      {section.buttons &&       
+        <ButtonContainer>
+          {section.buttons.map( (button) =>
+            <Button label={t(button.label)} icon={<Icon name={button.icon_name} />} />
+          )}
+        </ButtonContainer>
+      }
     </StyledTopBar>
   );
 };

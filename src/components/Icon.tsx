@@ -8,6 +8,7 @@ import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import ManageAccountsRoundedIcon from "@mui/icons-material/ManageAccountsRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import HandymanOutlinedIcon from "@mui/icons-material/HandymanOutlined";
+import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from "styled-components";
 
 interface IconProps {
@@ -26,6 +27,7 @@ const Icon = ({ name }: IconProps) => {
     backoffice: <ManageAccountsRoundedIcon />,
     logout: <LogoutRoundedIcon />,
     tools: <HandymanOutlinedIcon />,
+    add: <AddIcon/>
   };
 
   return icons[name] || null;

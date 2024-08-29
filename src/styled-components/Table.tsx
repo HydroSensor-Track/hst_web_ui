@@ -7,7 +7,7 @@ export const StyledTable = styled.table`
 
     th, td {
         padding: 15px;
-        text-align: left;
+        text-align: center;
     }
 
     th {

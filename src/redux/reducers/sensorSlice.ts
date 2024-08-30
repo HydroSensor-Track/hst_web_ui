@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { SensorState } from '../../interfaces/redux';
 import { SensorInfo } from '../../interfaces/sensorInfo';
 import { getLatestInfoByName } from '../../services/sensors_latest_info';
-import { getSensorsLocations } from '../../services/sesnsors_location';
+import { getSensorsLocations } from '../../services/sensors_location';
 
 const INITIAL_STATE: SensorState = {
     sensors: [],

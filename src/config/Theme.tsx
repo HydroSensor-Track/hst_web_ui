@@ -21,7 +21,7 @@ const theme = {
   },
   sizes: {
     titleFontSize: "1.5rem",
-    textFontSize: "1rem",
+    textFontSize: "0.8rem",
     topBarHeight: "10vh",
     buttonFontSize: "0.8rem",
     buttonGap: "2vh",

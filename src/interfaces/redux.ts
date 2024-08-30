@@ -1,5 +1,6 @@
 import { SensorInfo } from './sensorInfo';
 import { SensorsTimeInfo } from './sensorTimeMetrics';
+import { Ticket } from './tickets';
 
 export interface AuthState {
     isAuthenticated: boolean;
@@ -24,4 +25,10 @@ export interface TimeMetricsParams {
     sensorName: string;
     from: number;
     to: number;
+}
+
+export interface TicketState {
+    tickets: Ticket[];
+    loading: boolean;
+    error: string | null;
 }

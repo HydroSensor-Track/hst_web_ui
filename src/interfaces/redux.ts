@@ -1,6 +1,7 @@
 import { SensorInfo } from './sensorInfo';
 import { SensorsTimeInfo } from './sensorTimeMetrics';
 import { Ticket } from './tickets';
+import { Assignee } from './assignee';
 
 export interface AuthState {
     isAuthenticated: boolean;
@@ -29,6 +30,12 @@ export interface TimeMetricsParams {
 
 export interface TicketState {
     tickets: Ticket[];
+    loading: boolean;
+    error: string | null;
+}
+
+export interface AssigneeState {
+    assignees: Assignee[];
     loading: boolean;
     error: string | null;
 }

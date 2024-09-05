@@ -22,5 +22,8 @@
   "sensorId": "ID del sensor",
   "createGraph": "Crear gráfico",
   "downloadReport": "Descargar reporte",
-  "createTicket": "Crear ticket"
+  "createTicket": "Crear ticket",
+  "pending": "Pending",
+  "completed": "Completed",
+  "canceled": "Canceled"
 }

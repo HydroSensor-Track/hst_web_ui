@@ -1,4 +1,4 @@
-// todo: deberia estar en interfaces, redux, etc y que TableProps reciba un objeto estandar, que no este atado a Tickets
+
 export interface Ticket {
     id: string;
     fecha: string;
@@ -8,3 +8,15 @@ export interface Ticket {
     responsable: string;
     descripcion: string;
 }
+
+
+export const formatDate = (date: string): string => {
+    const formatedDate = new Date(date);
+    return formatedDate.toLocaleString('es-ES', {
+        day: '2-digit',
+        month: 'numeric',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    }).replace(',', ''); // Ejemplo: "04-9-2024 15:30"
+};

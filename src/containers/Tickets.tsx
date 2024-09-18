@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store.ts";
 import { fetchTickets } from "../redux/reducers/ticketSlice.ts";
@@ -22,33 +22,6 @@ import Button from '../components/Button.tsx';
 import Icon from '../components/Icon.tsx';
 
 
-
-// TODO: Se deberian buscar los datos cuando se inicia la pagina por primera vez y cada vez que hay un cambio ////////////////////77
-// const data: Ticket[] = [
-//     {
-//         id: "ABC123",
-//         fecha: "22/06/2024",
-//         estado: "Completado",
-//         ubicacion: "Atucha II",
-//         sensor: "201704123",
-//         responsable: "Juan Pablo",
-//         descripcion: "Ver detalle"
-//     },
-//     {
-//         id: "DEF456",
-//         fecha: "24/06/2024",
-//         estado: "Pendiente",
-//         ubicacion: "Atucha II",
-//         sensor: "201704123",
-//         responsable: "Belen Buceta",
-//         descripcion: "Ver detalle"
-//     }
-// ];
-
-
-// TODO: En el caso de las columnas deberian ser los valores de las options
-///////////////////////////////////////////
-
 const Tickets = () => {
 
     const dispatch = useDispatch<AppDispatch>();
@@ -58,9 +31,15 @@ const Tickets = () => {
     const assigneesData = useSelector((state: RootState) => state.assignee.assignees);
     const locationData = useSelector((state: RootState) => state.sensor.locations);
 
+    const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
     const handleFetchTickets = () => {
         dispatch(fetchTickets());
     }
+
+    // const filteredTickets = selectedOptions.includes('all') || selectedOptions.length === 0 
+    // ? ticketsData 
+    // : ticketsData.filter(ticket => selectedOptions.includes(ticket.category)); // Ajusta según el atributo a filtrar
 
     useEffect(() => {
         dispatch(fetchTickets());
@@ -123,6 +102,8 @@ const Tickets = () => {
                     key={column.key}
                     placeholder={column.title}
                     options={column.values ? column.values : ["No hay datos"]} // TODO: Constante de texto 
+                    selectedValues={selectedOptions}
+                    setSelectedValues={setSelectedOptions}
                 />
                 ))}
                 <DateInput type="date" />
@@ -138,3 +119,4 @@ const Tickets = () => {
 
 
 export default Tickets;
+     

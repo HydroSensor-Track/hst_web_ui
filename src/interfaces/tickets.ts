@@ -14,7 +14,7 @@ export const formatDate = (date: string): string => {
     const formatedDate = new Date(date);
     return formatedDate.toLocaleString('es-ES', {
         day: '2-digit',
-        month: 'numeric',
+        month: '2-digit',
         year: 'numeric',
         hour: '2-digit',
         minute: '2-digit',

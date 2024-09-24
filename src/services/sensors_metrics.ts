@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const ENDPOINT = 'http://localhost:9290/sensors';
+const ENDPOINT = 'https://hst-web-server-53dq.onrender.com/delta-parana/sensors';
 
 export const getSensorTimeSeries = async (metric: string, sensorName: string, from: number, to: number) => {
     try {

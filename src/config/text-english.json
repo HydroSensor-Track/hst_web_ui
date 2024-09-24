@@ -21,5 +21,7 @@
   "longitude": "Longitude",
   "sensorId": "Sensor ID",
   "createGrapgh": "Create graph",
-  "downloadReport": "Download report"
+  "downloadReport": "Download report",
+  "search": "Search",
+  "addNewUser": "Add new user"
 }

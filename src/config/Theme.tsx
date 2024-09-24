@@ -13,6 +13,9 @@ const theme = {
     primaryFaded: "#103e75",
     text_faded: "#718096",
     buttonDisabled: "#718096",
+    riskyOperation: "#b81414",
+    headerBackground: "#000071",
+    searchBackground: "#36454F",
     // Add more colors as needed
   },
   sizes: {

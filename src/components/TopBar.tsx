@@ -1,9 +1,9 @@
-import { StyledTopBar, ButtonContainer } from "../styled-components/TopBar.tsx";
 import { useTranslation } from "react-i18next";
-import NormalTitle from "./NormalTitle.tsx";
 import { useLocation } from "react-router-dom";
-import Button from "./Button.tsx";
-import Icon from "./Icon.tsx";
+
+import { StyledTopBar } from "../styled-components/TopBar.tsx";
+import { useButtonConfig } from "../utils/ButtonConfig.tsx";
+import NormalTitle from "./NormalTitle.tsx";
 
 interface TopBarProps {
   className?: string;
@@ -12,19 +12,21 @@ interface TopBarProps {
 const TopBar = ({ className }: TopBarProps) => {
   const { t } = useTranslation();
   const location = useLocation();
-  let buttons = undefined;
-  if (location.pathname === "/") {
-    buttons = (
-      <ButtonContainer>
-        <Button label={t("downloadReport")} icon={<Icon name="download" />} />
-        <Button label={t("createGraph")} icon={<Icon name="eastArrow" />} />
-      </ButtonContainer>
-    );
-  }
+  const pathTitles: { [key: string]: string } = {
+    "/": "dashboard",
+    "/tickets": "tickets",
+    "/backoffice": "backoffice",
+    "/notifications": "notifications"
+  };
+
+  const titleKey = pathTitles[location.pathname] || "defaultTitle";
+  const title = t(titleKey);
+
+  const buttons = useButtonConfig(t)[location.pathname];
 
   return (
     <StyledTopBar className={className}>
-      <NormalTitle>{t("dashboard")}</NormalTitle>
+      <NormalTitle>{title}</NormalTitle>
       {buttons}
     </StyledTopBar>
   );

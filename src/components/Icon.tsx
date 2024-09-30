@@ -10,6 +10,10 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
+import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 import { useTheme } from "styled-components";
 
 interface IconProps {
@@ -32,6 +36,10 @@ const Icon = ({ name }: IconProps) => {
     edit: <EditRoundedIcon htmlColor={theme.colors.primary} />,
     accountAvatar: <AccountCircleRoundedIcon />,
     addUser: <PersonAddAltRoundedIcon />,
+    cancel: <CloseRoundedIcon htmlColor={theme.colors.riskyOperation} />,
+    check: <CheckRoundedIcon />,
+    passwordEyeIcon: <VisibilityRoundedIcon />,
+    passwordEyeClosedIcon: <VisibilityOffRoundedIcon />,
   };
 
   return icons[name] || null;

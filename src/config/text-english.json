@@ -23,5 +23,20 @@
   "createGrapgh": "Create graph",
   "downloadReport": "Download report",
   "search": "Search",
-  "addNewUser": "Add new user"
+  "addNewUser": "Add new user",
+  "cancel": "Cancel",
+  "save": "Save",
+  "enterEmail": "Enter your email",
+  "enterUserName": "Enter your username",
+  "enterPassword": "Enter your password",
+  "enterFirstName": "Enter your first name",
+  "enterLastName": "Enter your last name",
+  "emailHeader": "Email",
+  "userNameHeader": "Username",
+  "passwordHeader": "Password",
+  "firstNameHeader": "First name",
+  "lastNameHeader": "Last name",
+  "invalidUserName": "Username must be between 3 and 15 characters, it can only contain letters, numbers, hyphens and underscores.",
+  "invalidPassword": "Password must be at least 8 characters.",
+  "invalidEmail": "The email is not valid."
 }

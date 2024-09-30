@@ -16,6 +16,8 @@ const theme = {
     riskyOperation: "#b81414",
     headerBackground: "#000071",
     searchBackground: "#36454F",
+    modalBackground: "#000000b9",
+    error: "#ff0000",
     // Add more colors as needed
   },
   sizes: {

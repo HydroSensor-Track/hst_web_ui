@@ -23,5 +23,20 @@
   "createGraph": "Crear gráfico",
   "downloadReport": "Descargar reporte",
   "search": "Buscar",
-  "addNewUser": "Agregar nuevo usuario"
+  "addNewUser": "Agregar nuevo usuario",
+  "cancel": "Cancelar",
+  "save": "Guardar",
+  "enterEmail": "Ingrese su correo electrónico",
+  "enterUserName": "Ingrese su nombre de usuario",
+  "enterPassword": "Ingrese su contraseña",
+  "enterFirstName": "Ingrese su nombre",
+  "enterLastName": "Ingrese su apellido",
+  "emailHeader": "Correo electrónico",
+  "userNameHeader": "Nombre de usuario",
+  "passwordHeader": "Contraseña",
+  "firstNameHeader": "Nombre",
+  "lastNameHeader": "Apellido",
+  "invalidUserName": "El nombre de usuario debe tener al entre 3 y 15 caracteres, solo puede contener letras, números, guiones y guiones bajos.",
+  "invalidPassword": "La contraseña debe tener al menos 8 caracteres.",
+  "invalidEmail": "El correo electrónico no es válido."
 }

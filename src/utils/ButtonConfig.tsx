@@ -9,7 +9,14 @@ interface ButtonConfig {
   [key: string]: ReactElement | undefined;
 }
 
-export const useButtonConfig = (t: TFunction<"translation", undefined>): ButtonConfig => {
+interface ButtonHandlers {
+  [key: string]: () => void;
+}
+
+export const useButtonConfig = (
+  t: TFunction<"translation", undefined>,
+  buttonHandlers: ButtonHandlers
+): ButtonConfig => {
   return {
     "/": (
       <ButtonContainer>
@@ -19,7 +26,11 @@ export const useButtonConfig = (t: TFunction<"translation", undefined>): ButtonC
     ),
     "/backoffice": (
       <ButtonContainer>
-        <Button label={t("addNewUser")} icon={<Icon name="addUser" />} />
+        <Button
+          label={t("addNewUser")}
+          icon={<Icon name="addUser" />}
+          onClick={buttonHandlers["addNewUser"]}
+        />
       </ButtonContainer>
     ),
     // Add more path configurations as needed

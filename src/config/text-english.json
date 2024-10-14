@@ -38,5 +38,18 @@
   "lastNameHeader": "Last name",
   "invalidUserName": "Username must be between 3 and 15 characters, it can only contain letters, numbers, hyphens and underscores.",
   "invalidPassword": "Password must be at least 8 characters.",
-  "invalidEmail": "The email is not valid."
+  "invalidEmail": "The email is not valid.",
+  "userProfile": "User profile",
+  "changePassword": "Change password",
+  "modify": "Modify",
+  "differentInput": "The new value must be different from the current one.",
+  "fieldDoesNotEmpty": "The field cannot be empty.",
+  "confirmPasswordHeader": "Confirm your password",
+  "passwordsDoNotMatch": "Passwords do not match.",
+  "emailVerified": "Email verified",
+  "emailNotVerified": "Email not verified",
+  "lastLoginHeader": "Last login",
+  "lastPasswordResetHeader": "Last password reset",
+  "updatedAtHeader": "Updated at",
+  "createdAtHeader": "Created at"
 }

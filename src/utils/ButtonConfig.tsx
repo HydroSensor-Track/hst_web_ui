@@ -33,6 +33,15 @@ export const useButtonConfig = (
         />
       </ButtonContainer>
     ),
+    "/users": (
+      <ButtonContainer>
+        <Button
+          label={t("changePassword")}
+          icon={<Icon name="changePassword" />}
+          onClick={buttonHandlers["changePassword"]}
+        />
+      </ButtonContainer>
+    )
     // Add more path configurations as needed
   };
 };

@@ -1,162 +1,82 @@
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from 'react';
+import { useTheme } from "styled-components";
 
 import {
     ModalContainer,
     ModalContent,
     ModalHeader,
     ModalForm,
-    ModalLabel,
-    ModalTextError,
-    ModalItem,
     ModalButtonContainer
 } from "../styled-components/Modal";
-import Button from "./Button"
-import Icon from "./Icon"
-import PasswordInput from "./PasswordInput";
-import TextInput from "./TextInput";
+import Button from "./Button";
+import Icon from "./Icon";
 
-import { isValidEmail, isValidPassword, isValidUserName } from "../utils/functions";
+type ModalProps = {
+    title: string;
+    children: React.ReactNode;
+    onClose: () => void;
+    onSubmit: () => void;
+    isOpen: boolean;
+    canSubmit: boolean;
+    isValidInput?: () => boolean;
+};
 
-type Props = {
-    setOpen: (open: boolean) => void;
-}
-
-const Modal = (props: Props) => {
+const Modal = ({
+    title,
+    children,
+    onClose,
+    onSubmit,
+    isOpen,
+    canSubmit,
+    isValidInput
+}: ModalProps) => {
     const { t } = useTranslation();
-    const [emailError, setEmailError] = useState<string | undefined>(undefined);
-    const [userNameError, setUserNameError] = useState<string | undefined>(undefined);
-    const [passwordError, setPasswordError] = useState<string | undefined>(undefined);
-    const [mail, setMail] = useState('');
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [canSubmit, setCanSubmit] = useState(false);
-
-    const isValidInput = () => {
-        return mail !== '' && userName !== '' && password !== '' && firstName !== '' && lastName !== '' && !areErrors();
-    }
-
-    const areErrors = () => {
-        return emailError !== undefined || userNameError !== undefined || passwordError !== undefined;
-    }
-
-    const validateSensitiveData = () => {
-        if (!isValidEmail(mail)) setEmailError('invalidEmail');
-
-        else setEmailError(undefined);
-
-        if (!isValidUserName(userName)) setUserNameError('invalidUserName');
-
-        else setUserNameError(undefined);
-
-        if (!isValidPassword(password)) setPasswordError('invalidPassword');
-
-        else setPasswordError(undefined);
-
-        isValidInput() ? setCanSubmit(true) : setCanSubmit(false);
-    }
-
-    const handleSubmit = () => {
-        if (!isValidEmail(mail)) {
-            setEmailError('invalidEmail');
-            setCanSubmit(false);
-            return;
-        }
-
-        if (!isValidUserName(userName)) {
-            setUserNameError('invalidUserName');
-            setCanSubmit(false);
-            return;
-        }
-
-        if (!isValidPassword(password)) {
-            setPasswordError('invalidPassword');
-            setCanSubmit(false);
-            return;
-        }
-
-        console.log("Mail: ", mail);
-        console.log("User name: ", userName);
-        console.log("Password: ", password);
-        console.log("Frist name: ", firstName);
-        console.log("Last name: ", lastName);
-        props.setOpen(false)
-    }
+    const theme = useTheme();
 
     useEffect(() => {
-        validateSensitiveData()
-    }, [mail, userName, password]);
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                onClose();
+            }
+        };
 
-    /*
-    TODO: react input disable hide text in password
-    make modal responsive and avoid click side bar
-    */
+        if (isOpen) {
+            document.body.classList.add('modal-open');
+            window.addEventListener('keydown', handleKeyDown);
+        } else {
+            document.body.classList.remove('modal-open');
+        }
+
+        return () => {
+            document.body.classList.remove('modal-open');
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isOpen, onClose]);
+
+    if (!isOpen) return null;
 
     return (
         <ModalContainer>
             <ModalContent>
-                <ModalHeader>{t('addNewUser')}</ModalHeader>
-                <ModalForm>
-                    <ModalItem>
-                        <ModalLabel>{t('emailHeader')}</ModalLabel>
-                        <TextInput
-                            type="email"
-                            placeholder={t('enterEmail')}
-                            onChange={setMail}
-                        />
-                        {emailError && <ModalTextError>{t(emailError)}</ModalTextError>}
-                    </ModalItem>
-                    <ModalItem>
-                        <ModalLabel>{t('userNameHeader')}</ModalLabel>
-                        <TextInput
-                            type="string"
-                            placeholder={t('enterUserName')}
-                            onChange={setUserName}
-                        />
-                        {userNameError && <ModalTextError>{t(userNameError)}</ModalTextError>}
-                    </ModalItem>
-                    <ModalItem>
-                        <ModalLabel>{t('passwordHeader')}</ModalLabel>
-                        <PasswordInput
-                            placeholder={t('enterPassword')}
-                            onChange={setPassword}
-                        />
-                        {passwordError && <ModalTextError>{t(passwordError)}</ModalTextError>}
-                    </ModalItem>
-                    <ModalItem>
-                        <ModalLabel>{t('firstNameHeader')}</ModalLabel>
-                        <TextInput
-                            type="string"
-                            placeholder={t('enterFirstName')}
-                            onChange={setFirstName}
-                        />
-                    </ModalItem>
-                    <ModalItem>
-                        <ModalLabel>{t('lastNameHeader')}</ModalLabel>
-                        <TextInput
-                            type="string"
-                            placeholder={t('enterLastName')}
-                            onChange={setLastName}
-                        />
-                    </ModalItem>
-                </ModalForm>
+                <ModalHeader>{t(title)}</ModalHeader>
+                <ModalForm>{children}</ModalForm>
                 <ModalButtonContainer>
-                    <Button label={t('cancel')}
-                        onClick={() => props.setOpen(false)}
-                        icon={<Icon name="cancel" />}
+                    <Button
+                        label={t('cancel')}
+                        onClick={onClose}
+                        icon={<Icon name="cancel" htmlColor={theme.colors.cancel} />}
                     />
                     <Button
                         label={t('save')}
-                        onClick={handleSubmit}
-                        icon={<Icon name="check" />}
-                        disabled={!isValidInput() && !canSubmit}
+                        onClick={onSubmit}
+                        icon={<Icon name="check" htmlColor={theme.colors.success} />}
+                        disabled={isValidInput ? !isValidInput() && !canSubmit : !canSubmit}
                     />
                 </ModalButtonContainer>
             </ModalContent>
         </ModalContainer>
     );
-}
+};
 
 export default Modal;

@@ -18,6 +18,8 @@ const theme = {
     searchBackground: "#36454F",
     modalBackground: "#000000b9",
     error: "#ff0000",
+    success: "#008000",
+    cancel: '#EE4B2B'
     // Add more colors as needed
   },
   sizes: {

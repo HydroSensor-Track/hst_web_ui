@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ModalContainer = styled.div`
     width: 100vw;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     background-color: ${(props) => props.theme.colors.modalBackground};
@@ -17,7 +17,7 @@ export const ModalContent = styled.div`
     background-color: ${(props) => props.theme.colors.componentBackground};
     padding: 50px;
     border-radius: 10px;
-    max-width: 600px;
+    max-width: 510px;
     width: 100%;
     max-height: 400px;
     overflow-y: auto;

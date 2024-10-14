@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "../components/Layout.tsx";
 import Tickets from "./Tickets.tsx";
 import Backoffice from './Backoffice.tsx';
+import User from './User.tsx';
 import { ModalProvider } from "../contexts/ModalContext.tsx";
 
 const AuthenticatedApp = () => {
@@ -16,6 +17,7 @@ const AuthenticatedApp = () => {
                     <Route path="/tickets" element={<Tickets />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/backoffice" element={<Backoffice />} />
+                    <Route path="/users/:id" element={<User />} />
                 </Routes>
             </Layout >
         </ModalProvider >

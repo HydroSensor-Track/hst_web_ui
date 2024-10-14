@@ -9,6 +9,10 @@ type Props = {
 }
 
 const DataTable = (props: Props) => {
+    /**
+     * TODO: make responsive
+     * export sx styles to another file
+     */
     const { t } = useTranslation();
     const theme = useTheme();
 
@@ -26,6 +30,11 @@ const DataTable = (props: Props) => {
                     columnVisibilityModel: {
                         // Hide id column, the other columns will remain visible
                         id: false,
+                        img: false,
+                        userName: false,
+                        createdAt: false,
+                        updatedAt: false,
+                        lastPasswordReset: false,
                     },
                 },
             }}

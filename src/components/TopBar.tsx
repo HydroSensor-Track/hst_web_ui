@@ -26,13 +26,21 @@ const TopBar = ({ className }: TopBarProps) => {
     "addNewUser": () => {
       updateOpenModal(true);
     },
+    "changePassword": () => {
+      updateOpenModal(true);
+    }
     // Add more handlers as needed
   };
 
-  const titleKey = pathTitles[location.pathname] || "defaultTitle";
+  const locationPath = location.pathname.startsWith("/users/") ?
+    "/users" : location.pathname;
+
+  const titleKey = location.pathname.startsWith("/users/") ?
+    "userProfile" :
+    pathTitles[location.pathname] || "defaultTitle";
   const title = t(titleKey);
 
-  const buttons = useButtonConfig(t, buttonHandlers)[location.pathname];
+  const buttons = useButtonConfig(t, buttonHandlers)[locationPath] || null;
 
   return (
     <StyledTopBar className={className}>

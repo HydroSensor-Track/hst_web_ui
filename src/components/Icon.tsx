@@ -14,13 +14,18 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
+import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import PasswordRoundedIcon from '@mui/icons-material/PasswordRounded';
+
 import { useTheme } from "styled-components";
 
 interface IconProps {
   name: string;
+  htmlColor?: string;
 }
 
-const Icon = ({ name }: IconProps) => {
+const Icon = ({ name, htmlColor }: IconProps) => {
   const theme = useTheme();
 
   const icons: { [key: string]: JSX.Element } = {
@@ -33,13 +38,16 @@ const Icon = ({ name }: IconProps) => {
     logout: <LogoutRoundedIcon />,
     tools: <HandymanOutlinedIcon />,
     delete: <DeleteRoundedIcon htmlColor={theme.colors.riskyOperation} />,
-    edit: <EditRoundedIcon htmlColor={theme.colors.primary} />,
+    edit: <EditRoundedIcon htmlColor={htmlColor} />,
     accountAvatar: <AccountCircleRoundedIcon />,
     addUser: <PersonAddAltRoundedIcon />,
-    cancel: <CloseRoundedIcon htmlColor={theme.colors.riskyOperation} />,
-    check: <CheckRoundedIcon />,
+    cancel: <CloseRoundedIcon htmlColor={htmlColor} />,
+    check: <CheckRoundedIcon htmlColor={htmlColor} />,
     passwordEyeIcon: <VisibilityRoundedIcon />,
     passwordEyeClosedIcon: <VisibilityOffRoundedIcon />,
+    checkCircle: <CheckCircleOutlineRoundedIcon htmlColor={htmlColor} />,
+    cancelCircle: <CancelRoundedIcon htmlColor={htmlColor} />,
+    changePassword: <PasswordRoundedIcon />,
   };
 
   return icons[name] || null;

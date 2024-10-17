@@ -1,7 +1,9 @@
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridCallbackDetails, GridColDef, GridRowSelectionModel, GridToolbar } from '@mui/x-data-grid';
 import { useTranslation } from "react-i18next";
 
 import { useTheme } from "styled-components";
+
+import dataTableStyles from '../mui-styles/dataTableStyles';
 
 type Props = {
     columns: GridColDef[];
@@ -10,11 +12,17 @@ type Props = {
 
 const DataTable = (props: Props) => {
     /**
-     * TODO: make responsive
-     * export sx styles to another file
+     * TODO: improve screen sizes for responsive design
+     * select multiple rows and enable delete button on top bar for delete multiple users
      */
     const { t } = useTranslation();
     const theme = useTheme();
+
+    const handleSelectionChange = (selection: GridRowSelectionModel, details: GridCallbackDetails) => {
+        console.log('Selected rows:', selection);
+        console.log('Details:', details);
+        console.log("getRow: ", details.api.getRow(selection[0]));
+    };
 
     return (
         <DataGrid
@@ -55,43 +63,8 @@ const DataTable = (props: Props) => {
             disableColumnSelector
             disableDensitySelector
             density='standard'// confortable, compact, standard
-            sx={{
-                '--DataGrid-containerBackground': theme.colors.headerBackground,
-                color: theme.colors.text,
-                '& .MuiDataGrid-toolbarContainer': {
-                    backgroundColor: theme.colors.searchBackground,
-                    flexDirection: 'row-reverse',
-                },
-                '& .MuiFormControl-root.MuiTextField-root.MuiDataGrid-toolbarQuickFilter': {
-                    color: theme.colors.text,
-                    '& .MuiInputBase-root': {
-                        color: theme.colors.text,
-                    },
-                    '& .MuiInputLabel-root': {
-                        color: theme.colors.text,
-                    },
-                    '& .MuiIconButton-root': {
-                        color: theme.colors.text,
-                    }
-                },
-                '& .MuiTablePagination-root': {
-                    color: theme.colors.text,
-                },
-                '& .MuiTablePagination-actions': {
-                    '& .MuiIconButton-root.Mui-disabled': {
-                        color: theme.colors.buttonDisabled,
-                    }
-                },
-                '& .MuiDataGrid-booleanCell[data-value="false"]': {
-                    color: theme.colors.buttonDisabled,
-                },
-                '& .MuiDataGrid-booleanCell[data-value="true"]': {
-                    color: theme.colors.text,
-                },
-                '& .MuiButtonBase-root.MuiCheckbox-root': {
-                    color: theme.colors.text,
-                },
-            }}
+            onRowSelectionModelChange={handleSelectionChange}
+            sx={dataTableStyles(theme)}
         />
     )
 }

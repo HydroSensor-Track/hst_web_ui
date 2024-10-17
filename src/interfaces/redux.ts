@@ -1,5 +1,6 @@
 import { SensorInfo } from './sensorInfo';
 import { SensorsTimeInfo } from './sensorTimeMetrics';
+import { UserCompleteInfo, CommonUserInfo, UserPassword } from './userInfo';
 
 export interface AuthState {
     isAuthenticated: boolean;
@@ -25,3 +26,21 @@ export interface TimeMetricsParams {
     from: number;
     to: number;
 }
+
+export interface UserState {
+    users: UserCompleteInfo[];
+    user: UserCompleteInfo | {};
+    loading: boolean;
+    error: string | null;
+}
+
+export interface UpdateUserParams {
+    email?: string;
+    userName?: string;
+    userMetadata?: {
+        [key: string]: string;
+    };
+    password?: string;
+}
+
+export type CreateUserParams = CommonUserInfo & UserPassword;

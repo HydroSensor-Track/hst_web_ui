@@ -20,7 +20,7 @@ export const getUsersList = createAsyncThunk<any, void>(
     }
 );
 
-export const getUser = createAsyncThunk<any, string>(
+export const getUser = createAsyncThunk<any, string | undefined>(
     'users/getUser',
     async (id) => {
         const response = await getUserById(id);

@@ -17,8 +17,12 @@ export const getUsers = async () => {
     }
 };
 
-export const getUserById = async (id: string) => {
+export const getUserById = async (id: string | undefined) => {
     try {
+        if (id === undefined) {
+            return undefined;
+        }
+
         const response = await axios.get(`${ENDPOINT}/${id}`);
         return response.data;
     } catch (error) {

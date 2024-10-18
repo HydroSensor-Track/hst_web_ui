@@ -2,31 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from "react-redux";
 
 import UserCard from '../components/UserCard';
-import { isValidEmail, isValidUserName } from "../utils/functions";
+import { isValidEmail, isValidUserName, transformUserCompleteInfoToUserInfo } from "../utils/functions";
 import PasswordModal from '../components/PasswordModal';
 import { useModal } from "../contexts/ModalContext";
-import UserInfo from '../interfaces/userInfo';
+import { UserInfo } from '../interfaces/userInfo';
 import EditFieldDialog from '../components/EditFieldDialog';
 import { getCardDataPropsList } from '../utils/data.ts';
+import { RootState, AppDispatch } from "../redux/store.ts";
+import { getUser } from "../redux/reducers/usersSlice.ts";
+import Loading from '../components/Loading.tsx';
 
 const User: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const { t } = useTranslation();
     const { openModal, updateOpenModal } = useModal();
+    const dispatch = useDispatch<AppDispatch>();
+    const { user, loading } = useSelector((state: RootState) => state.users);
 
-    const [userInfo, setUserInfo] = useState<UserInfo>({
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john.doe@example.com',
-        userName: 'johndoe',
-        emailVerified: true,
-        lastLogin: '2023-10-01T12:34:56Z',
-        lastPasswordReset: '2023-09-15T12:34:56Z',
-        updatedAt: '2023-10-01T12:34:56Z',
-        createdAt: '2023-01-01T12:34:56Z',
-    });
+    const [userInfo, setUserInfo] = useState<UserInfo>(transformUserCompleteInfoToUserInfo(user));
     const cardDataPropsList = getCardDataPropsList(userInfo);
 
     const [open, setOpen] = useState(false);
@@ -94,36 +90,47 @@ const User: React.FC = () => {
     };
 
     useEffect(() => {
+        dispatch(getUser(id));
+    }, []);
+
+    useEffect(() => {
+        setUserInfo(transformUserCompleteInfoToUserInfo(user));
+    }, [user]);
+
+    useEffect(() => {
         validateInput();
     }, [open, editableField])
 
     return (
-        <Box p={5}>
-            {openModal && <PasswordModal setOpen={updateOpenModal} />}
-            {cardDataPropsList.map(cardDataProps => {
-                return (
-                    <UserCard
-                        key={cardDataProps.key}
-                        title={cardDataProps.title}
-                        value={cardDataProps.value}
-                        field={cardDataProps.field as keyof UserInfo}
-                        showHeader={cardDataProps.showHeader}
-                        userInfo={userInfo}
-                        handleEditClick={handleEditClick}
-                    />
-                )
-            })}
+        loading ?
+            <Loading />
+            :
+            <Box p={5}>
+                {openModal && <PasswordModal setOpen={updateOpenModal} />}
+                {cardDataPropsList.map(cardDataProps => {
+                    return (
+                        <UserCard
+                            key={cardDataProps.key}
+                            title={cardDataProps.title}
+                            value={cardDataProps.value}
+                            field={cardDataProps.field as keyof UserInfo}
+                            showHeader={cardDataProps.showHeader}
+                            userInfo={userInfo}
+                            handleEditClick={handleEditClick}
+                        />
+                    )
+                })}
 
-            <EditFieldDialog
-                open={open}
-                title="Edit Information"
-                handleClose={handleClose}
-                handleSave={handleSave}
-                handleChange={handleChange}
-                editableField={editableField}
-                errors={errors}
-                disabled={disabled} />
-        </Box>
+                <EditFieldDialog
+                    open={open}
+                    title="Edit Information"
+                    handleClose={handleClose}
+                    handleSave={handleSave}
+                    handleChange={handleChange}
+                    editableField={editableField}
+                    errors={errors}
+                    disabled={disabled} />
+            </Box>
     );
 };
 

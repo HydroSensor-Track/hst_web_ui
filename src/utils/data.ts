@@ -1,4 +1,4 @@
-import UserInfo from "../interfaces/userInfo";
+import { UserInfo } from "../interfaces/userInfo";
 
 export const getCardDataPropsList = (userInfo: UserInfo) => {
     return [

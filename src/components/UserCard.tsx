@@ -17,13 +17,14 @@ import {
     cardTypographyHeaderStyles,
     cardTypographyContentStyles
 } from '../mui-styles/userCardStyles';
-import UserInfo from '../interfaces/userInfo';
+import { UserInfo } from '../interfaces/userInfo';
 import Icon from './Icon';
 import Button from './Button';
+import { getTranslatedValueOrDateString } from '../utils/functions';
 
 interface UserCardItemProps {
     title: string;
-    value: string;
+    value: string | Date;
     field?: keyof UserInfo;
     showHeader?: boolean;
     userInfo: UserInfo;
@@ -61,7 +62,9 @@ const UserCard: React.FC<UserCardItemProps> = ({
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
                         <Typography sx={cardTypographyHeaderStyles(theme)} >{t(title)}</Typography>
-                        <Typography sx={cardTypographyContentStyles(theme)}>{value.toString()}</Typography>
+                        <Typography sx={cardTypographyContentStyles(theme)}>
+                            {getTranslatedValueOrDateString(value, t)}
+                        </Typography>
                     </Grid>
                     <Grid item>
                         {field ?

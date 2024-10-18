@@ -51,5 +51,6 @@
   "lastLoginHeader": "Last login",
   "lastPasswordResetHeader": "Last password reset",
   "updatedAtHeader": "Updated at",
-  "createdAtHeader": "Created at"
+  "createdAtHeader": "Created at",
+  "noData": "No data"
 }

@@ -3,7 +3,7 @@ import { Dialog, DialogTitle, DialogContent, TextField, DialogActions } from '@m
 import { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import UserInfo from '../interfaces/userInfo';
+import { UserInfo } from '../interfaces/userInfo';
 import Icon from './Icon';
 import Button from './Button';
 import { dialogStyles, textFieldStyles } from '../mui-styles/editFieldDialogStyles';

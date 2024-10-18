@@ -10,7 +10,7 @@ type Props = {
     rows: object[];
 }
 
-const DataTable = (props: Props) => {
+const DataTable = ({ columns, rows }: Props) => {
     /**
      * TODO: improve screen sizes for responsive design
      * select multiple rows and enable delete button on top bar for delete multiple users
@@ -26,8 +26,8 @@ const DataTable = (props: Props) => {
 
     return (
         <DataGrid
-            rows={props.rows}
-            columns={props.columns}
+            rows={rows}
+            columns={columns}
             initialState={{
                 pagination: {
                     paginationModel: {

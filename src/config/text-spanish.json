@@ -51,5 +51,6 @@
   "lastLoginHeader": "Último inicio de sesión",
   "lastPasswordResetHeader": "Último restablecimiento de contraseña",
   "updatedAtHeader": "Actualizado en",
-  "createdAtHeader": "Creado en"
+  "createdAtHeader": "Creado en",
+  "noData": "Sin datos"
 }

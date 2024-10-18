@@ -29,7 +29,7 @@ export interface TimeMetricsParams {
 
 export interface UserState {
     users: UserCompleteInfo[];
-    user: UserCompleteInfo | {};
+    user: Partial<UserCompleteInfo>;
     loading: boolean;
     error: string | null;
 }

@@ -1,19 +1,23 @@
-interface UserInfo {
+export interface UserInfo {
     firstName: string;
     lastName: string;
     email: string;
     userName: string;
     emailVerified: boolean;
-    lastLogin: string;
-    lastPasswordReset: string;
-    updatedAt: string;
-    createdAt: string;
+    lastLogin: Date | string;
+    lastPasswordReset: Date | string;
+    updatedAt: Date | string;
+    createdAt: Date | string;
+}
+
+interface IdUserInfo {
+    id: string;
 }
 
 export interface CommonUserInfo {
     email: string,
-    userName: string,
-    userMetadata: {
+    username: string,
+    user_metadata: {
         [key: string]: string;
     }
 }
@@ -36,5 +40,4 @@ interface UserId {
 }
 
 export type UserCompleteInfo = CommonUserInfo & UserStatus & UserId;
-
-export default UserInfo;
+export type DataGridUserInfo = UserInfo & IdUserInfo;

@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from 'react';
+import { useDispatch } from "react-redux";
 
 import {
     ModalLabel,
@@ -9,6 +10,9 @@ import {
 import Modal from "./Modal";
 import PasswordInput from "./PasswordInput";
 import TextInput from "./TextInput";
+import { AppDispatch } from "../redux/store.ts";
+import { newUser } from "../redux/reducers/usersSlice.ts";
+import { CreateUserParams } from "../interfaces/redux.ts"
 
 import { isValidEmail, isValidPassword, isValidUserName } from "../utils/functions";
 
@@ -25,6 +29,7 @@ type Props = {
 
 const AddUserModal = ({ setOpen }: Props) => {
     const { t } = useTranslation();
+    const dispatch = useDispatch<AppDispatch>();
 
     const [errors, setErrors] = useState<AddUserErrors>({
         emailError: undefined,
@@ -96,11 +101,17 @@ const AddUserModal = ({ setOpen }: Props) => {
     }
 
     const handleSubmit = () => {
-        console.log("Mail: ", editableFields.email);
-        console.log("User name: ", editableFields.userName);
-        console.log("Password: ", editableFields.password);
-        console.log("Frist name: ", editableFields.firstName);
-        console.log("Last name: ", editableFields.lastName);
+        const newUserParams: CreateUserParams = {
+            email: editableFields.email,
+            username: editableFields.userName,
+            password: editableFields.password,
+            connection: 'Username-Password-Authentication',
+            user_metadata: {
+                first_name: editableFields.firstName,
+                last_name: editableFields.lastName
+            }
+        }
+        dispatch(newUser(newUserParams));
         setOpenModal(false);
         setOpen(false);
     }
@@ -118,6 +129,7 @@ const AddUserModal = ({ setOpen }: Props) => {
     /*
     TODO: react input disable hide text in password
     make modal responsive
+    hash password or something like that before sending it to the server
     */
 
     return (

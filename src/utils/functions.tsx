@@ -1,3 +1,6 @@
+import { TFunction } from "i18next";
+
+import { UserInfo, UserCompleteInfo } from "../interfaces/userInfo";
 
 export const getLogoAndFontSize = (logoSize?: string) => {
     let size = "";
@@ -50,4 +53,35 @@ export const isValidUserName = (userName: string) => {
     //regex for username: only letters and numbers, at least 1 characters, no spaces and at most 15 characters, and ony _ and -
     const userNameRegex = /^[a-zA-Z0-9_-]{1,15}$/;
     return userNameRegex.test(userName);
+};
+
+export const transformUserCompleteInfoToUserInfo = (user: Partial<UserCompleteInfo>): UserInfo => {
+    return {
+        firstName: user?.user_metadata?.first_name ?? 'noData',
+        lastName: user?.user_metadata?.last_name ?? 'noData',
+        email: user?.email ?? 'noData',
+        userName: user?.username ?? 'noData',
+        emailVerified: user?.emailVerified ?? false,
+        lastLogin: user?.lastLogin ?? 'noData',
+        lastPasswordReset: user?.lastPasswordReset ?? 'noData',
+        updatedAt: user?.updatedAt ?? 'noData',
+        createdAt: user?.createdAt ?? 'noData',
+    };
+};
+
+export const getTranslatedValueOrDateString = (
+    value: string | Date,
+    t: TFunction<"translation", undefined>
+) => {
+    if (value instanceof Date) {
+        console.log("Date: ", value);
+        return value.toString();
+    }
+
+    const date = new Date(value);
+    if (date instanceof Date && !isNaN(date.getTime())) {
+        return date.toLocaleString();
+    }
+
+    return t(value);
 };

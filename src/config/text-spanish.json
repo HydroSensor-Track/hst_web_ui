@@ -25,5 +25,15 @@
   "createTicket": "Crear ticket",
   "pending": "Pending",
   "completed": "Completed",
-  "canceled": "Canceled"
+  "canceled": "Canceled",
+  "ticketTitle": "Título",
+  "description": "Descripción",
+  "status": "Estado",
+  "category": "Categoría",
+  "assignee": "Asignado",
+  "customCategory": "Categoría personalizada",
+  "enterCustomCategory": "Ingrese una categoría personalizada",
+  "outOfService": "Fuera de servicio",
+  "maintenance": "Mantenimiento",
+  "unassigned": "Sin asignar"
 }

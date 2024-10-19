@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const ENDPOINT = 'http://localhost:9290/sensors/latest';
+const ENDPOINT = 'https://hst-web-server-53dq.onrender.com/delta-parana/sensors/latest';
 
 export const getLatestInfoByName = async (locationName: string) => {
     try {

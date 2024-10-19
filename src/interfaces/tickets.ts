@@ -1,12 +1,16 @@
 
 export interface Ticket {
-    id: string;
-    fecha: string;
-    estado: string;
-    ubicacion: string;
-    sensor: string;
-    responsable: string;
-    descripcion: string;
+    idTicket: number;
+    idSensor: number;
+    createdDate: string;
+    updatedDate: string;
+    status: string;
+    createdBy: string;
+    updatedBy: string;
+    assignee: string | null;
+    description: string;
+    category: string;
+    location: string;
 }
 
 

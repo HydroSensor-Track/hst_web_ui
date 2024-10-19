@@ -22,5 +22,15 @@
   "sensorId": "Sensor ID",
   "createGraph": "Create graph",
   "downloadReport": "Download report",
-  "createTicket": "Create ticket"
+  "createTicket": "Create ticket",
+  "ticketTitle": "Title",
+  "description": "Description",
+  "status": "Status",
+  "assignee" : "Assignee",
+  "category": "Category",
+  "customCategory": "Custom category",
+  "enterCustomCategory": "Enter custom category",
+  "outOfService": "Out of service",
+  "maintenance": "Maintenance",
+  "unassigned": "Unassigned"
 }

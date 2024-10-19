@@ -18,15 +18,12 @@ import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlin
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import PasswordRoundedIcon from '@mui/icons-material/PasswordRounded';
 
-import { useTheme } from "styled-components";
-
 interface IconProps {
   name: string;
   htmlColor?: string;
 }
 
 const Icon = ({ name, htmlColor }: IconProps) => {
-  const theme = useTheme();
 
   const icons: { [key: string]: JSX.Element } = {
     download: <FileDownloadOutlinedIcon />,
@@ -37,7 +34,7 @@ const Icon = ({ name, htmlColor }: IconProps) => {
     backoffice: <ManageAccountsRoundedIcon />,
     logout: <LogoutRoundedIcon />,
     tools: <HandymanOutlinedIcon />,
-    delete: <DeleteRoundedIcon htmlColor={theme.colors.riskyOperation} />,
+    delete: <DeleteRoundedIcon htmlColor={htmlColor} />,
     edit: <EditRoundedIcon htmlColor={htmlColor} />,
     accountAvatar: <AccountCircleRoundedIcon />,
     addUser: <PersonAddAltRoundedIcon />,

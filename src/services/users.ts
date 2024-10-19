@@ -49,8 +49,12 @@ export const createUser = async (user: CreateUserParams) => {
     }
 };
 
-export const updateUser = async (id: string, data: UpdateUserParams) => {
+export const updateUser = async (id: string | undefined, data: UpdateUserParams) => {
     try {
+        if (id === undefined) {
+            return undefined;
+        }
+
         const response = await axios.patch(`${ENDPOINT}/${id}`, data);
         return response.data;
     } catch (error) {

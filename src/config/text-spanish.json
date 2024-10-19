@@ -48,9 +48,10 @@
   "passwordsDoNotMatch": "Las contraseñas no coinciden.",
   "emailVerified": "Correo electrónico verificado",
   "emailNotVerified": "Correo electrónico no verificado",
-  "lastLoginHeader": "Último inicio de sesión",
+  "lastLoginHeader": "Última sesión",
   "lastPasswordResetHeader": "Último restablecimiento de contraseña",
   "updatedAtHeader": "Actualizado en",
   "createdAtHeader": "Creado en",
-  "noData": "Sin datos"
+  "noData": "Sin datos",
+  "verified": "Verificado"
 }

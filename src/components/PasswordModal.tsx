@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 
 import Modal from "./Modal";
 import PasswordInput from "./PasswordInput";
@@ -9,6 +10,9 @@ import {
     ModalTextError
 } from "../styled-components/Modal";
 import { isValidPassword } from "../utils/functions";
+import { AppDispatch } from "../redux/store.ts";
+import { UpdateUserParams } from "../interfaces/redux.ts";
+import { updateUserById } from "../redux/reducers/usersSlice.ts";
 
 interface PasswordErrors {
     passwordError: string | undefined;
@@ -17,10 +21,12 @@ interface PasswordErrors {
 
 type PasswordModalProps = {
     setOpen: (open: boolean) => void;
+    id: string | undefined;
 };
 
-const PasswordModal = ({ setOpen }: PasswordModalProps) => {
+const PasswordModal = ({ setOpen, id }: PasswordModalProps) => {
     const { t } = useTranslation();
+    const dispatch = useDispatch<AppDispatch>();
 
     const [passwords, setPasswords] = useState({
         password: '',
@@ -74,7 +80,10 @@ const PasswordModal = ({ setOpen }: PasswordModalProps) => {
     }
 
     const handleSubmit = () => {
-        console.log("Password: ", passwords.password);
+        const data: UpdateUserParams = {
+            password: passwords.password
+        };
+        dispatch(updateUserById({ id, data }));
         setOpen(false);
     };
 

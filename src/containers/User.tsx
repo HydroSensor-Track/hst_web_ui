@@ -12,7 +12,8 @@ import { UserInfo } from '../interfaces/userInfo';
 import EditFieldDialog from '../components/EditFieldDialog';
 import { getCardDataPropsList } from '../utils/data.ts';
 import { RootState, AppDispatch } from "../redux/store.ts";
-import { getUser } from "../redux/reducers/usersSlice.ts";
+import { UpdateUserParams } from "../interfaces/redux.ts";
+import { getUser, updateUserById } from "../redux/reducers/usersSlice.ts";
 import Loading from '../components/Loading.tsx';
 
 const User: React.FC = () => {
@@ -43,6 +44,35 @@ const User: React.FC = () => {
 
     const handleSave = () => {
         setUserInfo({ ...userInfo, ...editableField });
+        const editableFieldKey = Object.keys(editableField)[0] as keyof UserInfo;
+
+        let data: UpdateUserParams = {}
+        if (editableFieldKey === 'firstName') {
+            data = {
+                user_metadata: {
+                    "frist_name": editableField[editableFieldKey] ?? ''
+                }
+            };
+        } else if (editableFieldKey === 'lastName') {
+            data = {
+                user_metadata: {
+                    "last_name": editableField[editableFieldKey] ?? ''
+                }
+            };
+        } else if (editableFieldKey === 'userName') {
+            data = {
+                "username": editableField[editableFieldKey] ?? ''
+            };
+        } else if (editableFieldKey === 'email') {
+            data = {
+                "email": editableField[editableFieldKey] ?? '',
+                "verify_email": true
+            };
+        } else {
+            data = { [editableFieldKey]: editableField[editableFieldKey] };
+        }
+
+        dispatch(updateUserById({ id, data }));
         setOpen(false);
     };
 
@@ -106,7 +136,7 @@ const User: React.FC = () => {
             <Loading />
             :
             <Box p={5}>
-                {openModal && <PasswordModal setOpen={updateOpenModal} />}
+                {openModal && <PasswordModal setOpen={updateOpenModal} id={id} />}
                 {cardDataPropsList.map(cardDataProps => {
                     return (
                         <UserCard

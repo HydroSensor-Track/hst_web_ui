@@ -36,11 +36,12 @@ export interface UserState {
 
 export interface UpdateUserParams {
     email?: string;
-    userName?: string;
-    userMetadata?: {
+    username?: string;
+    user_metadata?: {
         [key: string]: string;
     };
     password?: string;
+    verify_email?: boolean;
 }
 
 export type CreateUserParams = CommonUserInfo & UserPassword;

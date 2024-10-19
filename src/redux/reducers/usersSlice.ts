@@ -38,7 +38,7 @@ export const newUser = createAsyncThunk<any, CreateUserParams>(
     }
 );
 
-export const updateUserById = createAsyncThunk<any, { id: string, data: UpdateUserParams }>(
+export const updateUserById = createAsyncThunk<any, { id: string | undefined, data: UpdateUserParams }>(
     'users/updateUser',
     async ({ id, data }) => {
         const response = await updateUser(id, data);
@@ -115,7 +115,7 @@ const usersSlice = createSlice({
         });
         builder.addCase(deleteUserById.fulfilled, (state, action) => {
             state.loading = false;
-            state.users = state.users.filter(user => user.userId !== action.meta.arg);
+            state.users = state.users.filter(user => user.userId !== `auth0|${action.meta.arg}`);
         });
         builder.addCase(deleteUserById.rejected, (state, action) => {
             state.loading = false;

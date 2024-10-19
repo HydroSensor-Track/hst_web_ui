@@ -52,5 +52,6 @@
   "lastPasswordResetHeader": "Last password reset",
   "updatedAtHeader": "Updated at",
   "createdAtHeader": "Created at",
-  "noData": "No data"
+  "noData": "No data",
+  "verified": "Verified"
 }

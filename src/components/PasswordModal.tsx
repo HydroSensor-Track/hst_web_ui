@@ -104,6 +104,8 @@ const PasswordModal = ({ setOpen, id }: PasswordModalProps) => {
             onSubmit={handleSubmit}
             isOpen={open}
             canSubmit={canSubmit}
+            cancelText={'cancel'}
+            submitText={'save'}
         >
             <ModalItem>
                 <ModalLabel>{t('passwordHeader')}</ModalLabel>

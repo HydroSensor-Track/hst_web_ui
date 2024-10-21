@@ -13,7 +13,7 @@ type Props = {
 const DataTable = ({ columns, rows }: Props) => {
     /**
      * TODO: improve screen sizes for responsive design
-     * select multiple rows and enable delete button on top bar for delete multiple users
+     * select multiple rows and enable delete button on top bar for delete multiple users (checkBoxSelection)
      */
     const { t } = useTranslation();
     const theme = useTheme();
@@ -57,7 +57,6 @@ const DataTable = ({ columns, rows }: Props) => {
             }}
             localeText={{ toolbarQuickFilterPlaceholder: t('search') }}
             pageSizeOptions={[5]}
-            checkboxSelection
             disableRowSelectionOnClick
             disableColumnFilter
             disableColumnSelector

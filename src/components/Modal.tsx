@@ -20,6 +20,8 @@ type ModalProps = {
     isOpen: boolean;
     canSubmit: boolean;
     isValidInput?: () => boolean;
+    cancelText: string;
+    submitText: string;
 };
 
 const Modal = ({
@@ -29,7 +31,9 @@ const Modal = ({
     onSubmit,
     isOpen,
     canSubmit,
-    isValidInput
+    isValidInput,
+    cancelText,
+    submitText
 }: ModalProps) => {
     const { t } = useTranslation();
     const theme = useTheme();
@@ -63,12 +67,12 @@ const Modal = ({
                 <ModalForm>{children}</ModalForm>
                 <ModalButtonContainer>
                     <Button
-                        label={t('cancel')}
+                        label={t(cancelText)}
                         onClick={onClose}
                         icon={<Icon name="cancel" htmlColor={theme.colors.cancel} />}
                     />
                     <Button
-                        label={t('save')}
+                        label={t(submitText)}
                         onClick={onSubmit}
                         icon={<Icon name="check" htmlColor={theme.colors.success} />}
                         disabled={isValidInput ? !isValidInput() && !canSubmit : !canSubmit}

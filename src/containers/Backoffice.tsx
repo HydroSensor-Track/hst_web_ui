@@ -1,7 +1,7 @@
 import { GridColDef } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
@@ -16,6 +16,7 @@ import { getUsersList, deleteUserById } from "../redux/reducers/usersSlice.ts";
 import { DataGridUserInfo } from "../interfaces/userInfo.ts";
 import Loading from '../components/Loading.tsx';
 import { getColumns } from '../utils/columns';
+import Modal from '../components/Modal.tsx';
 
 const Backoffice = () => {
     const theme = useTheme();
@@ -24,11 +25,25 @@ const Backoffice = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { users, loading } = useSelector((state: RootState) => state.users);
 
-    /*
-    TODO: display a confirmation dialog before deleting a user
-    */
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+    const [userIdToDelete, setUserIdToDelete] = useState<string | null>(null);
+
     const handleDelete = (id: string) => {
-        dispatch(deleteUserById(id));
+        setUserIdToDelete(id);
+        setIsModalDeleteOpen(true);
+    };
+
+    const confirmDelete = () => {
+        if (userIdToDelete) {
+            dispatch(deleteUserById(userIdToDelete));
+            setIsModalDeleteOpen(false);
+            setUserIdToDelete(null);
+        }
+    };
+
+    const cancelDelete = () => {
+        setIsModalDeleteOpen(false);
+        setUserIdToDelete(null);
     };
 
     const columns: GridColDef[] = getColumns(t);
@@ -72,6 +87,19 @@ const Backoffice = () => {
             <BackofficeContainer>
                 <DataTable columns={columnsWithActions} rows={rows} />
                 {openModal && <AddUserModal setOpen={updateOpenModal} />}
+                {isModalDeleteOpen && (
+                    <Modal
+                        title='confirmUserDeleteHeader'
+                        onClose={cancelDelete}
+                        onSubmit={confirmDelete}
+                        isOpen={isModalDeleteOpen}
+                        canSubmit={true}
+                        cancelText='avoidUserDelete'
+                        submitText='confirmUserDelete'
+                    >
+                        <p>{t('deleteUserConfirmation')}</p>
+                    </Modal>
+                )}
             </BackofficeContainer >
     )
 }

@@ -53,6 +53,9 @@ const dataTableStyles = (theme: DefaultTheme) => ({
         '& .MuiDataGrid-cell': {
             fontSize: '0.75rem',
         },
+        '& .MuiDataGrid-virtualScroller': {
+            paddingBottom: '20px',
+        },
     },
     '& .MuiDataGrid-virtualScroller': {
         overflowX: 'auto',

@@ -129,7 +129,7 @@ const AddUserModal = ({ setOpen }: Props) => {
     /*
     TODO: react input disable hide text in password
     make modal responsive
-    hash password or something like that before sending it to the server
+    hash password or something like that before sending it to the server -> do not necessarily need to do this due to https
     */
 
     return (
@@ -139,6 +139,8 @@ const AddUserModal = ({ setOpen }: Props) => {
             onSubmit={handleSubmit}
             isOpen={open}
             canSubmit={canSubmit}
+            cancelText={'cancel'}
+            submitText={'save'}
         >
             <ModalItem>
                 <ModalLabel>{t('emailHeader')}</ModalLabel>

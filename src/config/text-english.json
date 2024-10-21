@@ -53,5 +53,9 @@
   "updatedAtHeader": "Updated at",
   "createdAtHeader": "Created at",
   "noData": "No data",
-  "verified": "Verified"
+  "verified": "Verified",
+  "confirmUserDeleteHeader": "Confirm user deletion",
+  "deleteUserConfirmation": "Are you sure you want to delete the user?",
+  "avoidUserDelete": "No",
+  "confirmUserDelete": "Yes"
 }

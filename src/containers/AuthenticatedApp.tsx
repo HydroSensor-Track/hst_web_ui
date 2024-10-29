@@ -1,4 +1,5 @@
-import Home from './Home';
+// import Home from './Home';
+import Home from './Home_2.0.tsx'
 import About from './About';
 import {Route, Routes} from "react-router-dom";
 import Layout from "../components/Layout.tsx";

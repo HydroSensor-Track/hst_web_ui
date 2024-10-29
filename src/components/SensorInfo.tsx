@@ -1,72 +1,82 @@
 import { useTranslation } from "react-i18next";
-
-import { SensorInfo } from '../interfaces/sensorInfo';
 import {
     LocationContainer,
     LocationTitle,
     LocationInfo,
     LocationLabel,
     LocationValue,
-    LocationBattery
+    LocationBattery,
+    SensorInfoContainer
 } from "../styled-components/Sensor.tsx";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store.ts";
+import { SensorDeltaInfo, SensorList } from "../interfaces/sensorInfo.ts";
 
-export const SensorInfoComponent: React.FC<SensorInfo> = ({
-    id,
-    marca,
-    modelo,
-    serie,
-    nivel,
-    bateria,
-    senal,
-    hora,
-    latitud,
-    longitud,
-    name,
-}) => {
+
+const SensorDeltaDetails: React.FC<{sensor: SensorDeltaInfo}> = ({sensor}) => {
     const { t } = useTranslation();
     return (
         <LocationContainer>
-            <LocationTitle>{name}</LocationTitle>
+            <LocationTitle>{sensor.name}</LocationTitle>
             <LocationInfo>
                 <LocationLabel>ID:</LocationLabel>
-                <LocationValue>{id}</LocationValue>
+                <LocationValue>{sensor.id}</LocationValue>
             </LocationInfo>
             <LocationInfo>
                 <LocationLabel>{t('brand')}:</LocationLabel>
-                <LocationValue>{marca}</LocationValue>
+                <LocationValue>{sensor.marca}</LocationValue>
             </LocationInfo>
             <LocationInfo>
                 <LocationLabel>{t('model')}:</LocationLabel>
-                <LocationValue>{modelo}</LocationValue>
+                <LocationValue>{sensor.modelo}</LocationValue>
             </LocationInfo>
             <LocationInfo>
                 <LocationLabel>Serie:</LocationLabel>
-                <LocationValue>{serie}</LocationValue>
+                <LocationValue>{sensor.serie}</LocationValue>
             </LocationInfo>
             <LocationInfo>
                 <LocationLabel>{t('level')}:</LocationLabel>
-                <LocationValue>{nivel}</LocationValue>
+                <LocationValue>{sensor.nivel}</LocationValue>
             </LocationInfo>
             <LocationInfo>
                 <LocationLabel>{t('battery')}:</LocationLabel>
-                <LocationBattery>{bateria / 10}%</LocationBattery>
+                <LocationBattery>{sensor.bateria / 10}%</LocationBattery>
             </LocationInfo>
             <LocationInfo>
                 <LocationLabel>{t('signal')}:</LocationLabel>
-                <LocationValue>{senal}</LocationValue>
+                <LocationValue>{sensor.senal}</LocationValue>
             </LocationInfo>
             <LocationInfo>
                 <LocationLabel>{t('hour')}:</LocationLabel>
-                <LocationValue>{hora}</LocationValue>
+                <LocationValue>{sensor.hora}</LocationValue>
             </LocationInfo>
             <LocationInfo>
                 <LocationLabel>{t('latitude')}:</LocationLabel>
-                <LocationValue>{latitud}</LocationValue>
+                <LocationValue>{sensor.latitud}</LocationValue>
             </LocationInfo>
             <LocationInfo>
                 <LocationLabel>{t('longitude')}:</LocationLabel>
-                <LocationValue>{longitud}</LocationValue>
+                <LocationValue>{sensor.longitud}</LocationValue>
             </LocationInfo>
         </LocationContainer>
     );
+}
+
+
+export const SensorInfoComponent: React.FC<{sensors: SensorList}> = ({sensors}) => {
+
+
+    const red = useSelector((state: RootState) => state.queryChart.red);
+
+    return (
+        <SensorInfoContainer>
+        {sensors.map((sensor) => {
+            if (red === "delta-parana") {
+                return <SensorDeltaDetails sensor={sensor as SensorDeltaInfo}/>
+            } else {
+                <p>Network not supported</p>
+            }
+        })}
+        </SensorInfoContainer>
+  );
 };

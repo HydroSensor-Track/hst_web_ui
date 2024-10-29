@@ -1,5 +1,6 @@
 import { SensorInfo } from './sensorInfo';
 import { SensorsTimeInfo } from './sensorTimeMetrics';
+import { LocationSensor } from './locationSensor';
 
 export interface AuthState {
     isAuthenticated: boolean;
@@ -24,4 +25,10 @@ export interface TimeMetricsParams {
     sensorName: string;
     from: number;
     to: number;
+}
+
+export interface LocationSensorState {
+    ubicaciones: LocationSensor[];
+    loading: boolean;
+    error: string | null;
 }

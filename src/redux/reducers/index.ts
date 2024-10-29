@@ -4,6 +4,7 @@ import sensorReducer from './sensorSlice';
 import sensorTimeReducer from './sensorTimeSlice';
 import ticketReducer from './ticketSlice';
 import assigneeReducer from "./assigneeSlice";
+import usersReducer from './usersSlice';
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     sensorTime: sensorTimeReducer,
     ticket: ticketReducer,
     assignee: assigneeReducer,
+    users: usersReducer,
     // Add other reducers here
 });
 

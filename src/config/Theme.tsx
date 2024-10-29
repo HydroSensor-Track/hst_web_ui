@@ -19,7 +19,14 @@ const theme = {
     darkGray: "#1E1E1E",
     mediumGray: "#2A2A2A",
     lightGray: "#242424",
-
+    riskyOperation: "#b81414",
+    headerBackground: "#000071",
+    searchBackground: "#36454F",
+    modalBackground: "#000000b9",
+    error: "#ff0000",
+    success: "#008000",
+    cancel: '#EE4B2B'
+    // Add more colors as needed
   },
   sizes: {
     titleFontSize: "1.5rem",

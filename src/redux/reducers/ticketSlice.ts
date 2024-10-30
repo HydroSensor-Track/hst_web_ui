@@ -47,15 +47,15 @@ const ticketSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message || 'An error occurred';
             })
-            .addCase(createTicketThunk.pending, (state) => {
+            .addCase(createTicket.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(createTicketThunk.fulfilled, (state, action) => {
+            .addCase(createTicket.fulfilled, (state, action) => {
                 state.loading = false;
                 state.tickets.push(action.payload);
             })
-            .addCase(createTicketThunk.rejected, (state, action) => {
+            .addCase(createTicket.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || 'Failed to create ticket';
             });

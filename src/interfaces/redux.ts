@@ -1,5 +1,6 @@
 import { SensorInfo } from './sensorInfo';
 import { SensorsTimeInfo } from './sensorTimeMetrics';
+import { LocationSensor } from './locationSensor';
 import { Ticket } from './tickets';
 import { Assignee } from './assignee';
 import { UserCompleteInfo, CommonUserInfo, UserPassword } from './userInfo';
@@ -29,6 +30,11 @@ export interface TimeMetricsParams {
     to: number;
 }
 
+export interface LocationSensorState {
+    ubicaciones: LocationSensor[];
+    loading: boolean;
+    error: string | null;
+}
 export interface TicketState {
     tickets: Ticket[];
     loading: boolean;

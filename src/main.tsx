@@ -9,6 +9,7 @@ import store from "./redux/store.ts";
 import theme from "./config/Theme.tsx";
 import {ThemeProvider} from "styled-components";
 import './config/i18n'; // Import i18n configuration
+import './index.css'
 
 const domain = import.meta.env.VITE_AUTH0_DOMAIN;
 const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;

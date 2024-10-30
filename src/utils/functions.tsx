@@ -1,6 +1,7 @@
 import { TFunction } from "i18next";
 
 import { UserInfo, UserCompleteInfo } from "../interfaces/userInfo";
+import { NetworkData } from "../interfaces/sensorInfo";
 
 export const getLogoAndFontSize = (logoSize?: string) => {
     let size = "";
@@ -85,3 +86,20 @@ export const getTranslatedValueOrDateString = (
 
     return t(value);
 };
+
+export function sortNetworksByLocation(networks: NetworkData) {
+
+    const sortedNetworks: NetworkData = {};
+  
+    Object.keys(networks).forEach((network) => {
+      const locations = networks[network];
+  
+      // Ordenar las ubicaciones directamente usando Object.fromEntries y Object.entries
+      sortedNetworks[network] = Object.fromEntries(
+        Object.entries(locations).sort(([a], [b]) => a.localeCompare(b))
+      );
+    });
+  
+    return sortedNetworks;
+  }
+  

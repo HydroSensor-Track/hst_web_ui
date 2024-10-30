@@ -1,67 +1,68 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+// import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { SensorState } from '../../interfaces/redux';
-import { SensorInfo } from '../../interfaces/sensorInfo';
-import { getLatestInfoByName } from '../../services/sensors_latest_info';
-import { getSensorsLocations } from '../../services/sensors_location';
+// import { SensorState } from '../../interfaces/redux';
+// import { SensorInfo } from '../../interfaces/sensorInfo';
+// import { getLatestInfoByName } from '../../services/sensors_latest_info';
+// import { getLocations } from '../../services/sensors_location';
 
-const INITIAL_STATE: SensorState = {
-    sensors: [],
-    locations: [],
-    loading: false,
-    error: null
-};
-export const sensorLatestInfo = createAsyncThunk<any, string>(
-    '/delta-parana/sensor/sensorLatestInfo',
-    async (sensorName) => {
-        const response = await getLatestInfoByName(sensorName);
-        const data: SensorInfo[] = response;
-        return data;
-    }
-);
+// const INITIAL_STATE: SensorState = {
+//     sensors: [],
+//     locations: [],
+//     loading: false,
+//     error: null
+// };
 
-export const sensorsLocation = createAsyncThunk<any, void>(
-    '/delta-parana/sensor/sensorsLocation',
-    async () => {
-        const response = await getSensorsLocations();
-        return response;
-    }
-)
+// export const sensorLatestInfo = createAsyncThunk<any, string>(
+//     'sensor/sensorLatestInfo',
+//     async (sensorName) => {
+//         const response = await getLatestInfoByName(sensorName);
+//         const data: SensorInfo[] = response;
+//         return data;
+//     }
+// );
 
-const sensorSlice = createSlice({
-    name: 'sensor',
-    initialState: INITIAL_STATE,
-    reducers: {},
-    extraReducers: builder => {
-        builder.addCase(sensorsLocation.fulfilled, (state, action) => {
-            state.locations = action.payload;
-        });
-        builder.addCase(sensorsLocation.rejected, (state, action) => {
-            state.error = action.error.message || 'Error fetching locations';
-        });
-        builder.addCase(sensorLatestInfo.pending, state => {
-            state.loading = true;
-            state.error = null;
-        });
-        builder.addCase(sensorLatestInfo.fulfilled, (state, action) => {
-            state.loading = false;
+// export const sensorsLocation = createAsyncThunk<any, void>(
+//     'sensor/sensorsLocation',
+//     async () => {
+//         const response = await getLocations();
+//         return response;
+//     }
+// )
 
-            for (let i = 0; i < action.payload.length; i++) {
-                const index = state.sensors.findIndex(sensor => sensor.id === action.payload[i].id);
+// const sensorSlice = createSlice({
+//     name: 'sensor',
+//     initialState: INITIAL_STATE,
+//     reducers: {},
+//     extraReducers: builder => {
+//         builder.addCase(sensorsLocation.fulfilled, (state, action) => {
+//             state.locations = action.payload;
+//         });
+//         builder.addCase(sensorsLocation.rejected, (state, action) => {
+//             state.error = action.error.message || 'Error fetching locations';
+//         });
+//         builder.addCase(sensorLatestInfo.pending, state => {
+//             state.loading = true;
+//             state.error = null;
+//         });
+//         builder.addCase(sensorLatestInfo.fulfilled, (state, action) => {
+//             state.loading = false;
 
-                if (index !== -1) {
-                    state.sensors[index] = action.payload[i];
-                    continue;
-                }
+//             for (let i = 0; i < action.payload.length; i++) {
+//                 const index = state.sensors.findIndex(sensor => sensor.id === action.payload[i].id);
 
-                state.sensors.push(action.payload[i]);
-            }
-        });
-        builder.addCase(sensorLatestInfo.rejected, (state, action) => {
-            state.loading = false;
-            state.error = action.error.message || 'Error fetching sensors';
-        });
-    }
-});
+//                 if (index !== -1) {
+//                     state.sensors[index] = action.payload[i];
+//                     continue;
+//                 }
 
-export default sensorSlice.reducer;
+//                 state.sensors.push(action.payload[i]);
+//             }
+//         });
+//         builder.addCase(sensorLatestInfo.rejected, (state, action) => {
+//             state.loading = false;
+//             state.error = action.error.message || 'Error fetching sensors';
+//         });
+//     }
+// });
+
+// export default sensorSlice.reducer;

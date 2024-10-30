@@ -4,7 +4,7 @@ import { useTheme } from "styled-components";
 
 interface ButtonProps {
   icon?: React.ReactNode;
-  label: string;
+  label?: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
@@ -27,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       className={className}
     >
-      {React.cloneElement(icon as React.ReactElement, {
+      {icon && React.cloneElement(icon as React.ReactElement, {
         style: { fontSize: theme.sizes.iconSize },
       })}
       {label}

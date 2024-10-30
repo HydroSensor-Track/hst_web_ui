@@ -6,6 +6,8 @@ import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import ManageAccountsRoundedIcon from "@mui/icons-material/ManageAccountsRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import HandymanOutlinedIcon from "@mui/icons-material/HandymanOutlined";
+import AddIcon from '@mui/icons-material/Add';
+import SyncIcon from '@mui/icons-material/Sync';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
@@ -34,6 +36,8 @@ const Icon = ({ name, htmlColor }: IconProps) => {
     backoffice: <ManageAccountsRoundedIcon />,
     logout: <LogoutRoundedIcon />,
     tools: <HandymanOutlinedIcon />,
+    add: <AddIcon/>,
+    reload: <SyncIcon/>,
     delete: <DeleteRoundedIcon htmlColor={htmlColor} />,
     edit: <EditRoundedIcon htmlColor={htmlColor} />,
     accountAvatar: <AccountCircleRoundedIcon />,

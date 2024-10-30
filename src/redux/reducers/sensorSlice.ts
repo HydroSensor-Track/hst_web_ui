@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { SensorState } from '../../interfaces/redux';
 import { SensorInfo } from '../../interfaces/sensorInfo';
 import { getLatestInfoByName } from '../../services/sensors_latest_info';
-import { getSensorsLocations } from '../../services/sesnsors_location';
+import { getSensorsLocations } from '../../services/sensors_location';
 
 const INITIAL_STATE: SensorState = {
     sensors: [],
@@ -11,9 +11,8 @@ const INITIAL_STATE: SensorState = {
     loading: false,
     error: null
 };
-
 export const sensorLatestInfo = createAsyncThunk<any, string>(
-    'sensor/sensorLatestInfo',
+    '/delta-parana/sensor/sensorLatestInfo',
     async (sensorName) => {
         const response = await getLatestInfoByName(sensorName);
         const data: SensorInfo[] = response;
@@ -22,7 +21,7 @@ export const sensorLatestInfo = createAsyncThunk<any, string>(
 );
 
 export const sensorsLocation = createAsyncThunk<any, void>(
-    'sensor/sensorsLocation',
+    '/delta-parana/sensor/sensorsLocation',
     async () => {
         const response = await getSensorsLocations();
         return response;

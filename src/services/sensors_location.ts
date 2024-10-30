@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-// import sensors from "../data/sensors.json"
-
 const URL = 'https://hst-web-server-53dq.onrender.com';
 
 const ENDPOINTS = {

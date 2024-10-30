@@ -8,6 +8,7 @@ import './App.css'
 function App() {
     const { isLoading, isAuthenticated, error, user, loginWithRedirect, logout } =
         useAuth0();
+
             
     if (isLoading) {
         return <Loading/>;

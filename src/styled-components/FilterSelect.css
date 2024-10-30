@@ -1,0 +1,28 @@
+/* FilterSelect.css */
+.custom-multiselect .p-multiselect {
+    background-color: #f0f0f0; /* Light grey background */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 8px; /* Padding inside the component */
+}
+
+.custom-multiselect .p-multiselect-label {
+    color: #333; /* Dark text color */
+}
+
+.custom-multiselect .p-multiselect-panel {
+    background-color: #fff; /* White background for the dropdown */
+    border: 1px solid #ccc; /* Light grey border */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Add shadow for better visibility */
+}
+
+.custom-multiselect .p-multiselect-item {
+    padding: 8px; /* Padding for each item */
+    background-color: #fff; /* Ensure item background is white */
+    color: #333; /* Dark text color */
+}
+
+.custom-multiselect .p-multiselect-item.p-highlight {
+    background-color: #007ad9; /* Highlight color */
+    color: #fff; /* Highlight text color */
+}

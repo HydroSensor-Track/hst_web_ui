@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { NetworkData, LocationData, SensorDeltaInfo, SensorPrevenirInfo } from '../../interfaces/sensorInfo';
 import { getDeltaLocations, getPrevenirLocations, getSensorLatest } from '../../services/sensors_location';
+import { sortNetworksByLocation } from '../../utils/functions';
 
 
 interface SensorsInfoState {
@@ -11,7 +12,7 @@ interface SensorsInfoState {
 
 const initialState: SensorsInfoState = {
   byLocation: {"delta-parana": {}, "prevenir": {}},
-  loading: true,
+  loading: false,
   error: null,
 };
 
@@ -58,18 +59,26 @@ export const fetchSensorsInfo = createAsyncThunk(
     }));
 
     const sensorsByLocation: NetworkData = {"delta-parana": byLocationDelta, "prevenir": byLocationPrevenir}
-    console.log("Sensors by location: ",sensorsByLocation)
 
-    return sensorsByLocation;
+    const orderedSensorsByLocation: NetworkData = sortNetworksByLocation(sensorsByLocation)
+
+    const lastUpdate = new Date().toISOString();
+
+    localStorage.setItem("networkMetadata", JSON.stringify({"last_update_date": lastUpdate, "data": orderedSensorsByLocation}))
+
+    return orderedSensorsByLocation;
   }
 );
-
 
 
 const sensorInfoSlice = createSlice({
   name: 'locations',
   initialState,
-  reducers: {},
+  reducers: {
+    setByLocation: (state, action: PayloadAction<NetworkData>) => {
+      state.byLocation = action.payload;
+  },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchSensorsInfo.pending, (state) => {
@@ -87,4 +96,5 @@ const sensorInfoSlice = createSlice({
   },
 });
 
+export const { setByLocation } = sensorInfoSlice.actions;
 export default sensorInfoSlice.reducer;

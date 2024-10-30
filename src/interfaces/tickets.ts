@@ -11,6 +11,22 @@ export interface Ticket {
     description: string;
     category: string;
     location: string;
+    projectType: string;
+}
+
+
+export interface CreateTicket{
+    idSensor: number;
+    createdDate: string;
+    updatedDate: string;
+    status: string;
+    createdBy: string;
+    updatedBy: string;
+    assignee: string | null;
+    description: string;
+    category: string;
+    location: string;
+    projectType: string;
 }
 
 

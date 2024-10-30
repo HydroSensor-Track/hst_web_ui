@@ -18,4 +18,12 @@ export const FiltersContainer = styled.div`
     margin-bottom: 20px;
     gap: 10px;
 `;
+export const StyledViewDetails = styled.p`
+    color: ${(props) => props.theme.colors.primary};
+    text-decoration: underline;
+    cursor: pointer;
 
+    &:hover {
+        color: #00BFFF; /* Even lighter blue for hover state */
+    }
+`;

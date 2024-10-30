@@ -71,5 +71,15 @@
   "confirmUserDeleteHeader": "Confirmar eliminación de usuario",
   "deleteUserConfirmation": "¿Estás seguro de que quieres eliminar al usuario?",
   "avoidUserDelete": "No",
-  "confirmUserDelete": "Sí"
+  "confirmUserDelete": "Sí",
+  "deltaParana": "Delta Paraná",
+  "prevenir": "Prevenir",
+  "id": "ID",
+  "inProgress": "En Progreso",
+  "noAssignee": "Sin Responsable",
+  "createdBy": "Creado Por",
+  "updatedBy": "Actualizado Por",
+  "createdDate": "Fecha de Creación",
+  "updatedDate": "Fecha de Actualización",
+  "viewDetails": "Ver Detalles"
 }

@@ -1,5 +1,6 @@
 // services/ticketService.js
 import axios from 'axios';
+import {CreateTicket} from '../interfaces/tickets';
 
 export const getAllTickets = async () => {
   try {
@@ -19,9 +20,9 @@ export const getAllAssignees = async () => {
   }
 };
 
-export const createTicketService = async (ticket) => {
+export const createTicketService = async (ticket: CreateTicket) => {
   try {
-    const response = await axios.post('https://hst-web-server-53dq.onrender.com/delta-parana/tickets', ticket); // Adjust the URL as needed
+    const response = await axios.post('https://hst-web-server-53dq.onrender.com/'+ ticket.projectType + '/tickets', ticket); // Adjust the URL as needed
     return response;
   } catch (error) {
     throw new Error('Failed to create ticket');

@@ -99,15 +99,16 @@ export const Dots = styled.div`
 `;
 export const StyledFilterButton = styled(FilterAltIcon)<{ isActive: boolean }>`
   background: none;
+  position:absolute;
+  right: 0;
   border: none;
   cursor: pointer;
   font-size: 18px;
-  padding: 0;
-  margin-left: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: ${({ isActive }) => (isActive ? '#007bff' : 'inherit')}; /* Change color when active */
+  
 
   &:hover {
     color: #007bff; /* Customize hover color */

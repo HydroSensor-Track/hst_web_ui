@@ -69,5 +69,15 @@
   "confirmUserDeleteHeader": "Confirm user deletion",
   "deleteUserConfirmation": "Are you sure you want to delete the user?",
   "avoidUserDelete": "No",
-  "confirmUserDelete": "Yes"
+  "confirmUserDelete": "Yes",
+  "deltaParana": "Delta Paraná",
+  "prevenir": "Prevenir",
+  "id": "ID",
+  "inProgress": "In Progress",
+  "noAssignee": "No Assignee",
+  "createdBy": "Created By",
+  "updatedBy": "Updated By",
+  "createdDate": "Created Date",
+  "updatedDate": "Updated Date",
+  "viewDetails": "View Details"
 }

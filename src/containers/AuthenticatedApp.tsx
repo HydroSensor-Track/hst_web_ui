@@ -18,21 +18,24 @@ const AuthenticatedApp = () => {
     const dispatch = useDispatch<AppDispatch>();
 
      useEffect(() => {
-        
-        const networkMetadata = localStorage.getItem("networkMetadata");
-        const parsedNetworkMetadata = networkMetadata ? JSON.parse(networkMetadata) : null;
+        let networkMetadata = undefined
+        try{
+            networkMetadata = localStorage.getItem("networkMetadata");
+            const parsedNetworkMetadata = networkMetadata ? JSON.parse(networkMetadata) : null;
 
-        // We only make a forced update if we haven't updated the localStorage for more than one week
-        const lastUpdateDate = parsedNetworkMetadata.last_update_date ? new Date(parsedNetworkMetadata.last_update_date) : null;
-        const currentDate = new Date();
-        const differenceDays = lastUpdateDate ? currentDate.getDate() - lastUpdateDate.getDate() : DIFFERENCE_DAYS_SEVEN + 1
-        
-        if (differenceDays < DIFFERENCE_DAYS_SEVEN && parsedNetworkMetadata) {
+            // We only make a forced update if we haven't updated the localStorage for more than one week
+            const lastUpdateDate = parsedNetworkMetadata.last_update_date ? new Date(parsedNetworkMetadata.last_update_date) : null;
+            const currentDate = new Date();
+            const differenceDays = lastUpdateDate ? currentDate.getDate() - lastUpdateDate.getDate() : DIFFERENCE_DAYS_SEVEN + 1
 
-            dispatch(setByLocation(parsedNetworkMetadata.data))
-        } else {
-            dispatch(fetchSensorsInfo())
-        }
+            if (differenceDays < DIFFERENCE_DAYS_SEVEN && parsedNetworkMetadata) {
+
+                dispatch(setByLocation(parsedNetworkMetadata.data))
+            } else {
+                dispatch(fetchSensorsInfo())
+            }
+        } catch (error) { dispatch(fetchSensorsInfo()) }
+
 
     }, [dispatch]);
     

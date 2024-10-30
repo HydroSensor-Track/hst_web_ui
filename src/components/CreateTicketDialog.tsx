@@ -17,7 +17,7 @@ import {
 import StyledSelectComponent from '../styled-components/StyledMuiSelect.tsx';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../redux/store.ts';
+import {AppDispatch, RootState} from '../redux/store.ts';
 import { createTicket } from '../redux/reducers/ticketSlice.ts';
 
 
@@ -37,7 +37,7 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }) => {
   const assigneesData = [t('unassigned'), 'User 1', 'User 2', 'User 3']; // TODO: replace with getUsers
   const networkData = useSelector((state: RootState) => state.sensorsInfo.byLocation);
   const ticketsData = useSelector((state: RootState) => state.ticket.tickets);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     // Reset states when dialog opens or closes
@@ -51,7 +51,7 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }) => {
   }, [open]);
 
   useEffect(() => {
-    
+
     setAvailableLocations(Object.keys(networkData[projectType]))
 
   }, [projectType, networkData]);
@@ -59,7 +59,7 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }) => {
   useEffect(() => {
 
     console.log(location)
-   
+
     if (location !== "") {
         console.log(networkData)
         setAvailableSensors(networkData[projectType][location].map((sensor) => sensor.id))
@@ -97,25 +97,25 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }) => {
         0
       );
 
-      const ticketData = {
-        idTicket: maxId + 1,
-        idSensor: parseInt(sensorId),
-        createdDate: new Date().toISOString(),
-        updatedDate: new Date().toISOString(),
-        status: assignee === t('unassigned') ? 'UNASSIGNED' : 'ASSIGNED',
-        createdBy: 'defaultUser', // TODO: Complete with user.currentUser
-        updatedBy: 'defaultUser', // TODO: Complete with user.currentUser
-        assignee,
-        description,
-        finalCategory,
-        location,
-      };
-
-      dispatch(createTicket(ticketData)); // TODO: Fix this
-      onSubmit(ticketData);
-      onClose();
-    }
-  };
+            const ticketData = {
+                idSensor: parseInt(sensorId),
+                createdDate: new Date().toISOString(),
+                updatedDate: new Date().toISOString(),
+                status: assignee === t('unassigned') ? "UNASSIGNED" : "ASSIGNED",
+                createdBy: "defaultUser", //TODO: Complete with user.currentUser
+                updatedBy: "defaultUser", // TODO: Complete with user.currentUser
+                category: finalCategory,
+                assignee,
+                description,
+                location,
+                projectType
+            };
+            console.log("Ticket Data", ticketData);
+            dispatch(createTicket(ticketData));
+            onSubmit(ticketData);
+            onClose();
+        }
+    };
 
 
   return (
@@ -210,12 +210,12 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }) => {
               onChange={handleCategoryChange}
             >
               <FormControlLabel
-                value="mantenimiento"
+                value="MANTENIMIENTO"
                 control={<StyledRadio />}
                 label={t('maintenance')}
               />
               <FormControlLabel
-                value="fueraDeServicio"
+                value="FUERA_DE_SERVICIO"
                 control={<StyledRadio />}
                 label={t('outOfService')}
               />

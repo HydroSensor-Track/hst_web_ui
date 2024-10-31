@@ -1,18 +1,19 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import { CreateUserParams, UpdateUserParams } from "../interfaces/redux";
-const ENDPOINT = "http://localhost:9290/users";
+const ENDPOINT = "https://hst-web-server-53dq.onrender.com/users";
 
 export const getUsers = async () => {
     try {
         const response = await axios.get(ENDPOINT);
         return response.data;
     } catch (error) {
-        if (error.response) {
-            console.error("Error response for getUsers", error.response);
+        const err = error as AxiosError;
+        if (err.response) {
+            console.error("Error response for getUsers", err.response);
             return undefined;
         }
-        console.error("Error getUsers", error.message);
+        console.error("Error getUsers", err.message);
         return undefined;
     }
 };
@@ -26,11 +27,12 @@ export const getUserById = async (id: string | undefined) => {
         const response = await axios.get(`${ENDPOINT}/${id}`);
         return response.data;
     } catch (error) {
-        if (error.response) {
-            console.error("Error response for getUserById", error.response);
+        const err = error as AxiosError;
+        if (err.response) {
+            console.error("Error response for getUserById", err.response);
             return undefined;
         }
-        console.error("Error getUserById", error.message);
+        console.error("Error getUserById", err.message);
         return undefined;
     }
 };
@@ -40,11 +42,12 @@ export const createUser = async (user: CreateUserParams) => {
         const response = await axios.post(ENDPOINT, user);
         return response.data;
     } catch (error) {
-        if (error.response) {
-            console.error("Error response for createUser", error.response);
+        const err = error as AxiosError;
+        if (err.response) {
+            console.error("Error response for createUser", err.response);
             return undefined;
         }
-        console.error("Error createUser", error.message);
+        console.error("Error createUser", err.message);
         return undefined;
     }
 };
@@ -58,11 +61,12 @@ export const updateUser = async (id: string | undefined, data: UpdateUserParams)
         const response = await axios.patch(`${ENDPOINT}/${id}`, data);
         return response.data;
     } catch (error) {
-        if (error.response) {
-            console.error("Error response for updateUser", error.response);
+        const err = error as AxiosError;
+        if (err.response) {
+            console.error("Error response for updateUser", err.response);
             return undefined;
         }
-        console.error("Error updateUser", error.message);
+        console.error("Error updateUser", err.message);
         return undefined;
     }
 };
@@ -72,11 +76,12 @@ export const deleteUser = async (id: string) => {
         const response = await axios.delete(`${ENDPOINT}/${id}`);
         return response.data;
     } catch (error) {
-        if (error.response) {
-            console.error("Error response for deleteUser", error.response);
+        const err = error as AxiosError;
+        if (err.response) {
+            console.error("Error response for deleteUser", err.response);
             return undefined;
         }
-        console.error("Error deleteUser", error.message);
+        console.error("Error deleteUser", err.message);
         return undefined;
     }
 };

@@ -1,5 +1,5 @@
 // src/components/Sidebar.tsx
-import { List, ListItem } from "@mui/material";
+import { List } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   SidebarContainer,

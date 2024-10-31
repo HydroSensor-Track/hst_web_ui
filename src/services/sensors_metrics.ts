@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 const ENDPOINT = 'https://hst-web-server-53dq.onrender.com/delta-parana/sensors';
 
@@ -7,11 +7,12 @@ export const getSensorTimeSeries = async (metric: string, sensorName: string, fr
         const response = await axios.get(`${ENDPOINT}/${metric}?name=${sensorName}&from=${from}&to=${to}`);
         return response.data;
     } catch (error) {
-        if (error.response) {
-            console.error("Error response for getSensorTimeSeries", error.response);
+        const err = error as AxiosError;
+        if (err.response) {
+            console.error("Error response for getSensorTimeSeries", err.response);
             return undefined;
         }
-        console.error("Error getSensorTimeSeries", error.mesaage);
+        console.error("Error getSensorTimeSeries", err.message);
         return undefined;
     }
 }
@@ -21,10 +22,11 @@ export const getSensorMetrics = async () => {
         const response = await axios.get(`${ENDPOINT}/metrics`);
         return response.data;
     } catch (error) {
-        if (error.response) {
-            console.error("Error response for getSensorMetrics", error.response);
+        const err = error as AxiosError;
+        if (err.response) {
+            console.error("Error response for getSensorMetrics", err.response);
         }
-        console.error("Error getSensorMetrics", error.mesaage);
+        console.error("Error getSensorMetrics", err.message);
         return undefined;
     }
 }

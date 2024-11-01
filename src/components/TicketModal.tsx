@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
     DialogActions,
     DialogContent,
     DialogTitle,
     Grid,
     Typography,
-    Box,
     Divider,
     Select,
     MenuItem,
@@ -19,19 +18,34 @@ import {
     StyledButton
 } from '../styled-components/TicketModal.tsx';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store.ts';
+import { Ticket } from '../interfaces/tickets.ts';
 // import { updateTicket } from '../redux/reducers/ticketSlice.ts';
 
-const TicketDetailModal = ({ open, onClose, ticketId }) => {
+interface TicketDetailModalProps {
+    open: boolean;
+    onClose: () => void;
+    ticketId: number | null;
+}
+
+interface TicketModalErrors {
+    [key: string]: string;
+}
+
+const TicketDetailModal = ({
+    open,
+    onClose,
+    ticketId
+}: TicketDetailModalProps) => {
     const { t } = useTranslation();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const ticketsData = useSelector((state: RootState) => state.ticket.tickets);
     const ticket = ticketsData.find((ticket) => ticket.idTicket === ticketId);
 
     const [editable, setEditable] = useState(false);
     const [formData, setFormData] = useState(ticket);
-    const [validationErrors, setValidationErrors] = useState({});
+    const [validationErrors, setValidationErrors] = useState<TicketModalErrors>({});
 
     if (!ticket) {
         return null;
@@ -41,15 +55,15 @@ const TicketDetailModal = ({ open, onClose, ticketId }) => {
         setEditable(!editable);
     };
 
-    const handleInputChange = (key, value) => {
+    const handleInputChange = (key: string, value: string | null) => {
         setFormData({ ...formData, [key]: value });
         setValidationErrors((prev) => ({ ...prev, [key]: '' }));
     };
 
     const handleSaveChanges = () => {
-        let errors = {};
+        let errors: TicketModalErrors = {};
         ['location', 'status', 'assignee', 'category', 'sensorId', 'description'].forEach((field) => {
-            if (!formData[field]) {
+            if (!formData?.[field as keyof Ticket]) {
                 errors[field] = t('requiredField');
             }
         });
@@ -81,7 +95,7 @@ const TicketDetailModal = ({ open, onClose, ticketId }) => {
                                 <FormControl fullWidth variant="outlined" error={Boolean(validationErrors.location)}>
                                     <InputLabel>{t('location')}</InputLabel>
                                     <Select
-                                        value={formData.location}
+                                        value={formData?.location}
                                         onChange={(e) => handleInputChange('location', e.target.value)}
                                         label={t('location')}
                                     >
@@ -97,7 +111,7 @@ const TicketDetailModal = ({ open, onClose, ticketId }) => {
                                 <FormControl fullWidth variant="outlined" error={Boolean(validationErrors.status)}>
                                     <InputLabel>{t('status')}</InputLabel>
                                     <Select
-                                        value={formData.status}
+                                        value={formData?.status}
                                         onChange={(e) => handleInputChange('status', e.target.value)}
                                         label={t('status')}
                                     >
@@ -112,7 +126,7 @@ const TicketDetailModal = ({ open, onClose, ticketId }) => {
                                 <FormControl fullWidth variant="outlined" error={Boolean(validationErrors.assignee)}>
                                     <InputLabel>{t('assignee')}</InputLabel>
                                     <Select
-                                        value={formData.assignee}
+                                        value={formData?.assignee}
                                         onChange={(e) => handleInputChange('assignee', e.target.value)}
                                         label={t('assignee')}
                                     >
@@ -128,7 +142,7 @@ const TicketDetailModal = ({ open, onClose, ticketId }) => {
                                 <FormControl fullWidth variant="outlined" error={Boolean(validationErrors.category)}>
                                     <InputLabel>{t('category')}</InputLabel>
                                     <Select
-                                        value={formData.category}
+                                        value={formData?.category}
                                         onChange={(e) => handleInputChange('category', e.target.value)}
                                         label={t('category')}
                                     >
@@ -144,7 +158,7 @@ const TicketDetailModal = ({ open, onClose, ticketId }) => {
                                 <StyledTextField
                                     label={t('sensorId')}
                                     fullWidth
-                                    value={formData.idSensor}
+                                    value={formData?.idSensor}
                                     onChange={(e) => handleInputChange('idSensor', e.target.value)}
                                     variant="outlined"
                                     required
@@ -159,7 +173,7 @@ const TicketDetailModal = ({ open, onClose, ticketId }) => {
                                     fullWidth
                                     multiline
                                     rows={4}
-                                    value={formData.description}
+                                    value={formData?.description}
                                     onChange={(e) => handleInputChange('description', e.target.value)}
                                     variant="outlined"
                                     required
@@ -173,33 +187,33 @@ const TicketDetailModal = ({ open, onClose, ticketId }) => {
                             {/** Static View */}
                             <Grid item xs={6}>
                                 <Typography variant="subtitle1" color="textSecondary">{t('location')}:</Typography>
-                                <Typography variant="h5" color="info.main">{formData.location}</Typography>
+                                <Typography variant="h5" color="info.main">{formData?.location}</Typography>
                             </Grid>
 
                             <Grid item xs={6}>
                                 <Typography variant="subtitle1" color="textSecondary">{t('status')}:</Typography>
-                                <Typography variant="h5" color="info.main">{formData.status}</Typography>
+                                <Typography variant="h5" color="info.main">{formData?.status}</Typography>
                             </Grid>
 
                             <Grid item xs={6}>
                                 <Typography variant="subtitle1" color="textSecondary">{t('assignee')}:</Typography>
-                                <Typography variant="h5" color="info.main">{formData.assignee || t('unassigned')}</Typography>
+                                <Typography variant="h5" color="info.main">{formData?.assignee || t('unassigned')}</Typography>
                             </Grid>
 
                             <Grid item xs={6}>
                                 <Typography variant="subtitle1" color="textSecondary">{t('category')}:</Typography>
-                                <Typography variant="h5" color="info.main">{formData.category}</Typography>
+                                <Typography variant="h5" color="info.main">{formData?.category}</Typography>
                             </Grid>
 
                             <Grid item xs={6}>
                                 <Typography variant="subtitle1" color="textSecondary">{t('sensorId')}:</Typography>
-                                <Typography variant="h5" color="info.main">{formData.idSensor}</Typography>
+                                <Typography variant="h5" color="info.main">{formData?.idSensor}</Typography>
                             </Grid>
 
                             <Grid item xs={12} sx={{ mt: 3 }}>
                                 <Typography variant="subtitle1" color="textSecondary">{t('description')}:</Typography>
                                 <Typography variant="body1" color="info.main" sx={{ whiteSpace: 'pre-line' }}>
-                                    {formData.description}
+                                    {formData?.description}
                                 </Typography>
                             </Grid>
                         </>

@@ -1,27 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   DialogActions,
   DialogContent,
   DialogTitle,
   Grid,
   FormControlLabel,
+  SelectChangeEvent,
 } from '@mui/material';
 import {
   StyledDialog,
   StyledTextField,
   StyledButton,
-  StyledFormControl,
   StyledRadioGroup,
   StyledRadio,
 } from '../styled-components/CreateTicketDialog.tsx';
 import StyledSelectComponent from '../styled-components/StyledMuiSelect.tsx';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
-import {AppDispatch, RootState} from '../redux/store.ts';
+import { AppDispatch, RootState } from '../redux/store.ts';
 import { createTicket } from '../redux/reducers/ticketSlice.ts';
+import { Ticket } from '../interfaces/tickets.ts';
 
 
-const CreateTicketDialog = ({ open, onClose, onSubmit }) => {
+interface CreateTicketDialogProps {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (ticketData: Ticket) => void;
+}
+
+interface TicketErrors {
+  description?: string;
+  location?: string;
+  sensorId?: string;
+  assignee?: string;
+  category?: string;
+}
+
+const CreateTicketDialog = ({ open, onClose, onSubmit }: CreateTicketDialogProps) => {
   const { t } = useTranslation();
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
@@ -29,7 +44,7 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }) => {
   const [assignee, setAssignee] = useState(t('unassigned'));
   const [category, setCategory] = useState('');
   const [customCategory, setCustomCategory] = useState('');
-  const [validationErrors, setValidationErrors] = useState({});
+  const [validationErrors, setValidationErrors] = useState<TicketErrors>({});
   const [projectType, setProjectType] = useState('delta-parana');
   const [availableSensors, setAvailableSensors] = useState([""]);
   const [availableLocations, setAvailableLocations] = useState([""]);
@@ -61,13 +76,13 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }) => {
     console.log(location)
 
     if (location !== "") {
-        console.log(networkData)
-        setAvailableSensors(networkData[projectType][location].map((sensor) => sensor.id))
+      console.log(networkData)
+      setAvailableSensors(networkData[projectType][location].map((sensor) => sensor.id))
     }
 
   }, [location]);
 
-  const handleCategoryChange = (event) => {
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedCategory = event.target.value;
     setValidationErrors({ ...validationErrors, category: '' });
     if (selectedCategory === 'custom') {
@@ -79,7 +94,7 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }) => {
   };
 
   const handleSubmit = () => {
-    let errors = {};
+    let errors: TicketErrors = {};
 
     if (!description) errors.description = t('requiredField');
     if (!location) errors.location = t('requiredField');
@@ -97,25 +112,26 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }) => {
         0
       );
 
-            const ticketData = {
-                idSensor: parseInt(sensorId),
-                createdDate: new Date().toISOString(),
-                updatedDate: new Date().toISOString(),
-                status: assignee === t('unassigned') ? "UNASSIGNED" : "ASSIGNED",
-                createdBy: "defaultUser", //TODO: Complete with user.currentUser
-                updatedBy: "defaultUser", // TODO: Complete with user.currentUser
-                category: finalCategory,
-                assignee,
-                description,
-                location,
-                projectType
-            };
-            console.log("Ticket Data", ticketData);
-            dispatch(createTicket(ticketData));
-            onSubmit(ticketData);
-            onClose();
-        }
-    };
+      const ticketData: Ticket = {
+        idSensor: parseInt(sensorId),
+        idTicket: maxId, //TODO: Complete with real ID
+        createdDate: new Date().toISOString(),
+        updatedDate: new Date().toISOString(),
+        status: assignee === t('unassigned') ? "UNASSIGNED" : "ASSIGNED",
+        createdBy: "defaultUser", //TODO: Complete with user.currentUser
+        updatedBy: "defaultUser", // TODO: Complete with user.currentUser
+        category: finalCategory,
+        assignee,
+        description,
+        location,
+        projectType
+      };
+      console.log("Ticket Data", ticketData);
+      dispatch(createTicket(ticketData));
+      onSubmit(ticketData);
+      onClose();
+    }
+  };
 
 
   return (
@@ -153,14 +169,14 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }) => {
                 <StyledSelectComponent
                   label={t('location')}
                   value={location}
-                  onChange={(e) => {
-                    const value = e.target.value;
+                  onChange={(e: SelectChangeEvent<unknown>) => {
+                    const value = e.target.value as string;
                     setLocation(value);
                     setSensorId(''); // Clear sensor selection when location changes
                     setValidationErrors((prev) => ({ ...prev, location: '' }));
                   }}
                   options={availableLocations}
-                  required
+                  required={true}
                 />
                 {validationErrors.location && (
                   <div style={{ color: 'red' }}>{validationErrors.location}</div>
@@ -170,13 +186,13 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }) => {
                 <StyledSelectComponent
                   label={t('sensorId')}
                   value={sensorId}
-                  onChange={(e) => {
-                    const value = e.target.value;
+                  onChange={(e: SelectChangeEvent<unknown>) => {
+                    const value = e.target.value as string;
                     setSensorId(value);
                     setValidationErrors((prev) => ({ ...prev, sensorId: '' }));
                   }}
                   options={availableSensors}
-                  required
+                  required={true}
                 />
                 {validationErrors.sensorId && (
                   <div style={{ color: 'red' }}>{validationErrors.sensorId}</div>
@@ -186,13 +202,13 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }) => {
                 <StyledSelectComponent
                   label={t('assignee')}
                   value={assignee}
-                  onChange={(e) => {
-                    const value = e.target.value;
+                  onChange={(e: SelectChangeEvent<unknown>) => {
+                    const value = e.target.value as string;
                     setAssignee(value);
                     setValidationErrors((prev) => ({ ...prev, assignee: '' }));
                   }}
                   options={assigneesData}
-                  required
+                  required={true}
                 />
                 {validationErrors.assignee && (
                   <div style={{ color: 'red' }}>{validationErrors.assignee}</div>

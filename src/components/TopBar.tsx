@@ -14,6 +14,7 @@ import { setRed } from "../redux/reducers/querySlice.ts";
 import { customStyles } from "../styled-components/FilterPanel.tsx";
 import Select, { SingleValue } from 'react-select';
 import { fetchSensorsInfo } from "../redux/reducers/sensorInfoSlice.ts";
+import { Ticket } from "../interfaces/tickets.ts";
 
 interface TopBarProps {
   className?: string;
@@ -70,7 +71,7 @@ const TopBar = ({ className }: TopBarProps) => {
     "createTicket": () => setIsDialogOpen(true),
     "addNewUser": () => updateOpenModal(true),
     "changePassword": () => updateOpenModal(true),
-    "downloadReport": () => {console.log("Download report")}
+    "downloadReport": () => { console.log("Download report") }
     // Add more handlers as needed
   };
 
@@ -93,20 +94,25 @@ const TopBar = ({ className }: TopBarProps) => {
     setIsDialogOpen(false);
   };
 
-  const handleCreateTicketSubmit = (ticketData: { title: string; description: string }) => {
+  /*const handleCreateTicketSubmit = (ticketData: { title: string; description: string }) => {
+    console.log("Ticket Created:", ticketData);
+    setIsDialogOpen(false);
+  };*/
+
+  const handleCreateTicketSubmit = (ticketData: Ticket) => {
     console.log("Ticket Created:", ticketData);
     setIsDialogOpen(false);
   };
 
   const buttons = section.buttons
     ? section.buttons.map((button) => (
-        <Button
-          key={button.label}
-          label={t(button.label)}
-          icon={<Icon name={button.icon_name} />}
-          onClick={buttonHandlers[button.label] || undefined}
-        />
-      ))
+      <Button
+        key={button.label}
+        label={t(button.label)}
+        icon={<Icon name={button.icon_name} />}
+        onClick={buttonHandlers[button.label] || undefined}
+      />
+    ))
     : useButtonConfig(t, buttonHandlers)[location.pathname] || null;
 
   const handleRefresh = () => {
@@ -120,16 +126,16 @@ const TopBar = ({ className }: TopBarProps) => {
 
       {location.pathname === "/" && (
         <>
-        <div style={{display: "flex", flexDirection: "row", gap: "10px", width: "20%", alignItems: "center"}}>
-                <Select 
-            value={networkOptions.find(option => option.value === currentNetwork)}
-            options={networkOptions}
-            name="networks"
-            placeholder="Red"
-            onChange={handleNetworkChange}
-            styles={customStyles} 
+          <div style={{ display: "flex", flexDirection: "row", gap: "10px", width: "20%", alignItems: "center" }}>
+            <Select
+              value={networkOptions.find(option => option.value === currentNetwork)}
+              options={networkOptions}
+              name="networks"
+              placeholder="Red"
+              onChange={handleNetworkChange}
+              styles={customStyles}
             />
-            <Button onClick={handleRefresh} icon={<Icon name="refresh"/>} disabled={loadingSensors} />
+            <Button onClick={handleRefresh} icon={<Icon name="refresh" />} disabled={loadingSensors} />
           </div>
         </>
       )}

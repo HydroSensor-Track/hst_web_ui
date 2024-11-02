@@ -25,6 +25,12 @@ interface SectionProps {
   buttons?: { label: string; icon_name: string }[];
 }
 
+type ButtonHandlerKeys = 'createTicket' | 'addNewUser' | 'changePassword' | 'downloadReport';
+
+type ButtonHandlers = {
+  [key in ButtonHandlerKeys]: () => void;
+};
+
 const titleMappings: Record<string, SectionProps> = {
   "/": {
     title: "dashboard",
@@ -67,7 +73,7 @@ const TopBar = ({ className }: TopBarProps) => {
 
   const section = titleMappings[location.pathname] || { title: "defaultTitle" };
 
-  const buttonHandlers = {
+  const buttonHandlers: ButtonHandlers = {
     "createTicket": () => setIsDialogOpen(true),
     "addNewUser": () => updateOpenModal(true),
     "changePassword": () => updateOpenModal(true),
@@ -110,7 +116,7 @@ const TopBar = ({ className }: TopBarProps) => {
         key={button.label}
         label={t(button.label)}
         icon={<Icon name={button.icon_name} />}
-        onClick={buttonHandlers[button.label] || undefined}
+        onClick={buttonHandlers[button.label as ButtonHandlerKeys] || undefined}
       />
     ))
     : useButtonConfig(t, buttonHandlers)[location.pathname] || null;

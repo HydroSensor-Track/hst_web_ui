@@ -28,6 +28,9 @@ jobs:
           echo "VITE_AUTH0_CLIENT_ID=${{ secrets.VITE_AUTH0_CLIENT_ID }}" >> .env.production
           echo "VITE_AUTH0_REDIRECT_URI=${{ secrets.VITE_AUTH0_REDIRECT_URI }}" >> .env.production
 
+      - name: Run TypeScript type-check (ignore errors)
+        run: npx tsc --noEmit || true
+
       - name: Build project
         env:
           VITE_AUTH0_DOMAIN: ${{ secrets.VITE_AUTH0_DOMAIN }}

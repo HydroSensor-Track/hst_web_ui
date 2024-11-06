@@ -9,6 +9,7 @@ import Layout from "../components/Layout.tsx";
 import Tickets from "./Tickets.tsx";
 import Backoffice from './Backoffice.tsx';
 import User from './User.tsx';
+import HstWebUi from './HstWebUi.tsx';
 import { ModalProvider } from "../contexts/ModalContext.tsx";
 import { fetchSensorsInfo, setByLocation } from '../redux/reducers/sensorInfoSlice.ts';
 
@@ -17,9 +18,9 @@ const DIFFERENCE_DAYS_SEVEN = 7
 const AuthenticatedApp = () => {
     const dispatch = useDispatch<AppDispatch>();
 
-     useEffect(() => {
+    useEffect(() => {
         let networkMetadata = undefined
-        try{
+        try {
             networkMetadata = localStorage.getItem("networkMetadata");
             const parsedNetworkMetadata = networkMetadata ? JSON.parse(networkMetadata) : null;
 
@@ -38,7 +39,7 @@ const AuthenticatedApp = () => {
 
 
     }, [dispatch]);
-    
+
     return (
         <ModalProvider>
             <Layout >
@@ -48,6 +49,7 @@ const AuthenticatedApp = () => {
                     <Route path="/about" element={<About />} />
                     <Route path="/backoffice" element={<Backoffice />} />
                     <Route path="/users/:id" element={<User />} />
+                    <Route path='/hst_web_ui' element={<HstWebUi />} />
                 </Routes>
             </Layout >
         </ModalProvider >

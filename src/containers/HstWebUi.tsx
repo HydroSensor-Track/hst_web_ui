@@ -5,7 +5,6 @@ const HstWebUi = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("HstWebUi");
         navigate("/");
     }, [])
 

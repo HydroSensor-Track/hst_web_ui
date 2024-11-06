@@ -55,7 +55,22 @@ const titleMappings: Record<string, SectionProps> = {
   },
   "/backoffice": {
     title: "backoffice",
+    buttons: [
+      {
+        label: "addNewUser",
+        icon_name: "addUser",
+      },
+    ],
   },
+  "/users": {
+    title: "userProfile",
+    buttons: [
+      {
+        label: "changePassword",
+        icon_name: "changePassword",
+      },
+    ]
+  }
 };
 
 const TopBar = ({ className }: TopBarProps) => {
@@ -71,7 +86,10 @@ const TopBar = ({ className }: TopBarProps) => {
   const [networkOptions, setNetworkOptions] = useState([{ value: "", label: "" }]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const section = titleMappings[location.pathname] || { title: "defaultTitle" };
+  const locationPath = location.pathname.startsWith("/users/") ?
+    "/users" : location.pathname;
+
+  const section = titleMappings[locationPath] || { title: "defaultTitle" };
 
   const buttonHandlers: ButtonHandlers = {
     "createTicket": () => setIsDialogOpen(true),
@@ -119,7 +137,7 @@ const TopBar = ({ className }: TopBarProps) => {
         onClick={buttonHandlers[button.label as ButtonHandlerKeys] || undefined}
       />
     ))
-    : useButtonConfig(t, buttonHandlers)[location.pathname] || null;
+    : useButtonConfig(t, buttonHandlers)[locationPath] || null;
 
   const handleRefresh = () => {
     console.log("Fetching sensors")
@@ -130,7 +148,7 @@ const TopBar = ({ className }: TopBarProps) => {
     <StyledTopBar className={className}>
       <NormalTitle>{t(section.title)}</NormalTitle>
 
-      {location.pathname === "/" && (
+      {locationPath === "/" && (
         <>
           <div style={{ display: "flex", flexDirection: "row", gap: "10px", width: "20%", alignItems: "center" }}>
             <Select

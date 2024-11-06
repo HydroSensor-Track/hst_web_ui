@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 
 import { CreateUserParams, UpdateUserParams } from "../interfaces/redux";
 const ENDPOINT = "https://hst-web-server-53dq.onrender.com/users";
+// TODO: change undefined with throw new Error
 
 export const getUsers = async () => {
     try {

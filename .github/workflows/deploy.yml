@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - feature/HST-54
+      - develop
 
 jobs:
   build-and-deploy:

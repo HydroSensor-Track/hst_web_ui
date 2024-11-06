@@ -49,7 +49,7 @@ const AuthenticatedApp = () => {
                     <Route path="/about" element={<About />} />
                     <Route path="/backoffice" element={<Backoffice />} />
                     <Route path="/users/:id" element={<User />} />
-                    <Route path='/hst_web_ui' element={<HstWebUi />} />
+                    <Route path='/hst_web_ui/' element={<HstWebUi />} />
                 </Routes>
             </Layout >
         </ModalProvider >

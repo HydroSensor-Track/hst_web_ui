@@ -14,6 +14,7 @@ import { setRed } from "../redux/reducers/querySlice.ts";
 import { customStyles } from "../styled-components/FilterPanel.tsx";
 import Select, { SingleValue } from 'react-select';
 import { fetchSensorsInfo } from "../redux/reducers/sensorInfoSlice.ts";
+import { Ticket } from "../interfaces/tickets.ts";
 
 interface TopBarProps {
   className?: string;
@@ -23,6 +24,12 @@ interface SectionProps {
   title: string;
   buttons?: { label: string; icon_name: string }[];
 }
+
+type ButtonHandlerKeys = 'createTicket' | 'addNewUser' | 'changePassword' | 'downloadReport';
+
+type ButtonHandlers = {
+  [key in ButtonHandlerKeys]: () => void;
+};
 
 const titleMappings: Record<string, SectionProps> = {
   "/": {
@@ -48,7 +55,22 @@ const titleMappings: Record<string, SectionProps> = {
   },
   "/backoffice": {
     title: "backoffice",
+    buttons: [
+      {
+        label: "addNewUser",
+        icon_name: "addUser",
+      },
+    ],
   },
+  "/users": {
+    title: "userProfile",
+    buttons: [
+      {
+        label: "changePassword",
+        icon_name: "changePassword",
+      },
+    ]
+  }
 };
 
 const TopBar = ({ className }: TopBarProps) => {
@@ -64,13 +86,16 @@ const TopBar = ({ className }: TopBarProps) => {
   const [networkOptions, setNetworkOptions] = useState([{ value: "", label: "" }]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const section = titleMappings[location.pathname] || { title: "defaultTitle" };
+  const locationPath = location.pathname.startsWith("/users/") ?
+    "/users" : location.pathname;
 
-  const buttonHandlers = {
+  const section = titleMappings[locationPath] || { title: "defaultTitle" };
+
+  const buttonHandlers: ButtonHandlers = {
     "createTicket": () => setIsDialogOpen(true),
     "addNewUser": () => updateOpenModal(true),
     "changePassword": () => updateOpenModal(true),
-    "downloadReport": () => {console.log("Download report")}
+    "downloadReport": () => { console.log("Download report") }
     // Add more handlers as needed
   };
 
@@ -93,21 +118,26 @@ const TopBar = ({ className }: TopBarProps) => {
     setIsDialogOpen(false);
   };
 
-  const handleCreateTicketSubmit = (ticketData: { title: string; description: string }) => {
+  /*const handleCreateTicketSubmit = (ticketData: { title: string; description: string }) => {
+    console.log("Ticket Created:", ticketData);
+    setIsDialogOpen(false);
+  };*/
+
+  const handleCreateTicketSubmit = (ticketData: Ticket) => {
     console.log("Ticket Created:", ticketData);
     setIsDialogOpen(false);
   };
 
   const buttons = section.buttons
     ? section.buttons.map((button) => (
-        <Button
-          key={button.label}
-          label={t(button.label)}
-          icon={<Icon name={button.icon_name} />}
-          onClick={buttonHandlers[button.label] || undefined}
-        />
-      ))
-    : useButtonConfig(t, buttonHandlers)[location.pathname] || null;
+      <Button
+        key={button.label}
+        label={t(button.label)}
+        icon={<Icon name={button.icon_name} />}
+        onClick={buttonHandlers[button.label as ButtonHandlerKeys] || undefined}
+      />
+    ))
+    : useButtonConfig(t, buttonHandlers)[locationPath] || null;
 
   const handleRefresh = () => {
     console.log("Fetching sensors")
@@ -118,18 +148,18 @@ const TopBar = ({ className }: TopBarProps) => {
     <StyledTopBar className={className}>
       <NormalTitle>{t(section.title)}</NormalTitle>
 
-      {location.pathname === "/" && (
+      {locationPath === "/" && (
         <>
-        <div style={{display: "flex", flexDirection: "row", gap: "10px", width: "20%", alignItems: "center"}}>
-                <Select 
-            value={networkOptions.find(option => option.value === currentNetwork)}
-            options={networkOptions}
-            name="networks"
-            placeholder="Red"
-            onChange={handleNetworkChange}
-            styles={customStyles} 
+          <div style={{ display: "flex", flexDirection: "row", gap: "10px", width: "20%", alignItems: "center" }}>
+            <Select
+              value={networkOptions.find(option => option.value === currentNetwork)}
+              options={networkOptions}
+              name="networks"
+              placeholder="Red"
+              onChange={handleNetworkChange}
+              styles={customStyles}
             />
-            <Button onClick={handleRefresh} icon={<Icon name="refresh"/>} disabled={loadingSensors} />
+            <Button onClick={handleRefresh} icon={<Icon name="refresh" />} disabled={loadingSensors} />
           </div>
         </>
       )}

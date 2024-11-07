@@ -1,4 +1,4 @@
-import { SensorInfo } from './sensorInfo';
+// import { SensorInfo } from './sensorInfo';
 import { SensorsTimeInfo } from './sensorTimeMetrics';
 import { LocationSensor } from './locationSensor';
 import { Ticket } from './tickets';
@@ -9,12 +9,12 @@ export interface AuthState {
     isAuthenticated: boolean;
 }
 
-export interface SensorState {
+/*export interface SensorState {
     sensors: SensorInfo[];
     locations: string[];
     loading: boolean;
     error: string | null;
-}
+}*/
 
 export interface SensorTimeMetricsState {
     levelData: SensorsTimeInfo;

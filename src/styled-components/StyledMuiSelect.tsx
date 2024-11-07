@@ -1,4 +1,4 @@
-import { Select, FormControl, InputLabel, MenuItem } from '@mui/material';
+import { Select, FormControl, InputLabel, MenuItem, SelectChangeEvent } from '@mui/material';
 import styled from 'styled-components';
 import { useTheme } from "styled-components";
 
@@ -52,7 +52,21 @@ const StyledMenuItem = styled(MenuItem)`
     }
 `;
 
-export default function StyledSelectComponent({ label, value, onChange, options }) {
+interface StyledSelectComponentProps {
+    label: string;
+    value: string;
+    onChange: (event: SelectChangeEvent<unknown>) => void;
+    options: string[];
+    required: boolean; // Add the required prop
+}
+
+export default function StyledSelectComponent({
+    label,
+    value,
+    onChange,
+    options,
+    required
+}: StyledSelectComponentProps) {
     const theme = useTheme(); // Use the theme to get the colors
 
     return (
@@ -70,6 +84,7 @@ export default function StyledSelectComponent({ label, value, onChange, options 
                         },
                     },
                 }}
+                required={required} // Pass the required prop to the Select component
             >
                 {options.map((option) => (
                     <StyledMenuItem key={option} value={option}>

@@ -6,14 +6,12 @@ import {
     MainContainer,
     StyledFilterButton,
     StyledButton,
-    Dots
 } from "../styled-components/Table";
 import { ReactElement, useState, useEffect, useRef } from 'react';
-import Button from "./Button.tsx";
 import StyledSelect from "../styled-components/StyledSelect.tsx";
-import {Ticket} from "../interfaces/tickets.ts";
-import {StyledViewDetails} from "../styled-components/Tickets.tsx";
-import {useTranslation} from "react-i18next";
+import { Ticket } from "../interfaces/tickets.ts";
+import { StyledViewDetails } from "../styled-components/Tickets.tsx";
+import { useTranslation } from "react-i18next";
 
 export interface ColumnProps<T> {
     key: string;
@@ -31,11 +29,11 @@ type Props<T> = {
 };
 
 const FilterPanel = ({
-                         columnKey,
-                         options,
-                         selectedOptions,
-                         setSelectedOptions,
-                     }: {
+    columnKey,
+    options,
+    selectedOptions,
+    setSelectedOptions,
+}: {
     columnKey: string;
     options: string[];
     selectedOptions: string[];
@@ -185,9 +183,9 @@ const Table = <T,>({ data = [], elementsPerPage, errorMessage, handleViewDetails
         const isActive = filters[column.key] && filters[column.key].length > 0;
         return (
             <th key={index}>
-                <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center',  position: 'relative'}}>
+                <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', position: 'relative' }}>
                     <span>{column.title}</span>
-                    <StyledFilterButton onClick={() => setActiveFilter(column.key)} isActive={isActive}/>
+                    <StyledFilterButton onClick={() => setActiveFilter(column.key)} isActive={isActive} />
                     {activeFilter === column.key && (
                         <div ref={filterPanelRef}>
                             <FilterPanel
@@ -195,7 +193,7 @@ const Table = <T,>({ data = [], elementsPerPage, errorMessage, handleViewDetails
                                 options={getUniqueValues(column.key) as string[]}
                                 selectedOptions={filters[column.key] || []}
                                 setSelectedOptions={(key, values) =>
-                                    setFilters((prev) => ({...prev, [key]: values}))
+                                    setFilters((prev) => ({ ...prev, [key]: values }))
                                 }
                             />
                         </div>
@@ -227,10 +225,10 @@ const Table = <T,>({ data = [], elementsPerPage, errorMessage, handleViewDetails
 
     return (
         <MainContainer>
-        <TableContainer>
+            <TableContainer>
                 <StyledTable columnWidth={100 / columns.length}>
                     <thead>
-                    <tr>{headers}</tr>
+                        <tr>{headers}</tr>
                     </thead>
                     <tbody>{rows}</tbody>
                 </StyledTable>

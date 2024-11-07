@@ -23,3 +23,7 @@ export const BackofficeContainer = styled.div`
         max-width: 1440px;
     }
 `;
+
+export const ErrorMessage = styled.p`
+    color: ${(props) => props.theme.colors.error};
+`;

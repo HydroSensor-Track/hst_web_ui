@@ -44,6 +44,7 @@ const AuthenticatedApp = () => {
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
+        console.log(params)
         const redirectPath = params.get('redirect');
         if (redirectPath) {
             // Remueve el prefijo "/repo_name" de la ruta en caso de que esté presente

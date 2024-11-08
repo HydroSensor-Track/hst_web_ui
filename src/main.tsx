@@ -27,7 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       >
 
         <ThemeProvider theme={theme}>
-          <BrowserRouter>
+          <BrowserRouter basename={redirect_uri}>
             <App />
           </BrowserRouter>
         </ThemeProvider>

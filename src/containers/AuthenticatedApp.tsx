@@ -47,9 +47,9 @@ const AuthenticatedApp = () => {
         console.log(params)
         const redirectPath = params.get('redirect');
         if (redirectPath) {
-            // Remueve el prefijo "/repo_name" de la ruta en caso de que esté presente
+            // Remueve el prefijo "/hst_web_ui" de la ruta en caso de que esté presente
             console.log(redirectPath)
-            const sanitizedPath = redirectPath.replace(/^\/repo_name/, '');
+            const sanitizedPath = redirectPath.replace(/^\/hst_web_ui/, '');
             console.log(sanitizedPath)
             navigate(sanitizedPath, { replace: true });
         }

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store.ts";
 import About from './About';
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Layout from "../components/Layout.tsx";
 import Tickets from "./Tickets.tsx";
 import Backoffice from './Backoffice.tsx';
@@ -17,6 +17,8 @@ const DIFFERENCE_DAYS_SEVEN = 7
 
 const AuthenticatedApp = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         let networkMetadata = undefined
@@ -39,6 +41,18 @@ const AuthenticatedApp = () => {
 
 
     }, [dispatch]);
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const redirectPath = params.get('redirect');
+
+        if (redirectPath) {
+            // Removes the "/hst_web_ui" prefix from the path if present
+            // hst_web_ui is the GitHub repository name
+            const sanitizedPath = redirectPath.replace(/^\/hst_web_ui/, '');
+            navigate(sanitizedPath, { replace: true });
+        }
+    }, [navigate]);
 
     return (
         <ModalProvider>

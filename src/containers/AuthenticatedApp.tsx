@@ -44,13 +44,12 @@ const AuthenticatedApp = () => {
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
-        console.log(params)
         const redirectPath = params.get('redirect');
+
         if (redirectPath) {
-            // Remueve el prefijo "/hst_web_ui" de la ruta en caso de que esté presente
-            console.log(redirectPath)
+            // Removes the "/hst_web_ui" prefix from the path if present
+            // hst_web_ui is the GitHub repository name
             const sanitizedPath = redirectPath.replace(/^\/hst_web_ui/, '');
-            console.log(sanitizedPath)
             navigate(sanitizedPath, { replace: true });
         }
     }, [navigate]);

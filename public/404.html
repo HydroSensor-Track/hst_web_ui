@@ -6,7 +6,6 @@
     <script type="text/javascript">
         window.onload = function () {
             var path = window.location.pathname;
-            console.log("Redirect path:", path);
             window.location.replace('/hst_web_ui/?redirect=' + encodeURIComponent(path));
         };
     </script>

@@ -16,7 +16,6 @@ const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
 const devMode = import.meta.env.DEV;
 
 const redirect_uri = devMode ? window.location.origin : import.meta.env.VITE_AUTH0_REDIRECT_URI;
-console.log(redirect_uri)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -28,7 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       >
 
         <ThemeProvider theme={theme}>
-          <BrowserRouter basename='/hst_web_ui/'>
+          <BrowserRouter basename={devMode ? '/' : '/hst_web_ui/'}>
             <App />
           </BrowserRouter>
         </ThemeProvider>

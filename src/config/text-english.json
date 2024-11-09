@@ -26,7 +26,7 @@
   "ticketTitle": "Title",
   "description": "Description",
   "status": "Status",
-  "assignee" : "Assignee",
+  "assignee": "Assignee",
   "category": "Category",
   "customCategory": "Custom category",
   "enterCustomCategory": "Enter custom category",
@@ -79,5 +79,7 @@
   "updatedBy": "Updated By",
   "createdDate": "Created Date",
   "updatedDate": "Updated Date",
-  "viewDetails": "View Details"
+  "viewDetails": "View Details",
+  "errorLoadingUsers": "Error loading users, please try again later.",
+  "errorLoadingUser": "Error loading user, please try again later."
 }

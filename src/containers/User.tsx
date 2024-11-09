@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from "react-redux";
+import { useTheme } from 'styled-components';
 
 import UserCard from '../components/UserCard';
 import { isValidEmail, isValidUserName, transformUserCompleteInfoToUserInfo } from "../utils/functions";
@@ -19,9 +20,10 @@ import Loading from '../components/Loading.tsx';
 const User: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const { t } = useTranslation();
+    const theme = useTheme();
     const { openModal, updateOpenModal } = useModal();
     const dispatch = useDispatch<AppDispatch>();
-    const { user, loading } = useSelector((state: RootState) => state.users);
+    const { user, loading, error } = useSelector((state: RootState) => state.users);
 
     const [userInfo, setUserInfo] = useState<UserInfo>(transformUserCompleteInfoToUserInfo(user));
     const cardDataPropsList = getCardDataPropsList(userInfo);
@@ -136,6 +138,7 @@ const User: React.FC = () => {
             <Loading />
             :
             <Box p={5}>
+                {error && <p style={{ color: theme.colors.error }}>{t('errorLoadingUser')}</p>}
                 {openModal && <PasswordModal setOpen={updateOpenModal} id={id} />}
                 {cardDataPropsList.map(cardDataProps => {
                     return (

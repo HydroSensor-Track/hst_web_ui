@@ -12,10 +12,10 @@ export const getUsers = async () => {
         const err = error as AxiosError;
         if (err.response) {
             console.error("Error response for getUsers", err.response);
-            return undefined;
+            throw new Error("Failed to get users");
         }
         console.error("Error getUsers", err.message);
-        return undefined;
+        throw new Error("Failed to get users");
     }
 };
 
@@ -31,10 +31,10 @@ export const getUserById = async (id: string | undefined) => {
         const err = error as AxiosError;
         if (err.response) {
             console.error("Error response for getUserById", err.response);
-            return undefined;
+            throw new Error("Failed to get the user");
         }
         console.error("Error getUserById", err.message);
-        return undefined;
+        throw new Error("Failed to get the user");
     }
 };
 
@@ -46,10 +46,10 @@ export const createUser = async (user: CreateUserParams) => {
         const err = error as AxiosError;
         if (err.response) {
             console.error("Error response for createUser", err.response);
-            return undefined;
+            throw new Error("Failed user create");
         }
         console.error("Error createUser", err.message);
-        return undefined;
+        throw new Error("Failed user create");
     }
 };
 
@@ -65,10 +65,10 @@ export const updateUser = async (id: string | undefined, data: UpdateUserParams)
         const err = error as AxiosError;
         if (err.response) {
             console.error("Error response for updateUser", err.response);
-            return undefined;
+            throw new Error("Failed user update");
         }
         console.error("Error updateUser", err.message);
-        return undefined;
+        throw new Error("Failed user update");
     }
 };
 
@@ -80,9 +80,9 @@ export const deleteUser = async (id: string) => {
         const err = error as AxiosError;
         if (err.response) {
             console.error("Error response for deleteUser", err.response);
-            return undefined;
+            throw new Error("Failed user delete");
         }
         console.error("Error deleteUser", err.message);
-        return undefined;
+        throw new Error("Failed user delete");
     }
 };

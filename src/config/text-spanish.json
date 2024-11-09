@@ -81,5 +81,7 @@
   "updatedBy": "Actualizado Por",
   "createdDate": "Fecha de Creación",
   "updatedDate": "Fecha de Actualización",
-  "viewDetails": "Ver Detalles"
+  "viewDetails": "Ver Detalles",
+  "errorLoadingUsers": "Error al cargar los usuarios, por favor intente nuevamente.",
+  "errorLoadingUser": "Error al cargar el usuario, por favor intente nuevamente."
 }

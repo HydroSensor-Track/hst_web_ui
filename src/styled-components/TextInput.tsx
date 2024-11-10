@@ -7,4 +7,9 @@ export const StyledTextInput = styled.input`
     outline: none;
     border: 1px solid ${(props) => props.theme.colors.border};
     border-radius: 4px;
+    width: 100%;
+
+    @media (max-width: 768px) {
+        padding: 8px;
+    }
 `;

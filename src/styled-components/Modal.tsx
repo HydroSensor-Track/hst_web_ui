@@ -11,6 +11,10 @@ export const ModalContainer = styled.div`
     align-items: center;
     justify-content: center;
     z-index: 1000;
+
+    @media (max-width: 768px) {
+        padding: 10px;
+    }
 `;
 
 export const ModalContent = styled.div`
@@ -21,6 +25,12 @@ export const ModalContent = styled.div`
     width: 100%;
     max-height: 400px;
     overflow-y: auto;
+
+    @media (max-width: 768px) {
+        padding: 20px;
+        max-width: 70%;
+        max-height: 90%;
+    }
 `;
 
 export const ModalHeader = styled.h1`
@@ -32,6 +42,11 @@ export const ModalForm = styled.form`
     flex-wrap: wrap;
     max-width: 500px;
     justify-content: space-between;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+    }
 `;
 
 export const ModalItem = styled.div`
@@ -40,6 +55,10 @@ export const ModalItem = styled.div`
     flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
+    
+    @media (max-width: 768px) {
+        width: 100%;
+    }
 `;
 
 export const ModalLabel = styled.label`

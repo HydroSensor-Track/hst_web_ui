@@ -7,6 +7,11 @@ export const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: auto;
+
+  @media (max-width: 768px) {
+    width: 65px;
+  }
 `;
 
 export const StyledListItem = styled(ListItem)`
@@ -19,6 +24,7 @@ export const StyledListItem = styled(ListItem)`
     display: flex;
     gap: 10px;
     justify-content: flex-start;
+    
     &:hover {
       background-color: rgba(0, 0, 0, 0.08);
     }
@@ -27,5 +33,10 @@ export const StyledListItem = styled(ListItem)`
       color: ${(props) => props.theme.colors.primary};
       font-weight: bold;
     }
+
+    span {
+      @media (max-width: 768px) {
+        display: none;
+      }
   }
 `;

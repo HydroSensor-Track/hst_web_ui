@@ -72,6 +72,18 @@ const dataTableStyles = (theme: DefaultTheme) => ({
             backgroundColor: theme.colors.textLight,
         },
     },
+    '& .MuiDataGrid-scrollbar--vertical': {
+        '&::-webkit-scrollbar': {
+            height: '1px',
+        },
+        '&::-webkit-scrollbar-thumb': {
+            backgroundColor: theme.colors.backgroundColor,
+            borderRadius: '1px',
+        },
+        '&::-webkit-scrollbar-thumb:hover': {
+            backgroundColor: theme.colors.backgroundColor,
+        },
+    },
     '& .MuiDataGrid-columnHeaderTitle': {
         fontWeight: 'bold',
     },

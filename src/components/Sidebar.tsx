@@ -42,28 +42,28 @@ const Sidebar = ({ className }: SidebarProps) => {
           className={location.pathname === "/" ? "active" : ""}
         >
           <Icon name="dashboard" />
-          {t("dashboard")}
+          <span>{t("dashboard")}</span>
         </StyledListItem>
         <StyledListItem
           onClick={() => handleNavigate("/tickets")}
           className={location.pathname === "/tickets" ? "active" : ""}
         >
           <Icon name="tools" />
-          {t("tickets")}
+          <span>{t("tickets")}</span>
         </StyledListItem>
         <StyledListItem
           onClick={() => handleNavigate("/notifications")}
           className={location.pathname === "/notifications" ? "active" : ""}
         >
           <Icon name="notifications" />
-          {t("notifications")}
+          <span>{t("notifications")}</span>
         </StyledListItem>
         <StyledListItem
           onClick={() => handleNavigate("/backoffice")}
           className={location.pathname === "/backoffice" ? "active" : ""}
         >
           <Icon name="backoffice" />
-          {t("backoffice")}
+          <span>{t("backoffice")}</span>
         </StyledListItem>
       </List>
       <List>
@@ -72,11 +72,11 @@ const Sidebar = ({ className }: SidebarProps) => {
           className={location.pathname === "/config" ? "active" : ""}
         >
           <Icon name="settings" />
-          {t("configuration")}
+          <span>{t("configuration")}</span>
         </StyledListItem>
         <StyledListItem onClick={() => handleLogOut()}>
           <Icon name="logout" />
-          {t("logout")}
+          <span>{t("logout")}</span>
         </StyledListItem>
       </List>
     </SidebarContainer>

@@ -7,6 +7,10 @@ const Logo = styled.img`
 
 const Title = styled.h1`
     color: ${(props) => props.theme.colors.text};
+
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
-export {Logo,Title};
+export { Logo, Title };

@@ -1,15 +1,16 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
+import { createAsyncThunk, createSlice  } from '@reduxjs/toolkit';
 import { UserState, CreateUserParams, UpdateUserParams } from '../../interfaces/redux';
 import { UserCompleteInfo } from '../../interfaces/userInfo';
 import { getUsers, getUserById, createUser, updateUser, deleteUser } from '../../services/users';
+
 
 const INITIAL_STATE: UserState = {
     users: [],
     user: {},
     loading: false,
-    error: null
+    error: null,
 };
+
 
 export const getUsersList = createAsyncThunk<any, void>(
     'users/getUsers',

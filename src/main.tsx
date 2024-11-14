@@ -20,7 +20,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Auth0Provider
               domain={domain}
               clientId={clientId}
-              authorizationParams={{ redirect_uri: window.location.origin }}
+              authorizationParams={{ 
+                redirect_uri: window.location.origin,
+                audience: 'https://dev-2r6j2ic26utqxp02.us.auth0.com/api/v2/'
+              }}
           >
 
             <ThemeProvider theme={theme}>

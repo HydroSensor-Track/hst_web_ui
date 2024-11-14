@@ -11,31 +11,70 @@ import Backoffice from './Backoffice.tsx';
 import User from './User.tsx';
 import { ModalProvider } from "../contexts/ModalContext.tsx";
 import { fetchSensorsInfo, setByLocation } from '../redux/reducers/sensorInfoSlice.ts';
+import { fetchInitialMetricUpdate, setData, setLastUpdateDate } from '../redux/reducers/sensorMetricsSlice.ts';
+import { setTimestampFin, setTimestampInicio } from '../redux/reducers/querySlice.ts';
 
-const DIFFERENCE_DAYS_SEVEN = 7
+
+const DIFFERENCE_HOURS_UPDATE = 6
+const HOURS_TO_FETCH_DATA = 24
 
 const AuthenticatedApp = () => {
     const dispatch = useDispatch<AppDispatch>();
 
-     useEffect(() => {
-        let networkMetadata = undefined
-        try{
-            networkMetadata = localStorage.getItem("networkMetadata");
-            const parsedNetworkMetadata = networkMetadata ? JSON.parse(networkMetadata) : null;
-
-            // We only make a forced update if we haven't updated the localStorage for more than one week
-            const lastUpdateDate = parsedNetworkMetadata.last_update_date ? new Date(parsedNetworkMetadata.last_update_date) : null;
+    useEffect(() => {
+        const getStoredNetworkMetrics = () => {
+            const networkMetrics = localStorage.getItem("networkMetrics");
+            return networkMetrics ? JSON.parse(networkMetrics) : null;
+        };
+    
+        const calculateHoursDifference = (lastUpdateDate: Date | null) => {
             const currentDate = new Date();
-            const differenceDays = lastUpdateDate ? currentDate.getDate() - lastUpdateDate.getDate() : DIFFERENCE_DAYS_SEVEN + 1
+            return lastUpdateDate ? (currentDate.getTime() - lastUpdateDate.getTime()) / (1000 * 60 * 60) : DIFFERENCE_HOURS_UPDATE + 1;
+        };
+    
+        const updateTimestamps = (lastUpdateDate: Date) => {
+            dispatch(setTimestampFin(lastUpdateDate.toISOString()));
+    
+            const timestampInicio = new Date(lastUpdateDate.getTime() - (HOURS_TO_FETCH_DATA * 60 * 60 * 1000))
+            dispatch(setTimestampInicio(timestampInicio.toISOString()));
+        };
+    
+        const fetchMetricsData = (from: Date, to: Date) => {
+            dispatch(fetchInitialMetricUpdate({ from, to }));
+        };
+    
+        const parsedNetworkMetrics = getStoredNetworkMetrics();
+        const lastUpdateDate = parsedNetworkMetrics?.last_update_date ? new Date(parsedNetworkMetrics.last_update_date) : null;
+        const differenceHours = calculateHoursDifference(lastUpdateDate);
 
-            if (differenceDays < DIFFERENCE_DAYS_SEVEN && parsedNetworkMetadata) {
+        if (differenceHours < DIFFERENCE_HOURS_UPDATE && lastUpdateDate && parsedNetworkMetrics.data) {
+            dispatch(setData(parsedNetworkMetrics.data));
+            dispatch(setLastUpdateDate(lastUpdateDate.toISOString()));
+            updateTimestamps(lastUpdateDate);
+        } else {
+            const currentDate = new Date();
+            const fromDate = new Date(currentDate.getTime() - (HOURS_TO_FETCH_DATA * 60 * 60 * 1000))
+            updateTimestamps(currentDate);
+            fetchMetricsData(fromDate, currentDate);
+        }
 
-                dispatch(setByLocation(parsedNetworkMetadata.data))
-            } else {
-                dispatch(fetchSensorsInfo())
-            }
-        } catch (error) { dispatch(fetchSensorsInfo()) }
+    }, [dispatch]);
+    
 
+     useEffect(() => {
+
+        const networkMetadata = localStorage.getItem("networkMetadata");
+        const parsedNetworkMetadata = networkMetadata ? JSON.parse(networkMetadata) : null;
+
+        const lastUpdateDate = parsedNetworkMetadata.last_update_date ? new Date(parsedNetworkMetadata.last_update_date) : null;
+
+        const currentDate = new Date();
+        const differenceHours = lastUpdateDate ? (currentDate.getTime() - lastUpdateDate.getTime()) / (1000 * 60 * 60) : DIFFERENCE_HOURS_UPDATE + 1;
+        if (differenceHours < DIFFERENCE_HOURS_UPDATE && parsedNetworkMetadata.data) {
+            dispatch(setByLocation(parsedNetworkMetadata.data))
+        } else {
+            dispatch(fetchSensorsInfo())
+        }
 
     }, [dispatch]);
     

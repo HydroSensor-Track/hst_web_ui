@@ -1,33 +1,54 @@
-import React from "react";
-import DatePicker from "react-datepicker";
-import './styles.css'; // Importa tu archivo CSS personalizado
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import DateRangePicker, { DateRange, RangeType } from 'rsuite/DateRangePicker';
+import 'rsuite/DateRangePicker/styles/index.css';
+import { AppDispatch, RootState } from "../../redux/store";
+import { setTimestampFin, setTimestampInicio } from "../../redux/reducers/querySlice";
+import { fetchMetricUpdateBySensor } from "../../redux/reducers/sensorMetricsSlice";
 
 interface DatePickerProps {
-  date: Date | null;
-  onChange: (date: Date | null) => void;
   disabled: boolean;
-  placeholder: string
 }
 
 const CustomDatePicker: React.FC<DatePickerProps> = ({
-    date,
-    onChange,
     disabled = true,
-    placeholder
 }) => {
-    
+  const dispatch = useDispatch<AppDispatch>();
+  const timestampInicio = useSelector((state: RootState) => state.queryChart.timestampInicio);
+  const timestampFin = useSelector((state: RootState) => state.queryChart.timestampFin);
+  const ubicacion = useSelector((state: RootState) => state.queryChart.ubicacion);
+  const red = useSelector((state: RootState) => state.queryChart.red);
+  const sensores = useSelector((state: RootState) => state.queryChart.sensores);
+
+  const [startDate, setStartDate] = useState(new Date(timestampInicio))
+  const [endDate, setEndDate] = useState(new Date(timestampFin))
+
+  useEffect(()=> {
+    setStartDate(new Date(timestampInicio))
+    setEndDate(new Date(timestampFin))
+  }, [timestampInicio, timestampFin])
+
+  const handleRangeSelected = (dateRange: DateRange) => {
+    const startDateRange = dateRange[0]
+    const endDateRange = dateRange[1]
+    dispatch(setTimestampFin(endDateRange.toISOString()));
+    dispatch(setTimestampInicio(startDateRange.toISOString()));
+    dispatch(fetchMetricUpdateBySensor({from:startDate, to: endDate, ubicacion: ubicacion, red: red, sensors: sensores }))
+  }
+
+  const handleShortcutClicked = (rangeType: RangeType) => {
+    handleRangeSelected(rangeType.value as DateRange)
+  }
+
   return (
-    <DatePicker
-    selected={date}
-    onChange={onChange}
-    className="custom-datepicker" // Clase personalizada para el input
-    // calendarClassName="custom-datepicker-calendar" // Clase personalizada para el calendario
-    showTimeSelect
-    selectsStart
-    placeholderText={placeholder}
-    dateFormat="Pp"
-    disabled={disabled}
-    />
+
+    <DateRangePicker
+      value={[startDate, endDate]}
+      onOk={handleRangeSelected}
+      onShortcutClick={handleShortcutClicked}
+      format="MM/dd/yyyy HH:mm"
+      disabled={disabled} 
+      style={{width: "100%"}}/>
   );
 };
 

@@ -6,20 +6,25 @@ import { ChartsContainer, InfoContainer } from "../styled-components/Home_2.0.ts
 import FilterPanel from "../components/FilterPanel.tsx";
 import LineChart from '../components/LineChart.tsx';
 import { SensorInfoComponent } from '../components/SensorInfo.tsx';
-import { SensorList } from '../interfaces/sensorInfo.ts';
-
+import { METRIC_TYPE, SensorList } from '../interfaces/sensorInfo.ts';
+import Loading from '../components/Loading.tsx';
 
 const Home = () => {
+
     
-    const query = useSelector((state: RootState) => state.queryChart);
+    const red = useSelector((state: RootState) => state.queryChart.red);
+    const ubicacion = useSelector((state: RootState) => state.queryChart.ubicacion);
     const sensorsInfo = useSelector((state: RootState) => state.sensorsInfo.byLocation);
+    const metricsLoading = useSelector((state: RootState) => state.sensorsMetrics.loading);
 
     const [currentSensorDetails, setCurrentSensorDetails] = useState<SensorList>([]) 
 
     useEffect(() => {
-        setCurrentSensorDetails(sensorsInfo[query.red][query.ubicacion])
-    }, [query, sensorsInfo])
-    
+        setCurrentSensorDetails(sensorsInfo[red][ubicacion])
+        console.log("Unicamente cambiaron red o ubicacion")
+        console.log(red)
+        console.log(ubicacion)
+    }, [red, ubicacion, sensorsInfo])
 
     return (
         <HomeContainer>
@@ -31,10 +36,10 @@ const Home = () => {
             
             <ChartsContainer>
                 <div>
-                    <LineChart query={query} dataType="sensor" title="Medición de sensores - m"/>
+                    {metricsLoading ? <Loading/> : <LineChart metricType={METRIC_TYPE.WATER_LEVEL} title='Medicion de sensores - m'/>}
                 </div>
                 <div>
-                    <LineChart query={query} dataType="bateria" title="Evolución de la batería - %"/>
+                    {metricsLoading ? <Loading/> : <LineChart metricType={METRIC_TYPE.BATTERY_LEVEL} title='Medicion de batería'/>}
                 </div>
             </ChartsContainer>
         </HomeContainer>

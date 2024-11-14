@@ -21,6 +21,8 @@ import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlin
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import PasswordRoundedIcon from '@mui/icons-material/PasswordRounded';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 
 interface IconProps {
   name: string;
@@ -52,6 +54,8 @@ const Icon = ({ name, htmlColor }: IconProps) => {
     cancelCircle: <CancelRoundedIcon htmlColor={htmlColor} />,
     changePassword: <PasswordRoundedIcon />,
     refresh: <RefreshIcon />,
+    rightArrow: <ArrowRightIcon fontSize="large"/>,
+    leftArrow: <ArrowLeftIcon fontSize="large"/>,
   };
 
   return icons[name] || null;

@@ -4,7 +4,8 @@ import Select, { MultiValue, SingleValue } from 'react-select';
 import 'react-datepicker/dist/react-datepicker.css';
 import { RootState, AppDispatch } from "../redux/store.ts";
 import { setUbicacion, setSensores, setTimestampInicio, setTimestampFin, setUnidadTiempo, setActualizacionTiempo } from '../redux/reducers/querySlice.ts';
-import { FilterMainContainer, FilterContainer, FilterTitle, customStyles } from "../styled-components/FilterPanel.tsx";
+import { FilterMainContainer, FilterContainer, FilterTitle, customStyles, TimeFilterContainer } from "../styled-components/FilterPanel.tsx";
+import CustomDatePicker from './date-picker/DatePicker.tsx';
 
 
 const FilterPanel = () => {
@@ -17,6 +18,7 @@ const FilterPanel = () => {
     const sensorQuery = useSelector((state: RootState) => state.queryChart.sensores);
     const timeUnit = useSelector((state: RootState) => state.queryChart.unidadTiempo);
     const timeUpdate = useSelector((state: RootState) => state.queryChart.actualizacionTiempo);
+    const lastUpdateDate = useSelector((state: RootState) => state.sensorsMetrics.lastUpdateDate);
 
     const [locationOptions, setLocationOptions] = useState([{value: "", label: ""}]);
     const [sensorOptions, setSensorOptions] = useState([{value: "", label: ""}]);
@@ -33,8 +35,6 @@ const FilterPanel = () => {
     ];
 
     const [customDisabled, setCustomDisabled] = useState(true);
-    const [startDate, setStartDate] = useState<Date | null>(null);
-    const [endDate, setEndDate] = useState<Date | null>(null);
   
     const handleLocationChange = (selectedOption: SingleValue<{ value: string; label: string; }>) => {
       dispatch(setUbicacion(selectedOption ? selectedOption.label : locationQuery))
@@ -46,7 +46,7 @@ const FilterPanel = () => {
     }
 
     const handleTimeChange = (selectedOption: SingleValue<{ value: string; label: string; }>) => {
-      const now = new Date();
+      const now = new Date(lastUpdateDate ?? "");
 
       dispatch(setActualizacionTiempo(selectedOption? selectedOption.value : timeUpdate))
       if (selectedOption && selectedOption.value === 'custom') {
@@ -79,29 +79,16 @@ const FilterPanel = () => {
       dispatch(setTimestampFin(timestampFin.toISOString()));
     }
 
-    // const handleCustomStartDateChange = (date: Date | null) => {
-    //   if (date) {
-    //     setStartDate(date);
-    //     dispatch(setTimestampInicio(date.toISOString()));
-    //   }
-    // };
-
-    // const handleCustomEndDateChange = (date: Date | null) => {
-    //   if (date) {
-    //     setEndDate(date);
-    //     dispatch(setTimestampFin(date.toISOString()));
-    //   }
-    // }
-
     const handleTimeUnitChange = (selectedOption: SingleValue<{ value: string; label: string; }>) => {
-      dispatch(setUnidadTiempo(selectedOption ? selectedOption.value : timeUnit));
+      const timeUnitSelected = selectedOption ? selectedOption.value as "day" | "hour" | "minute" : timeUnit
+      dispatch(setUnidadTiempo(timeUnitSelected));
     }
 
     useEffect(() => {
       if (sensorsByLocation && Object.keys(sensorsByLocation).length > 0) {
         const initialLocation = Object.keys(sensorsByLocation[networkQuery])[0];
         dispatch(setUbicacion(initialLocation));
-    
+
         const locationsArray = sensorsByLocation[networkQuery];
         const locations = Object.keys(locationsArray).map(key => ({
           value: key,
@@ -167,23 +154,13 @@ const FilterPanel = () => {
               styles={customStyles}
               />
 
-          {/*<TimeFilterContainer>
+          <TimeFilterContainer>
 
-            <CustomDateRangePicker/>
              <CustomDatePicker
-              date={startDate}
-              onChange={handleCustomStartDateChange}
               disabled={customDisabled}
-              placeholder='Desde'
               />
-            <CustomDatePicker
-              date={endDate}
-              onChange={handleCustomEndDateChange}
-              disabled={customDisabled}
-              placeholder='Hasta'
-              /> 
               
-          </TimeFilterContainer>*/}
+          </TimeFilterContainer>
 
           <Select 
               value={timeUnitOptions.find(option => option.value === timeUnit)}

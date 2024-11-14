@@ -6,10 +6,9 @@ import Loading from "./components/Loading.tsx";
 import './App.css'
 
 function App() {
-    const { isLoading, isAuthenticated, error, user, loginWithRedirect, logout } =
+    const { isLoading, isAuthenticated, error } =
         useAuth0();
 
-            
     if (isLoading) {
         return <Loading/>;
     }
@@ -24,6 +23,7 @@ function App() {
     } else {
         return <Login/>;
     }
+    
 }
 
 export default App;

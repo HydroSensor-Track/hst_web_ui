@@ -4,50 +4,69 @@ import { useSelector } from "react-redux";
 import theme from '../config/Theme';
 import { RootState } from "../redux/store.ts";
 import 'chartjs-adapter-date-fns';
-import { QueryChart } from '../interfaces/queryChart';
+import { useEffect, useState } from 'react';
+import { METRIC_TYPE } from '../interfaces/sensorInfo.ts';
+import { filterWaterData, filterBatteryData } from '../utils/queryUtils.ts';
 ChartJS.register(TimeScale, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend);
 
-type Props<T> = {
-    query: QueryChart;
-    dataType: T;
+type Props = {
     title: string;
+    metricType: METRIC_TYPE;
 };
 
-const LineChart = <T,> ({ query, dataType, title}: Props<T>) => {
+interface Dataset {
+    label: string;
+    data: (number | null)[];
+    fill: boolean;
+    borderColor: string;
+    tension: number;
+}
 
-    const sensorsByLocation = useSelector((state: RootState) => state.sensorsInfo.byLocation);
-    const locationQuery = useSelector((state: RootState) => state.queryChart.ubicacion);
-    const sensorQuery = useSelector((state: RootState) => state.queryChart.sensores);
+const LineChart = ({metricType, title}: Props) => {
+
     const timeUnit = useSelector((state: RootState) => state.queryChart.unidadTiempo);
-    const timeUpdate = useSelector((state: RootState) => state.queryChart.actualizacionTiempo);
+    const [labels, setLabels] = useState([""])
+    const [datasets, setDatasets] = useState<Dataset[]>([])
+    const query = useSelector((state: RootState) => state.queryChart);
+    const waterLevelData = useSelector((state: RootState) => state.sensorsMetrics.waterLevelData);
+    const batteryLevelData = useSelector((state: RootState) => state.sensorsMetrics.batteryLevelData);
+
+    const [noData, setNoData] = useState(false)
+
+    useEffect(() => {
+        let response = null;
+
+        // Selecciona datos y función de filtrado según el tipo de métrica
+        if (metricType === METRIC_TYPE.WATER_LEVEL && Object.keys(waterLevelData).length > 0) {
+            response = filterWaterData(waterLevelData, query);
+        } else if (metricType === METRIC_TYPE.BATTERY_LEVEL && Object.keys(batteryLevelData).length > 0) {
+            response = filterBatteryData(batteryLevelData, query);
+        }
 
 
-    // Suponemos que obtienes los datos de la API basados en el `query`
-    const fetchData = () => {
+        if (response) {
+            setNoData(false)
+            setLabels(response.labels);
+            setDatasets(response.datasets);
+        } else {
+            console.log("No data available for the selected metric type.");
+            setNoData(true)
+        }
 
-        return {
-        labels: ['2023-09-01T00:00:00', '2023-09-02T14:35:12', '2023-09-03T09:10:03'],
-        datasets: [
-            {
-            label: 'Sensor 1',
-            data: [30, 50, 45],
-            borderColor: 'rgba(75,192,192,1)',
-            fill: false,
-            },
-            {
-            label: 'Sensor 2',
-            data: [40, 45, 60],
-            borderColor: 'rgba(153,102,255,1)',
-            fill: false,
-            },
-        ],
-        };
-    };
+    }, [waterLevelData, batteryLevelData, query, metricType]); // Añade las dependencias necesarias
 
-    const data = fetchData();
 
-    return <Line
-        data={data}
+    return <>
+        {
+            noData ?
+            <div style={{display:"flex", justifyContent: "center" ,height: "100%"}}>
+                <p>No data available for the selected filters</p> 
+            </div> :
+            <Line
+        data={{
+            labels:labels,
+            datasets:datasets
+        }}
         options={{
             plugins: {
                 title: {
@@ -128,7 +147,10 @@ const LineChart = <T,> ({ query, dataType, title}: Props<T>) => {
                 },
             }
         }}
-    />;
+    />}
+    </>
+    
+    
 };
 
 export default LineChart;

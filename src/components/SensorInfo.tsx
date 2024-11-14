@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
 import {
     LocationContainer,
     LocationTitle,
@@ -6,22 +7,22 @@ import {
     LocationLabel,
     LocationValue,
     LocationBattery,
-    SensorInfoContainer
+    SensorInfoContainer,
+    SensorDetailsHeader,
+    Arrow
 } from "../styled-components/Sensor.tsx";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store.ts";
-import { SensorDeltaInfo, SensorList } from "../interfaces/sensorInfo.ts";
+import { SensorDeltaInfo, SensorPrevenirInfo, SensorList } from "../interfaces/sensorInfo.ts";
+import Icon from "./Icon.tsx";
 
+function isSensorDeltaInfo(sensor: SensorDeltaInfo | SensorPrevenirInfo): sensor is SensorDeltaInfo {
+    return (sensor as SensorDeltaInfo).marca !== undefined;
+}
 
 const SensorDeltaDetails: React.FC<{sensor: SensorDeltaInfo}> = ({sensor}) => {
+    
     const { t } = useTranslation();
     return (
-        <LocationContainer>
-            <LocationTitle>{sensor.name}</LocationTitle>
-            <LocationInfo>
-                <LocationLabel>ID:</LocationLabel>
-                <LocationValue>{sensor.id}</LocationValue>
-            </LocationInfo>
+        <>
             <LocationInfo>
                 <LocationLabel>{t('brand')}:</LocationLabel>
                 <LocationValue>{sensor.marca}</LocationValue>
@@ -47,10 +48,6 @@ const SensorDeltaDetails: React.FC<{sensor: SensorDeltaInfo}> = ({sensor}) => {
                 <LocationValue>{sensor.senal}</LocationValue>
             </LocationInfo>
             <LocationInfo>
-                <LocationLabel>{t('hour')}:</LocationLabel>
-                <LocationValue>{sensor.hora}</LocationValue>
-            </LocationInfo>
-            <LocationInfo>
                 <LocationLabel>{t('latitude')}:</LocationLabel>
                 <LocationValue>{sensor.latitud}</LocationValue>
             </LocationInfo>
@@ -58,6 +55,27 @@ const SensorDeltaDetails: React.FC<{sensor: SensorDeltaInfo}> = ({sensor}) => {
                 <LocationLabel>{t('longitude')}:</LocationLabel>
                 <LocationValue>{sensor.longitud}</LocationValue>
             </LocationInfo>
+        </>
+    )
+}
+
+const SensorDetails: React.FC<{sensor: SensorDeltaInfo | SensorPrevenirInfo}> = ({sensor}) => {
+
+    useEffect(() => {
+
+    }, [])
+
+    return (
+        <LocationContainer>
+            <LocationTitle>{sensor.name}</LocationTitle>
+            <LocationInfo>
+                <LocationLabel>ID:</LocationLabel>
+                <LocationValue>{sensor.id}</LocationValue>
+            </LocationInfo>
+            {isSensorDeltaInfo(sensor) &&
+                <SensorDeltaDetails sensor={sensor}/>
+            }
+            
         </LocationContainer>
     );
 }
@@ -66,17 +84,55 @@ const SensorDeltaDetails: React.FC<{sensor: SensorDeltaInfo}> = ({sensor}) => {
 export const SensorInfoComponent: React.FC<{sensors: SensorList}> = ({sensors}) => {
 
 
-    const red = useSelector((state: RootState) => state.queryChart.red);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [disableRightArrow, setDisableRightArrow] = useState(true);
+    const [disableLeftArrow, setDisableLeftArrow] = useState(true);
+
+
+    const handleNext = () => {
+        setCurrentIndex((prevIndex) => prevIndex === (sensors.length - 1) ? (sensors.length - 1) : (prevIndex + 1) % sensors.length);
+    };
+
+
+    const handlePrev = () => {
+        setCurrentIndex((prevIndex) =>
+        prevIndex === 0 ? 0 : prevIndex - 1
+        );
+    };
+
+    useEffect(() => {
+        if (currentIndex <= 0) {
+            setDisableLeftArrow(true);
+        } else {
+            setDisableLeftArrow(false);
+        }
+    
+        if (currentIndex >= sensors.length - 1) {
+            
+            setDisableRightArrow(true);
+        } else {
+            setDisableRightArrow(false);
+        }
+      }, [currentIndex, sensors.length]);
+
 
     return (
         <SensorInfoContainer>
-        {sensors.map((sensor) => {
-            if (red === "delta-parana") {
-                return <SensorDeltaDetails sensor={sensor as SensorDeltaInfo}/>
-            } else {
-                <p>Network not supported</p>
+            {sensors.length > 0 &&
+                <>
+                <SensorDetailsHeader>
+                    
+                    <Arrow onClick={handlePrev} disabled={disableLeftArrow}>
+                        <Icon name="leftArrow" />
+                    </Arrow>
+                    <Arrow onClick={handleNext} disabled={disableRightArrow}>
+                        <Icon name="rightArrow" />
+                    </Arrow>
+                </SensorDetailsHeader>
+                
+                <SensorDetails sensor={sensors[currentIndex]}/>
+                </>
             }
-        })}
         </SensorInfoContainer>
   );
 };

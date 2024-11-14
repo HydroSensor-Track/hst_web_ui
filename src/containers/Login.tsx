@@ -4,16 +4,23 @@ import {LoginButton, LoginForm, LoginPage} from "../styled-components/Login.tsx"
 import {useTranslation} from "react-i18next";
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-const Login = () => {
-  const {loginWithRedirect, isAuthenticated} = useAuth0();
 
+
+const Login = () => {
+    
+  const {loginWithRedirect, isAuthenticated} = useAuth0();
   const navigate = useNavigate();
 
+
   useEffect(() => {
+
     if (isAuthenticated) {
         navigate("/");
     }
-  },[isAuthenticated])
+
+  },[isAuthenticated, navigate])
+
+
   const {t} = useTranslation();
   return (
       <LoginPage>

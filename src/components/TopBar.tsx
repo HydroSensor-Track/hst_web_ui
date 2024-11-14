@@ -10,10 +10,11 @@ import { useModal } from "../contexts/ModalContext.tsx";
 import CreateTicketDialog from "./CreateTicketDialog.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store.ts";
-import { setRed } from "../redux/reducers/querySlice.ts";
+import { setRed, setTimestampFin, setTimestampInicio } from "../redux/reducers/querySlice.ts";
 import { customStyles } from "../styled-components/FilterPanel.tsx";
 import Select, { SingleValue } from 'react-select';
 import { fetchSensorsInfo } from "../redux/reducers/sensorInfoSlice.ts";
+import { fetchInitialMetricUpdate } from "../redux/reducers/sensorMetricsSlice.ts";
 
 interface TopBarProps {
   className?: string;
@@ -59,10 +60,12 @@ const TopBar = ({ className }: TopBarProps) => {
 
   const currentNetwork = useSelector((state: RootState) => state.queryChart.red);
   const sensorsByLocation = useSelector((state: RootState) => state.sensorsInfo.byLocation);
-  const loadingSensors = useSelector((state: RootState) => state.sensorsInfo.loading)
+  const loadingSensors = useSelector((state: RootState) => state.sensorsInfo.loading);
+  const lastUpdateDate = useSelector((state: RootState) => state.sensorsMetrics.lastUpdateDate);
 
   const [networkOptions, setNetworkOptions] = useState([{ value: "", label: "" }]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [lastUpdateDateLocal, setUpdateDateLocal] = useState("")
 
   const section = titleMappings[location.pathname] || { title: "defaultTitle" };
 
@@ -75,7 +78,9 @@ const TopBar = ({ className }: TopBarProps) => {
   };
 
   const handleNetworkChange = (selectedOption: SingleValue<{ value: string; label: string }>) => {
-    dispatch(setRed(selectedOption ? selectedOption.label : ""));
+    const networkSelected = selectedOption ? selectedOption.value as "delta-parana" | "prevenir" : currentNetwork
+    dispatch(setRed(networkSelected));
+
   };
 
   useEffect(() => {
@@ -87,7 +92,11 @@ const TopBar = ({ className }: TopBarProps) => {
       }));
       setNetworkOptions(networks);
     }
-  }, [sensorsByLocation]);
+    const utc = new Date(lastUpdateDate as string)
+    const offset = utc.getTimezoneOffset();
+    const local = new Date(utc.getTime() - (offset * 60000));
+    setUpdateDateLocal(local.toISOString())
+  }, [sensorsByLocation, lastUpdateDate]);
 
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
@@ -110,8 +119,14 @@ const TopBar = ({ className }: TopBarProps) => {
     : useButtonConfig(t, buttonHandlers)[location.pathname] || null;
 
   const handleRefresh = () => {
-    console.log("Fetching sensors")
+    console.log("Fetching sensors and metrics")
     dispatch(fetchSensorsInfo())
+    const currentDate = new Date();
+    const fromDate = new Date(currentDate);
+    fromDate.setHours(currentDate.getHours() - 24);
+    dispatch(setTimestampFin(currentDate.toISOString()));
+    dispatch(setTimestampInicio(fromDate.toISOString()));
+    dispatch(fetchInitialMetricUpdate({ from: fromDate, to: currentDate }));
   }
 
   return (
@@ -120,17 +135,22 @@ const TopBar = ({ className }: TopBarProps) => {
 
       {location.pathname === "/" && (
         <>
-        <div style={{display: "flex", flexDirection: "row", gap: "10px", width: "20%", alignItems: "center"}}>
-                <Select 
-            value={networkOptions.find(option => option.value === currentNetwork)}
-            options={networkOptions}
-            name="networks"
-            placeholder="Red"
-            onChange={handleNetworkChange}
-            styles={customStyles} 
-            />
-            <Button onClick={handleRefresh} icon={<Icon name="refresh"/>} disabled={loadingSensors} />
-          </div>
+        <div  style={{display: "flex", flexDirection: "column", width: "40%", alignItems: "center"}}>
+          <div  style={{display: "flex", flexDirection: "row", gap: "10px", alignItems: "center"}}>
+
+              <Select 
+                value={networkOptions.find(option => option.value === currentNetwork)}
+                options={networkOptions}
+                name="networks"
+                placeholder="Red"
+                onChange={handleNetworkChange}
+                styles={customStyles} 
+                />
+              <Button onClick={handleRefresh} icon={<Icon name="refresh"/>} disabled={loadingSensors} />
+            </div>
+            <p style={{fontSize: "12px"}}>Última actualización: {lastUpdateDateLocal}</p>
+        </div>
+        
         </>
       )}
 

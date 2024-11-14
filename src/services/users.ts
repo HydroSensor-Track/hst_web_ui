@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { CreateUserParams, UpdateUserParams } from "../interfaces/redux";
-const ENDPOINT = "http://localhost:9290/users";
+const ENDPOINT = import.meta.env.VITE_ENDPOINT_URL + "/users";
 
 export const getUsers = async () => {
     try {

@@ -37,8 +37,8 @@ const Tickets = () => {
         setOpenTicketModal(true);
     };
 
-            const handleModalClose = () => {
-            setOpenTicketModal(false);
+    const handleModalClose = () => {
+        setOpenTicketModal(false);
         setSelectedTicketId(null);
     };
 

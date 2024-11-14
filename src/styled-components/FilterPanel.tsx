@@ -4,7 +4,7 @@ export const FilterMainContainer = styled.div`
     width: 100%;
     background-color: ${(props) => props.theme.colors.componentBackground};
     border-radius: 12px;
-    height: 30%;
+    height: 35%;
 `;
 
 export const FilterContainer = styled.div`
@@ -27,8 +27,8 @@ export const FilterTitle = styled.h4`
 
 export const TimeFilterContainer = styled.div`
     display: flex;
-    
-    width: 100%;
+    justify-content: center;
+    width: 90%;
     max-width: 400px;
 `;
 

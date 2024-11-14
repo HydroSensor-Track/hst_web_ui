@@ -66,7 +66,7 @@ const AuthenticatedApp = () => {
         const networkMetadata = localStorage.getItem("networkMetadata");
         const parsedNetworkMetadata = networkMetadata ? JSON.parse(networkMetadata) : null;
 
-        const lastUpdateDate = parsedNetworkMetadata.last_update_date ? new Date(parsedNetworkMetadata.last_update_date) : null;
+        const lastUpdateDate = parsedNetworkMetadata?.last_update_date ? new Date(parsedNetworkMetadata?.last_update_date) : null;
 
         const currentDate = new Date();
         const differenceHours = lastUpdateDate ? (currentDate.getTime() - lastUpdateDate.getTime()) / (1000 * 60 * 60) : DIFFERENCE_HOURS_UPDATE + 1;

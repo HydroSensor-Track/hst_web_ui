@@ -6,6 +6,7 @@ import { RootState, AppDispatch } from "../redux/store.ts";
 import { setUbicacion, setSensores, setTimestampInicio, setTimestampFin, setUnidadTiempo, setActualizacionTiempo } from '../redux/reducers/querySlice.ts';
 import { FilterMainContainer, FilterContainer, FilterTitle, customStyles, TimeFilterContainer } from "../styled-components/FilterPanel.tsx";
 import CustomDatePicker from './date-picker/DatePicker.tsx';
+import { fetchMetricUpdateBySensor } from "../redux/reducers/sensorMetricsSlice";
 
 
 const FilterPanel = () => {
@@ -19,6 +20,8 @@ const FilterPanel = () => {
     const timeUnit = useSelector((state: RootState) => state.queryChart.unidadTiempo);
     const timeUpdate = useSelector((state: RootState) => state.queryChart.actualizacionTiempo);
     const lastUpdateDate = useSelector((state: RootState) => state.sensorsMetrics.lastUpdateDate);
+    const query = useSelector((state: RootState) => state.queryChart);
+    const waterLevelData = useSelector((state: RootState) => state.sensorsMetrics.waterLevelData);
 
     const [locationOptions, setLocationOptions] = useState([{value: "", label: ""}]);
     const [sensorOptions, setSensorOptions] = useState([{value: "", label: ""}]);
@@ -34,6 +37,13 @@ const FilterPanel = () => {
       { value: 'day', label: 'Día' }
     ];
 
+    useEffect(() => {
+        console.log("Water level data", waterLevelData)
+        if(query.timestampInicio && query.timestampFin && query.ubicacion && query.red && query.sensores){
+            dispatch(fetchMetricUpdateBySensor({from:new Date(query.timestampInicio), to: new Date(query.timestampFin), ubicacion: locationQuery, red: networkQuery, sensors: sensorQuery }))
+        }
+        console.log(query)
+    }, [query]);
     const [customDisabled, setCustomDisabled] = useState(true);
   
     const handleLocationChange = (selectedOption: SingleValue<{ value: string; label: string; }>) => {

@@ -33,7 +33,7 @@ const CustomDatePicker: React.FC<DatePickerProps> = ({
     const endDateRange = dateRange[1]
     dispatch(setTimestampFin(endDateRange.toISOString()));
     dispatch(setTimestampInicio(startDateRange.toISOString()));
-    dispatch(fetchMetricUpdateBySensor({from:startDate, to: endDate, ubicacion: ubicacion, red: red, sensors: sensores }))
+    dispatch(fetchMetricUpdateBySensor({from:startDateRange, to: endDateRange, ubicacion: ubicacion, red: red, sensors: sensores }))
   }
 
   const handleShortcutClicked = (rangeType: RangeType) => {

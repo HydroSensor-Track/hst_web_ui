@@ -59,7 +59,7 @@ export const fetchMetricUpdateBySensor = createAsyncThunk(
 
     // Función para combinar datos y eliminar duplicados
     const combineAndRemoveDuplicates = (currentData: any, newData: any) => {
-      const combinedData = {};
+      const combinedData = currentWaterLevelBySensors;
 
       sensors.forEach(sensorId => {
         const currentDataPoints = currentData[sensorId] || [];
@@ -88,7 +88,7 @@ export const fetchMetricUpdateBySensor = createAsyncThunk(
 
     // Crear la estructura completa de MetricData con las redes
     const metricData: MetricData = {
-      waterLevel: { "delta-parana": red === "delta-parana" ? combinedWaterLevelData : {}, "prevenir": red === "prevenir" ? combinedWaterLevelData : {} },
+      waterLevel: { "delta-parana": red === "delta-parana" ? combinedWaterLevelData : currentState.sensorsMetrics.waterLevelData['delta-parana'], "prevenir": red === "prevenir" ? combinedWaterLevelData : currentState.sensorsMetrics.waterLevelData['prevenir'] },
       batteryLevel: { "delta-parana": combinedBatteryLevelData, "prevenir": {} },
       signalStrength: { "delta-parana": combinedSignalStrengthData, "prevenir": {} }
     };

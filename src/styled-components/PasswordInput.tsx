@@ -7,11 +7,7 @@ export const PasswordInputContainer = styled.div`
     width: 100%;
 
     @media (max-width: 768px) {
-        width: 516px;
-    }
-
-    @media (max-width: 480px) {
-        width: 355px;
+        width: 100%;
     }
 `;
 

@@ -49,6 +49,24 @@ export const StyledTable = styled.table<StyledTableProps>`
       color: ${(props) => props.theme.colors.textLink};
       text-decoration: none;
     }
+
+    @media (max-width: 768px) {
+        th, td {
+            font-size: 0.7rem;
+            padding: 0.4vh;
+        }
+
+        th {
+            display: none;
+        }
+    }
+
+    @media (max-width: 480px) {
+        th, td {
+            font-size: 0.6rem;
+            padding: 0.2vh;
+        }
+    }
 `;
 
 // Styled Pagination Container
@@ -66,6 +84,10 @@ export const ButtonContainer = styled.div`
   align-items: center;
   height: 100%;
   gap: 0.5rem; // Add some space between the buttons
+
+  @media (max-width: 768px) {
+      flex-wrap: wrap;
+  }
 `;
 
 // Styled Button
@@ -88,6 +110,11 @@ export const StyledButton = styled.button`
   &:active {
     transform: ${(props) => (props.disabled ? 'none' : 'scale(0.95)')};
   }
+
+  @media (max-width: 768px) {
+      font-size: 0.8rem;
+      padding: 5px 10px;
+  }
 `;
 
 // Dots for indicating more pages visually
@@ -97,7 +124,7 @@ export const Dots = styled.div`
   color: ${(props) => props.theme.colors.textLight};
   margin: 0 0.5rem;
 `;
-export const StyledFilterButton = styled(FilterAltIcon)<{ isActive: boolean }>`
+export const StyledFilterButton = styled(FilterAltIcon) <{ isActive: boolean }>`
   background: none;
   position:absolute;
   right: 0;

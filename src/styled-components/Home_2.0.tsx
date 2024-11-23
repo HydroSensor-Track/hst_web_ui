@@ -84,6 +84,10 @@ export const ChartsContainer = styled.div`
       margin: 15px;
     }
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const InfoContainer = styled.div`

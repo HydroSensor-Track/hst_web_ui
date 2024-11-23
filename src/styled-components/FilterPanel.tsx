@@ -5,6 +5,10 @@ export const FilterMainContainer = styled.div`
     background-color: ${(props) => props.theme.colors.componentBackground};
     border-radius: 12px;
     height: 30%;
+
+    @media (max-width: 768px) {
+        height: auto;
+    }
 `;
 
 export const FilterContainer = styled.div`
@@ -16,6 +20,12 @@ export const FilterContainer = styled.div`
     width: 100%;
     background-color: ${(props) => props.theme.colors.componentBackground};
     border-radius: 12px;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        min-width: 180px;
+        margin-bottom: 10px;
+  }
 
 `;
 
@@ -69,6 +79,9 @@ export const customStyles: StylesConfig<any, false, GroupBase<any>> = {
     backgroundColor: state.isSelected ? '#2684FF' : state.isFocused ? '#f0f0f0' : '#ffffff', // Cambiar el fondo por default de las opciones seleccionadas, null no puede ser
     color: state.isSelected ? '#ffffff' : '#333333',
     padding: 10,
+    '@media (max-width: 768px)': {
+      fontSize: '12px',
+    },
   }),
   menu: (provided) => ({
     ...provided,

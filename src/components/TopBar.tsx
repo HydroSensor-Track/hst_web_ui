@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { StyledTopBar, ButtonContainer } from "../styled-components/TopBar.tsx";
+import { StyledTopBar, HomeSelectContainer, ButtonContainer } from "../styled-components/TopBar.tsx";
 import { useButtonConfig } from "../utils/ButtonConfig.tsx";
 import NormalTitle from "./NormalTitle.tsx";
 import Button from "./Button.tsx";
@@ -150,7 +150,7 @@ const TopBar = ({ className }: TopBarProps) => {
 
       {locationPath === "/" && (
         <>
-          <div style={{ display: "flex", flexDirection: "row", gap: "10px", width: "20%", alignItems: "center" }}>
+          <HomeSelectContainer>
             <Select
               value={networkOptions.find(option => option.value === currentNetwork)}
               options={networkOptions}
@@ -160,7 +160,7 @@ const TopBar = ({ className }: TopBarProps) => {
               styles={customStyles}
             />
             <Button onClick={handleRefresh} icon={<Icon name="refresh" />} disabled={loadingSensors} />
-          </div>
+          </HomeSelectContainer>
         </>
       )}
 

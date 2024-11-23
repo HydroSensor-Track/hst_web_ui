@@ -90,16 +90,31 @@ export const getTranslatedValueOrDateString = (
 export function sortNetworksByLocation(networks: NetworkData) {
 
     const sortedNetworks: NetworkData = {};
-  
+
     Object.keys(networks).forEach((network) => {
-      const locations = networks[network];
-  
-      // Ordenar las ubicaciones directamente usando Object.fromEntries y Object.entries
-      sortedNetworks[network] = Object.fromEntries(
-        Object.entries(locations).sort(([a], [b]) => a.localeCompare(b))
-      );
+        const locations = networks[network];
+
+        // Ordenar las ubicaciones directamente usando Object.fromEntries y Object.entries
+        sortedNetworks[network] = Object.fromEntries(
+            Object.entries(locations).sort(([a], [b]) => a.localeCompare(b))
+        );
     });
-  
+
     return sortedNetworks;
-  }
-  
+}
+
+export const formatDate = (dateString: string, isMobile: boolean): string => {
+    const date: Date = new Date(dateString);
+
+    if (isMobile) {
+        const aux_date = date.getDate();
+        const aux_month = date.getMonth() + 1;
+        const aux_year = date.getFullYear();
+        const aux_hour = date.getHours();
+        const aux_minutes = date.getMinutes();
+        const aux_seconds = date.getSeconds();
+        return `${aux_year}-${aux_month}-${aux_date}T${aux_hour}:${aux_minutes}:${aux_seconds}`;
+    }
+
+    return dateString;
+};

@@ -11,10 +11,13 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store.ts";
 import { SensorDeltaInfo, SensorList } from "../interfaces/sensorInfo.ts";
+import { formatDate } from "../utils/functions.tsx";
 
 
-const SensorDeltaDetails: React.FC<{sensor: SensorDeltaInfo}> = ({sensor}) => {
+const SensorDeltaDetails: React.FC<{ sensor: SensorDeltaInfo }> = ({ sensor }) => {
     const { t } = useTranslation();
+    const isMobile = window.innerWidth <= 768;
+
     return (
         <LocationContainer>
             <LocationTitle>{sensor.name}</LocationTitle>
@@ -48,7 +51,7 @@ const SensorDeltaDetails: React.FC<{sensor: SensorDeltaInfo}> = ({sensor}) => {
             </LocationInfo>
             <LocationInfo>
                 <LocationLabel>{t('hour')}:</LocationLabel>
-                <LocationValue>{sensor.hora}</LocationValue>
+                <LocationValue>{formatDate(sensor.hora, isMobile)}</LocationValue>
             </LocationInfo>
             <LocationInfo>
                 <LocationLabel>{t('latitude')}:</LocationLabel>
@@ -63,20 +66,20 @@ const SensorDeltaDetails: React.FC<{sensor: SensorDeltaInfo}> = ({sensor}) => {
 }
 
 
-export const SensorInfoComponent: React.FC<{sensors: SensorList}> = ({sensors}) => {
+export const SensorInfoComponent: React.FC<{ sensors: SensorList }> = ({ sensors }) => {
 
 
     const red = useSelector((state: RootState) => state.queryChart.red);
 
     return (
         <SensorInfoContainer>
-        {sensors.map((sensor) => {
-            if (red === "delta-parana") {
-                return <SensorDeltaDetails sensor={sensor as SensorDeltaInfo}/>
-            } else {
-                <p>Network not supported</p>
-            }
-        })}
+            {sensors.map((sensor) => {
+                if (red === "delta-parana") {
+                    return <SensorDeltaDetails sensor={sensor as SensorDeltaInfo} />
+                } else {
+                    <p>Network not supported</p>
+                }
+            })}
         </SensorInfoContainer>
-  );
+    );
 };

@@ -11,10 +11,22 @@ const StyledTopBar = styled.div`
   }
 `;
 
+const HomeSelectContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 20%;
+  align-items: center;
+
+  @media (max-width: 768px) {
+        width: 30%;
+  }
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: ${(props) => props.theme.sizes.buttonGap};
 `;
 
-export { StyledTopBar, ButtonContainer };
+export { StyledTopBar, HomeSelectContainer, ButtonContainer };

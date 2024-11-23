@@ -8,6 +8,7 @@ export const FilterMainContainer = styled.div`
 
     @media (max-width: 768px) {
         height: auto;
+        flex-grow: 1;
     }
 `;
 

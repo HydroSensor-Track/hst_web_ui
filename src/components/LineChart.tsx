@@ -49,7 +49,7 @@ const LineChart = ({metricType, title}: Props) => {
             setLabels(response.labels);
             setDatasets(response.datasets);
         } else {
-            console.log("No data available for the selected metric type.");
+            console.log("No hay datos disponibles para los filtros seleccionados");
             setNoData(true)
         }
 
@@ -60,7 +60,7 @@ const LineChart = ({metricType, title}: Props) => {
         {
             noData ?
             <div style={{display:"flex", justifyContent: "center" ,height: "100%"}}>
-                <p>No data available for the selected filters</p> 
+                <p>No hay datos disponibles para los filtros seleccionados</p> 
             </div> :
             <Line
         data={{

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DateRangePicker, { DateRange, RangeType } from 'rsuite/DateRangePicker';
 import 'rsuite/DateRangePicker/styles/index.css';
-import { AppDispatch, RootState } from "../../redux/store";
-import { setTimestampFin, setTimestampInicio } from "../../redux/reducers/querySlice";
-import { fetchMetricUpdateBySensor } from "../../redux/reducers/sensorMetricsSlice";
+import { AppDispatch, RootState } from "../redux/store";
+import { setTimestampFin, setTimestampInicio } from "../redux/reducers/querySlice";
+import { fetchMetricUpdateBySensor } from "../redux/reducers/sensorMetricsSlice";
 
 interface DatePickerProps {
   disabled: boolean;

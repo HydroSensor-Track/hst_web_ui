@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import {
     LocationContainer,
@@ -6,55 +5,58 @@ import {
     LocationInfo,
     LocationLabel,
     LocationValue,
-    LocationBattery,
     SensorInfoContainer,
     SensorDetailsHeader,
     Arrow
 } from "../styled-components/Sensor.tsx";
 import { SensorDeltaInfo, SensorPrevenirInfo, SensorList } from "../interfaces/sensorInfo.ts";
 import Icon from "./Icon.tsx";
+import TicketSensorTable from "./TicketSensorTable.tsx";
 
 function isSensorDeltaInfo(sensor: SensorDeltaInfo | SensorPrevenirInfo): sensor is SensorDeltaInfo {
     return (sensor as SensorDeltaInfo).marca !== undefined;
 }
 
 const SensorDeltaDetails: React.FC<{sensor: SensorDeltaInfo}> = ({sensor}) => {
-    
-    const { t } = useTranslation();
+
     return (
         <>
             <LocationInfo>
-                <LocationLabel>{t('brand')}:</LocationLabel>
+                <LocationLabel>Marca:</LocationLabel>
                 <LocationValue>{sensor.marca}</LocationValue>
             </LocationInfo>
             <LocationInfo>
-                <LocationLabel>{t('model')}:</LocationLabel>
+                <LocationLabel>Modelo:</LocationLabel>
                 <LocationValue>{sensor.modelo}</LocationValue>
             </LocationInfo>
             <LocationInfo>
                 <LocationLabel>Serie:</LocationLabel>
                 <LocationValue>{sensor.serie}</LocationValue>
             </LocationInfo>
+            {(sensor.latitud || sensor.longitud)  && 
             <LocationInfo>
-                <LocationLabel>{t('level')}:</LocationLabel>
+                <LocationLabel>Ubicacion:</LocationLabel>
+                <LocationValue>[ {sensor.latitud}, {sensor.longitud} ]</LocationValue>
+            </LocationInfo>
+            }
+            <LocationInfo>
+                <LocationLabel>Hora de actualización:</LocationLabel>
+                <LocationValue>{new Date(sensor.hora).toLocaleString("es-ES")}</LocationValue>
+            </LocationInfo>
+            <LocationInfo>
+                <LocationLabel>Batería actual:</LocationLabel>
+                <LocationValue>{sensor.bateria}</LocationValue>
+            </LocationInfo>
+            <LocationInfo>
+                <LocationLabel>Último nivel:</LocationLabel>
                 <LocationValue>{sensor.nivel}</LocationValue>
             </LocationInfo>
             <LocationInfo>
-                <LocationLabel>{t('battery')}:</LocationLabel>
-                <LocationBattery>{sensor.bateria / 10}%</LocationBattery>
-            </LocationInfo>
-            <LocationInfo>
-                <LocationLabel>{t('signal')}:</LocationLabel>
+                <LocationLabel>Última señal:</LocationLabel>
                 <LocationValue>{sensor.senal}</LocationValue>
             </LocationInfo>
-            <LocationInfo>
-                <LocationLabel>{t('latitude')}:</LocationLabel>
-                <LocationValue>{sensor.latitud}</LocationValue>
-            </LocationInfo>
-            <LocationInfo>
-                <LocationLabel>{t('longitude')}:</LocationLabel>
-                <LocationValue>{sensor.longitud}</LocationValue>
-            </LocationInfo>
+
+
         </>
     )
 }
@@ -67,7 +69,7 @@ const SensorDetails: React.FC<{sensor: SensorDeltaInfo | SensorPrevenirInfo}> = 
 
     return (
         <LocationContainer>
-            <LocationTitle>{sensor.name}</LocationTitle>
+            
             <LocationInfo>
                 <LocationLabel>ID:</LocationLabel>
                 <LocationValue>{sensor.id}</LocationValue>
@@ -121,7 +123,7 @@ export const SensorInfoComponent: React.FC<{sensors: SensorList}> = ({sensors}) 
             {sensors.length > 0 &&
                 <>
                 <SensorDetailsHeader>
-                    
+                    <LocationTitle>{sensors[currentIndex].name}</LocationTitle>
                     <Arrow onClick={handlePrev} disabled={disableLeftArrow}>
                         <Icon name="leftArrow" />
                     </Arrow>
@@ -131,6 +133,8 @@ export const SensorInfoComponent: React.FC<{sensors: SensorList}> = ({sensors}) 
                 </SensorDetailsHeader>
                 
                 <SensorDetails sensor={sensors[currentIndex]}/>
+
+                <TicketSensorTable sensorId={sensors[currentIndex].id} errorMessage="No hay tickets abiertos para este sensor" handleViewDetails={() => console.log("View details")} />
                 </>
             }
         </SensorInfoContainer>

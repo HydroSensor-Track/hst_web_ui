@@ -5,6 +5,7 @@ export const CenteredDiv = styled.div<{$column?:boolean}>`
     flex-direction: ${props => props.$column ? 'column' : 'row'};
     align-items: center;
     justify-content: center;
+    height: 10%;
 `;
 
 export const StyledLoading = styled.div`

@@ -36,10 +36,10 @@ const Home = () => {
             
             <ChartsContainer>
                 <div>
-                    {metricsLoading ? <Loading/> : <LineChart metricType={METRIC_TYPE.WATER_LEVEL} title='Medicion de sensores - m'/>}
+                    {metricsLoading ? <Loading/> : <LineChart metricType={METRIC_TYPE.WATER_LEVEL} title='Nivel del agua'/>}
                 </div>
                 <div>
-                    {metricsLoading ? <Loading/> : <LineChart metricType={METRIC_TYPE.BATTERY_LEVEL} title='Medicion de batería'/>}
+                    {metricsLoading ? <Loading/> : <LineChart metricType={METRIC_TYPE.BATTERY_LEVEL} title='Nivel de batería'/>}
                 </div>
             </ChartsContainer>
         </HomeContainer>

@@ -20,10 +20,6 @@ const Tickets = () => {
     const ticketsData = useSelector((state: RootState) => state.ticket.tickets);
     const loading = useSelector((state: RootState) => state.ticket.loading);
     const error = useSelector((state: RootState) => state.ticket.error);
-    // const assigneesData = useSelector((state: RootState) => state.assignee.assignees);
-    // const locationData = useSelector((state: RootState) => state.sensor.locations);
-
-    const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({});
     const [elementsPerPage, setElementsPerPage] = useState(10); // Initial default
     const [openTicketModal, setOpenTicketModal] = useState(false);
     const [selectedTicketId, setSelectedTicketId] = useState<number | null>(null);

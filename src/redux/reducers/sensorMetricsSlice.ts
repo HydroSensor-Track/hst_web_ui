@@ -52,30 +52,55 @@ export const fetchMetricUpdateBySensor = createAsyncThunk(
     const currentBatteryLevelBySensors = red === "delta-parana" ? currentState.sensorsMetrics.batteryLevelData[red] : {};
     const currentSignalStrengthBySensors = red === "delta-parana" ? currentState.sensorsMetrics.signalStrengthData[red] : {};
 
+
+    const locationNeedsUpdate = (currentData: any) => {
+      for (const sensorId of sensors) {
+        const currentDataPoints = currentData[sensorId] || [];
+        const minDatapoint = currentDataPoints[currentDataPoints.length - 1];
+        
+        if (!minDatapoint) continue; // Si no hay puntos de datos, pasa al siguiente sensor
+        
+        const minFecha = new Date(isMetricDeltaInfo(minDatapoint) ? minDatapoint.hora : minDatapoint.time);
+        console.log(minFecha);
+    
+        if (minFecha <= from) {
+          return false;
+        }
+      }
+      
+      return true; 
+    };
+
+    // Tomamos water level unicamente como referencia porque todos traen la misma fecha
+    const needsUpdate = locationNeedsUpdate(currentWaterLevelBySensors)
+
+    console.log(needsUpdate)
+
     // Nuevos datos a buscar
-    const waterLevel: SensorWaterLevel = await getLocationMetric(red, "WATER_LEVEL", from, to, ubicacion);
-    const batteryLevel: SensorBattery = red === "delta-parana" ? await getLocationMetric(red, "BATTERY_LEVEL", from, to, ubicacion) : {};
-    const signalStrength: SensorSignal = red === "delta-parana" ? await getLocationMetric(red, "SIGNAL_STRENGTH", from, to, ubicacion) : {};
+    const waterLevel: SensorWaterLevel = needsUpdate ? await getLocationMetric(red, "WATER_LEVEL", from, to, ubicacion) : {};
+    const batteryLevel: SensorBattery = red === "delta-parana" ? needsUpdate ? await getLocationMetric(red, "BATTERY_LEVEL", from, to, ubicacion): {} : {};
+    const signalStrength: SensorSignal = red === "delta-parana" ? needsUpdate ? await getLocationMetric(red, "SIGNAL_STRENGTH", from, to, ubicacion): {} : {};
 
     // Función para combinar datos y eliminar duplicados
     const combineAndRemoveDuplicates = (currentData: any, newData: any) => {
-      const combinedData = currentWaterLevelBySensors;
+      const combinedData = {...currentData};
 
       sensors.forEach(sensorId => {
         const currentDataPoints = currentData[sensorId] || [];
+        
         const newDataPoints = newData[sensorId] || [];
 
-        const allDataPoints = [...currentDataPoints, ...newDataPoints];
-        const uniqueDataPoints = Array.from(
-          new Map(
-            allDataPoints.map(dp => [
-              isMetricDeltaInfo(dp) ? dp.hora : dp.time, // Usa `hora` si es `MetricDeltaInfo`, de lo contrario `time`
-              dp
-            ])
-          ).values()
-        );
+        const allDataPoints = [...newDataPoints, ...currentDataPoints];
+
+        const uniqueDataPoints = allDataPoints.filter((value, index, self) =>
+          index === self.findIndex((dp) => (
+            isMetricDeltaInfo(dp) ? dp.hora == value.hora : dp.time === value.time
+          ))
+        )
+        console.log(uniqueDataPoints)
 
         combinedData[sensorId] = uniqueDataPoints;
+
       });
 
       return combinedData;
@@ -83,6 +108,8 @@ export const fetchMetricUpdateBySensor = createAsyncThunk(
 
     // Combinar y limpiar duplicados en cada tipo de métrica
     const combinedWaterLevelData = combineAndRemoveDuplicates(currentWaterLevelBySensors, waterLevel);
+    console.log(combinedWaterLevelData)
+
     const combinedBatteryLevelData = red === "delta-parana" ? combineAndRemoveDuplicates(currentBatteryLevelBySensors, batteryLevel) : {};
     const combinedSignalStrengthData = red === "delta-parana" ? combineAndRemoveDuplicates(currentSignalStrengthBySensors, signalStrength) : {};
 

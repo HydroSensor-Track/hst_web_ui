@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const BackofficeContainer = styled.div`
     background-color: ${(props) => props.theme.colors.componentBackground};
+    border-radius: 14px;
     width: 100%;
     overflow-x: auto;
     margin: 0 auto;

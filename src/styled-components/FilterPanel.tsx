@@ -40,30 +40,34 @@ import { StylesConfig, GroupBase } from 'react-select';
 
 
 export const customStyles: StylesConfig<any, false, GroupBase<any>> = {
-      container: (provided) => ({
-        ...provided,
-        width: '90%', // Ajusta el ancho del container
-        maxWidth: '400px', // O define un ancho máximo
-        margin: '0 auto',  // Centra el select si es necesario
-        height: '30px',
-        minHeight: '30px'
-      }),
-      indicatorsContainer: (provided) => ({
-        ...provided,
-        height: '30px',
-        minHeight: '30px'
-      }),
-      control: (provided, state) => ({
-        ...provided,
-        backgroundColor: state.isFocused ? '#f0f0f0' : '#ffffff', // Cambiar el fondo del control cuando está enfocado
-        borderColor: state.isFocused ? '#2684FF' : '#cccccc', // Cambiar el borde cuando está enfocado
-        '&:hover': {
-          borderColor: '#2684FF' // Cambiar el borde al pasar el ratón
-        },
-        // height: '100%',
-        height: '30px',
-        minHeight: '30px'
-      }),
+    container: (provided) => ({
+      ...provided,
+      width: '90%', // Ajusta el ancho del container
+      maxWidth: '400px', // O define un ancho máximo
+      margin: '0 auto',  // Centra el select si es necesario
+      height: '30px',
+      minHeight: '30px'
+    }),
+    indicatorsContainer: (provided) => ({
+      ...provided,
+      height: '30px',
+      minHeight: '30px'
+    }),
+    control: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused ? '#f0f0f0' : '#ffffff', // Cambiar el fondo del control cuando está enfocado
+      borderColor: state.isFocused ? '#2684FF' : '#cccccc', // Cambiar el borde cuando está enfocado
+      '&:hover': {
+        borderColor: '#2684FF' // Cambiar el borde al pasar el ratón
+      },
+      // height: '100%',
+      height: '30px',
+      minHeight: '30px'
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      fontSize: '12px'
+    }),
     option: (provided, state) => ({
       ...provided,
       backgroundColor: state.isSelected ? '#2684FF' : state.isFocused ? '#f0f0f0' : null,

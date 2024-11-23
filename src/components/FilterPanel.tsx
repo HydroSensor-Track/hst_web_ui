@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { RootState, AppDispatch } from "../redux/store.ts";
 import { setUbicacion, setSensores, setTimestampInicio, setTimestampFin, setUnidadTiempo, setActualizacionTiempo } from '../redux/reducers/querySlice.ts';
 import { FilterMainContainer, FilterContainer, FilterTitle, customStyles, TimeFilterContainer } from "../styled-components/FilterPanel.tsx";
-import CustomDatePicker from './date-picker/DatePicker.tsx';
+import CustomDatePicker from './DatePicker.tsx';
 import { fetchMetricUpdateBySensor } from "../redux/reducers/sensorMetricsSlice";
 
 
@@ -20,9 +20,7 @@ const FilterPanel = () => {
     const timeUnit = useSelector((state: RootState) => state.queryChart.unidadTiempo);
     const timeUpdate = useSelector((state: RootState) => state.queryChart.actualizacionTiempo);
     const lastUpdateDate = useSelector((state: RootState) => state.sensorsMetrics.lastUpdateDate);
-    const query = useSelector((state: RootState) => state.queryChart);
-    const waterLevelData = useSelector((state: RootState) => state.sensorsMetrics.waterLevelData);
-
+    
     const [locationOptions, setLocationOptions] = useState([{value: "", label: ""}]);
     const [sensorOptions, setSensorOptions] = useState([{value: "", label: ""}]);
     const timeUpdateOptions = [
@@ -37,17 +35,11 @@ const FilterPanel = () => {
       { value: 'day', label: 'Día' }
     ];
 
-    useEffect(() => {
-        console.log("Water level data", waterLevelData)
-        if(query.timestampInicio && query.timestampFin && query.ubicacion && query.red && query.sensores){
-            dispatch(fetchMetricUpdateBySensor({from:new Date(query.timestampInicio), to: new Date(query.timestampFin), ubicacion: locationQuery, red: networkQuery, sensors: sensorQuery }))
-        }
-        console.log(query)
-    }, [query]);
     const [customDisabled, setCustomDisabled] = useState(true);
   
     const handleLocationChange = (selectedOption: SingleValue<{ value: string; label: string; }>) => {
       dispatch(setUbicacion(selectedOption ? selectedOption.label : locationQuery))
+      handleTimeChange({ value: 'last_24_hours', label: 'Últimas 24 horas' })
     }
 
     const handleSensorsChange = (selectedOptions: MultiValue<{ value: string; label: string; }>) => {
@@ -56,7 +48,7 @@ const FilterPanel = () => {
     }
 
     const handleTimeChange = (selectedOption: SingleValue<{ value: string; label: string; }>) => {
-      const now = new Date(lastUpdateDate ?? "");
+      const now = lastUpdateDate ? new Date(lastUpdateDate) : new Date();
 
       dispatch(setActualizacionTiempo(selectedOption? selectedOption.value : timeUpdate))
       if (selectedOption && selectedOption.value === 'custom') {
@@ -98,7 +90,7 @@ const FilterPanel = () => {
       if (sensorsByLocation && Object.keys(sensorsByLocation).length > 0) {
         const initialLocation = Object.keys(sensorsByLocation[networkQuery])[0];
         dispatch(setUbicacion(initialLocation));
-
+        handleTimeChange({ value: 'last_24_hours', label: 'Últimas 24 horas' })
         const locationsArray = sensorsByLocation[networkQuery];
         const locations = Object.keys(locationsArray).map(key => ({
           value: key,
@@ -135,7 +127,7 @@ const FilterPanel = () => {
               value={locationOptions.find(option => option.value === locationQuery)}
               options={locationOptions}
               name="locations"
-              placeholder="Locacion"
+              placeholder="Ubicacion"
               onChange={handleLocationChange}
               styles={customStyles} 
               />
@@ -160,7 +152,6 @@ const FilterPanel = () => {
               name="time"
               placeholder="Tiempo"
               onChange={handleTimeChange}
-              // styles={customStylesTime} 
               styles={customStyles}
               />
 

@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface StyledTableProps {
+  columnWidth: number;
+}
+
 export const SensorInfoContainer = styled.div`
   width: 100%;
   background-color: ${(props) => props.theme.colors.componentBackground};
@@ -7,54 +11,87 @@ export const SensorInfoContainer = styled.div`
   height: 65%;
 `;
 
+export const SensorDetailsHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  height: 10%;
+`;
+
+export const TableTicketContainer = styled.div`
+  width: 100%;
+  height: 40%;
+  background-color: ${(props) => props.theme.colors.darkGray};
+  display:flex;
+  justify-content: center;
+  align-items: flex-start;
+  border-radius: 0 0 20px 20px;
+`;
+
+export const StyledTable = styled.table<StyledTableProps>`
+    width: 90%;
+    border-collapse: collapse;
+    color: ${(props) => props.theme.colors.text};
+    border-radius: 20px;
+
+    th, td {
+      text-align: center;
+      font-size: ${(props) => props.theme.sizes.textFontSize};
+      width: ${(props) => props.columnWidth}%;
+    }
+
+    a {
+      color: ${(props) => props.theme.colors.textLink};
+      text-decoration: none;
+    }
+`;
+
 export const LocationContainer = styled.div`
   color: ${(props) => props.theme.colors.text};
   padding-left: 15px;
-
+  height: 50%;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 `;
 
 export const LocationTitle = styled.h1`
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
-  margin-bottom: 10px;
-  margin-top: 0;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  margin-left: 15px;
   width: 100%;
   `;
 
 export const LocationInfo = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 
 `;
 
 export const LocationLabel = styled.span`
   font-weight: bold;
+  font-size: 14px;
 `;
 
 export const LocationValue = styled.span`
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 export const LocationBattery = styled(LocationValue)`
   color: #ffc107;
 `;
 
-export const SensorDetailsHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: right;
-`;
+
 
 export const Arrow = styled.button`
   background: none;
   border: none;
   color: #fff;
-  margin-top: 10px;
+  margin-top: 8px;
   padding: 0;
   font-size: 32px;
   cursor: pointer;

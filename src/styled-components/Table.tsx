@@ -19,6 +19,8 @@ export const TableContainer = styled.div`
     border-radius: 20px;
 `;
 
+
+
 export const StyledTable = styled.table<StyledTableProps>`
     width: 100%;
     border-collapse: collapse;

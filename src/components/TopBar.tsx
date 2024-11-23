@@ -148,7 +148,7 @@ const TopBar = ({ className }: TopBarProps) => {
                 />
               <Button onClick={handleRefresh} icon={<Icon name="refresh"/>} disabled={loadingSensors} />
             </div>
-            <p style={{fontSize: "12px"}}>Última actualización: {lastUpdateDateLocal}</p>
+            <p style={{fontSize: "12px"}}>Última actualización: {new Date(lastUpdateDateLocal).toUTCString()}</p>
         </div>
         
         </>

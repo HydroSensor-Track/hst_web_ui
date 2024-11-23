@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const ModalContainer = styled.div`
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     position: fixed;
     top: 0;
     left: 0;
@@ -17,20 +17,17 @@ export const ModalContent = styled.div`
     background-color: ${(props) => props.theme.colors.componentBackground};
     padding: 50px;
     border-radius: 10px;
-    max-width: 510px;
-    width: 100%;
-    max-height: 400px;
+    width: 40%;
     overflow-y: auto;
 `;
 
-export const ModalHeader = styled.h1`
+export const ModalHeader = styled.h2`
     margin-bottom: 20px;
 `;
 
 export const ModalForm = styled.form`
     display: flex;
     flex-wrap: wrap;
-    max-width: 500px;
     justify-content: space-between;
 `;
 

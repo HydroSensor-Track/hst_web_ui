@@ -13,6 +13,8 @@ import { ModalProvider } from "../contexts/ModalContext.tsx";
 import { fetchSensorsInfo, setByLocation } from '../redux/reducers/sensorInfoSlice.ts';
 import { fetchInitialMetricUpdate, setData, setLastUpdateDate } from '../redux/reducers/sensorMetricsSlice.ts';
 import { setTimestampFin, setTimestampInicio } from '../redux/reducers/querySlice.ts';
+import { fetchTickets } from '../redux/reducers/ticketSlice.ts';
+import { fetchAssignees } from '../redux/reducers/assigneeSlice.ts';
 
 
 const DIFFERENCE_HOURS_UPDATE = 6
@@ -20,6 +22,11 @@ const HOURS_TO_FETCH_DATA = 24
 
 const AuthenticatedApp = () => {
     const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        dispatch(fetchTickets());
+        dispatch(fetchAssignees());
+    }, [dispatch]);
 
     useEffect(() => {
         const getStoredNetworkMetrics = () => {

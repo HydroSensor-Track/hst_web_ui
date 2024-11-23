@@ -6,7 +6,7 @@
 
 
 import { QueryChart } from "../interfaces/queryChart";
-import { DeltaBatteryLevelPoint, DeltaWaterLevelPoint, NetworkBatteryLevelData, NetworkWaterLevelData, PrevenirWaterLevelPoint } from "../interfaces/sensorInfo";
+import { DeltaMetric, DeltaBatteryLevelPoint, DeltaWaterLevelPoint, NetworkBatteryLevelData, NetworkWaterLevelData, PrevenirWaterLevelPoint } from "../interfaces/sensorInfo";
 
 const RED_INICIAL = "delta-parana"
 
@@ -31,8 +31,8 @@ export const generateInitialState = () => {
     return query;
 }
 
-export function isMetricDeltaInfo(datapoint: DeltaWaterLevelPoint | PrevenirWaterLevelPoint): datapoint is DeltaWaterLevelPoint {
-    return (datapoint as DeltaWaterLevelPoint).hora !== undefined;
+export function isMetricDeltaInfo(datapoint: DeltaMetric | PrevenirWaterLevelPoint): datapoint is DeltaMetric {
+    return (datapoint as DeltaMetric).hora !== undefined;
 }
 
 

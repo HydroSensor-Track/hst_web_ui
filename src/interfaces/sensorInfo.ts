@@ -55,6 +55,9 @@ export type SensorWaterLevel = {[sensorId: string]: (PrevenirWaterLevelPoint | D
 export type SensorBattery = {[sensorId: string]: (DeltaBatteryLevelPoint)[]};
 export type SensorSignal = {[sensorId: string]: (DeltaSignalStrengthPoint)[]}; 
 
+export type DeltaMetric = DeltaWaterLevelPoint | DeltaBatteryLevelPoint | DeltaSignalStrengthPoint;
+export type PrevenirMetric = PrevenirWaterLevelPoint;
+
 export interface NetworkWaterLevelData {
     [networkName: string]: SensorWaterLevel;
 }

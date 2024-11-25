@@ -14,6 +14,8 @@ import StyledSelect from "../styled-components/StyledSelect.tsx";
 import {Ticket} from "../interfaces/tickets.ts";
 import {StyledViewDetails} from "../styled-components/Tickets.tsx";
 import {useTranslation} from "react-i18next";
+import Select from 'react-select';
+import {customStyles} from "../styled-components/StyledTicketFiler.tsx";
 
 export interface ColumnProps<T> {
     key: string;
@@ -52,14 +54,14 @@ const FilterPanel = ({
     }));
 
     return (
-        <div style={{ position: 'absolute', background: 'white', border: '1px solid #ccc', padding: '10px' }}>
-            <StyledSelect
+        <div>
+            <Select
                 isMulti
                 value={formattedOptions.filter(opt => selectedOptions.includes(opt.value))}
                 onChange={handleChange}
                 options={formattedOptions}
                 placeholder="Select options"
-                classNamePrefix="custom-select"
+                styles={customStyles}
             />
         </div>
     );
@@ -186,8 +188,8 @@ const Table = <T,>({ data = [], elementsPerPage, errorMessage, handleViewDetails
         return (
             <th key={index}>
                 <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center',  position: 'relative'}}>
-                    <span>{column.title}</span>
-                    <StyledFilterButton onClick={() => setActiveFilter(column.key)} isActive={isActive}/>
+                    {activeFilter===column.key ? null :<span style={{paddingLeft: "20px",paddingRight: "20px"}}>{column.title}</span>}
+                    {activeFilter===column.key || column.key === 'viewDetails' ? null : <StyledFilterButton onClick={() => setActiveFilter(column.key)} isActive={isActive}/>}
                     {activeFilter === column.key && (
                         <div ref={filterPanelRef}>
                             <FilterPanel

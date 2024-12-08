@@ -19,14 +19,21 @@ export interface SensorPrevenirInfo {
     hora: string;
 }
 
-export type SensorList = (SensorDeltaInfo | SensorPrevenirInfo)[];
-
 export interface LocationData {
     [locationName: string]: SensorList;
 }
 
-export interface NetworkData {
-    [networkName: string]: LocationData;
+export type SensorList = (SensorDeltaInfo | SensorPrevenirInfo)[];
+
+export type Network = "delta-parana" | "prevenir"
+
+export type NetworkData = {
+    [key in Network]: LocationData;
+}
+
+export enum NETWORK {
+    DELTA_PARANA = "delta-parana",
+    PREVENIR = "prevenir"
 }
 
 export enum METRIC_TYPE {

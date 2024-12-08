@@ -31,7 +31,6 @@ export const StyledTable = styled.table<StyledTableProps>`
       padding: 0.5vh;
       text-align: center;
       font-size: ${(props) => props.theme.sizes.textFontSize};
-      width: ${(props) => props.columnWidth}%;
     }
 
     th {
@@ -45,6 +44,10 @@ export const StyledTable = styled.table<StyledTableProps>`
 
     tr:nth-child(even) td {
       background-color: ${(props) => props.theme.colors.lightGray};
+    }
+
+    th:not([style*="width"]) {
+        width: auto;
     }
 
     a {

@@ -6,7 +6,6 @@ import { RootState, AppDispatch } from "../redux/store.ts";
 import { setUbicacion, setSensores, setTimestampInicio, setTimestampFin, setUnidadTiempo, setActualizacionTiempo } from '../redux/reducers/querySlice.ts';
 import { FilterMainContainer, FilterContainer, FilterTitle, customStyles, TimeFilterContainer } from "../styled-components/FilterPanel.tsx";
 import CustomDatePicker from './DatePicker.tsx';
-import { fetchMetricUpdateBySensor } from "../redux/reducers/sensorMetricsSlice";
 
 
 const FilterPanel = () => {

@@ -23,6 +23,7 @@ export interface AssigneeState {
 export interface UserState {
     users: UserCompleteInfo[];
     user: Partial<UserCompleteInfo>;
+    current_user: Partial<UserCompleteInfo>;
     loading: boolean;
     error: string | null;
 }

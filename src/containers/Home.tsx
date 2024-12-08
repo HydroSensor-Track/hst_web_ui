@@ -21,9 +21,6 @@ const Home = () => {
 
     useEffect(() => {
         setCurrentSensorDetails(sensorsInfo[red][ubicacion])
-        console.log("Unicamente cambiaron red o ubicacion")
-        console.log(red)
-        console.log(ubicacion)
     }, [red, ubicacion, sensorsInfo])
 
     return (

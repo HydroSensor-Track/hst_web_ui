@@ -1,7 +1,7 @@
 import { GridColDef } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
@@ -12,7 +12,7 @@ import Icon from "../components/Icon.tsx";
 import AddUserModal from "../components/AddUserModal";
 import { useModal } from "../contexts/ModalContext";
 import { RootState, AppDispatch } from "../redux/store.ts";
-import { getUsersList, deleteUserById } from "../redux/reducers/usersSlice.ts";
+import { deleteUserById } from "../redux/reducers/usersSlice.ts";
 import { DataGridUserInfo } from "../interfaces/userInfo.ts";
 import Loading from '../components/Loading.tsx';
 import { getColumns } from '../utils/columns';
@@ -77,9 +77,6 @@ const Backoffice = () => {
         lastName: user_metadata?.last_name || '',
     }));
 
-    useEffect(() => {
-        dispatch(getUsersList());
-    }, []);
 
     return (
         loading ? <Loading />

@@ -26,8 +26,6 @@ interface UserCardItemProps {
     title: string;
     value: string | Date;
     field?: keyof UserInfo;
-    showHeader?: boolean;
-    userInfo: UserInfo;
     handleEditClick: (field: keyof UserInfo) => void;
 }
 
@@ -35,8 +33,6 @@ const UserCard: React.FC<UserCardItemProps> = ({
     title,
     value,
     field,
-    showHeader = false,
-    userInfo,
     handleEditClick,
 }) => {
     const theme = useTheme();
@@ -44,23 +40,9 @@ const UserCard: React.FC<UserCardItemProps> = ({
 
     return (
         <Card sx={cardStyles(theme)}>
-            {showHeader ? (
-                <>
-                    <CardHeader
-                        title={userInfo.emailVerified ? t('emailVerified') : t('emailNotVerified')}
-                        avatar={
-                            userInfo.emailVerified ?
-                                <Icon name="checkCircle" /> :
-                                <Icon name="cancelCircle" />
-                        }
-                        sx={cardHeaderStyles(theme, userInfo.emailVerified)}
-                    />
-                    <Divider sx={dividerStyles(theme)} />
-                </>
-            ) : null}
             <CardContent>
                 <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
+                    <Grid item display={"flex"} flexDirection={'row'} justifyContent={"space-between"} width={"40%"}>
                         <Typography sx={cardTypographyHeaderStyles(theme)} >{t(title)}</Typography>
                         <Typography sx={cardTypographyContentStyles(theme)}>
                             {getTranslatedValueOrDateString(value, t)}

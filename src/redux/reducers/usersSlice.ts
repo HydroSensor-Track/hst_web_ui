@@ -7,6 +7,7 @@ import { getUsers, getUserById, createUser, updateUser, deleteUser } from '../..
 const INITIAL_STATE: UserState = {
     users: [],
     user: {},
+    current_user: {}, 
     loading: false,
     error: null,
 };
@@ -18,6 +19,15 @@ export const getUsersList = createAsyncThunk<any, void>(
         const response = await getUsers();
         const userList: UserCompleteInfo[] = response;
         return userList;
+    }
+);
+
+export const getCurrentUser = createAsyncThunk<any, string | undefined>(
+    'users/getCurrentUser',
+    async (id) => {
+        const response = await getUserById(id);
+        const user: UserCompleteInfo = response;
+        return user;
     }
 );
 
@@ -72,6 +82,18 @@ const usersSlice = createSlice({
         builder.addCase(getUsersList.rejected, (state, action) => {
             state.loading = false;
             state.error = action.error.message || 'Error fetching users';
+        });
+        builder.addCase(getCurrentUser.pending, state => {
+            state.loading = true;
+            state.error = null;
+        });
+        builder.addCase(getCurrentUser.fulfilled, (state, action) => {
+            state.loading = false;
+            state.current_user = action.payload;
+        });
+        builder.addCase(getCurrentUser.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.error.message || 'Error fetching user';
         });
         builder.addCase(getUser.pending, state => {
             state.loading = true;

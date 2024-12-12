@@ -38,7 +38,7 @@ const AuthenticatedApp = () => {
         if (redirectPath) {
             // Removes the "/hst_web_ui" prefix from the path if present
             // hst_web_ui is the GitHub repository name
-            const sanitizedPath = redirectPath.replace("/^/hst_web_ui/", '');
+            const sanitizedPath = redirectPath.replace(/^\/hst_web_ui/, '');
             navigate(sanitizedPath, { replace: true });
         }
     }, [navigate]);

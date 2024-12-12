@@ -70,19 +70,19 @@ const DateHeader = forwardRef<HTMLDivElement, DateHeaderProps>(({
                             background: 'none',
                             border: 'none',
                             cursor: 'pointer',
-                            marginLeft: '5px',
+                            fontSize: '2vh',
                             color:  filtered ? theme.colors.primary : 'white'
                         }}
                     >
                         ▼
                     </button>
                     {isActive && (
-                        <div onClick={(e) => e.stopPropagation()} style={{position: "absolute", width: "400px"}}>
+                        <div onClick={(e) => e.stopPropagation()} style={{position: "absolute", width: "55vh"}}>
                             <DateRangePicker
                                 value={dateRange}
                                 onOk={(e) => handleSelect(e)}
                                 format="MM/dd/yyyy HH:mm"
-                                style={{width: "100%"}}
+                                size='xs'
                                 open={true}
                                 onClean={handleClear} // Limpia los filtros
                                 showHeader={false}

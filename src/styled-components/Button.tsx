@@ -6,7 +6,7 @@ export const StyledButton = styled.button`
       ? props.theme.colors.buttonDisabled
       : props.theme.colors.primary};
   color: white;
-  height: 30px;
+  height: 5vh;
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 4px;

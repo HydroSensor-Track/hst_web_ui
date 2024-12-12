@@ -134,7 +134,7 @@ export const SensorInfoComponent: React.FC<{sensors: SensorList}> = ({sensors}) 
                 
                 <SensorDetails sensor={sensors[currentIndex]}/>
 
-                <TicketSensorTable sensorId={sensors[currentIndex].id} errorMessage="No hay tickets abiertos para este sensor" handleViewDetails={() => console.log("View details")} />
+                {/*<TicketSensorTable sensorId={sensors[currentIndex].id} errorMessage="No hay tickets abiertos para este sensor" handleViewDetails={() => console.log("View details")} />*/}
                 </>
             }
         </SensorInfoContainer>

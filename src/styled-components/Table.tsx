@@ -108,7 +108,7 @@ export const StyledFilterButton = styled(FilterAltIcon)<{ isActive: boolean }>`
   right: 0;
   border: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 3vh;
   display: flex;
   align-items: center;
   justify-content: center;

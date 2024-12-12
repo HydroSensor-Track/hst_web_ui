@@ -15,14 +15,14 @@ export const ModalContainer = styled.div`
 
 export const ModalContent = styled.div`
     background-color: ${(props) => props.theme.colors.componentBackground};
-    padding: 50px;
+    padding: 6vh;
     border-radius: 10px;
-    width: 40%;
+    width: 80%;
     overflow-y: auto;
 `;
 
 export const ModalHeader = styled.h2`
-    margin-bottom: 20px;
+    margin-bottom: 3vh;
 `;
 
 export const ModalForm = styled.form`
@@ -33,6 +33,7 @@ export const ModalForm = styled.form`
 
 export const ModalItem = styled.div`
     width: 40%;
+    height: 11vh;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -41,12 +42,13 @@ export const ModalItem = styled.div`
 
 export const ModalLabel = styled.label`
     color: ${(props) => props.theme.colors.text};
-    font-size: 14px;
+    font-size: 2vh;
 `;
 
 export const ModalTextError = styled.p`
     color: ${(props) => props.theme.colors.error};
-    font-size: 10px;
+    margin-top: 0; 
+    font-size: 1.5vh;
 `;
 
 export const ModalInput = styled.input`

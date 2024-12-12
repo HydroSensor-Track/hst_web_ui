@@ -4,6 +4,7 @@ html, body, #root {
     padding: 0;
     display: flex;
     flex-direction: column;
+    font-size: 2vh;
   }
 
 body {

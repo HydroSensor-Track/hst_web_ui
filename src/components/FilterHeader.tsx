@@ -51,7 +51,8 @@ const FilterHeader: React.FC<FilterHeaderProps> = ({
                             background: 'none',
                             border: 'none',
                             cursor: 'pointer',
-                            marginLeft: '5px',
+                            fontSize: '2vh',
+                            margin: '0',
                             color: filtered ? theme.colors.primary : 'white'
                         }}
                     >
@@ -65,11 +66,11 @@ const FilterHeader: React.FC<FilterHeaderProps> = ({
                                 left: 0,
                                 background: 'white',
                                 listStyle: 'none',
-                                padding: '0.8rem',
+                                padding: '2vh',
                                 zIndex: 1000,
-                                maxHeight: '200px',
+                                maxHeight: '25vh',
                                 overflowY: 'auto',
-                                width: "150px",
+                                width: "20vh",
                                 borderRadius: "12px"
                             }}
                         >

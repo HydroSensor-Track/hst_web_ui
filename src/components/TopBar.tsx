@@ -164,8 +164,8 @@ const TopBar = ({ className }: TopBarProps) => {
 
       {location.pathname === "/" && (
         <>
-        <div  style={{display: "flex", flexDirection: "column", width: "40%", alignItems: "center"}}>
-          <div  style={{display: "flex", flexDirection: "row", gap: "10px", alignItems: "center"}}>
+        <div  style={{height: '6vh',display: "flex", flexDirection: "column", width: "40%", alignItems: 'center'}}>
+          <div  style={{height: '6vh',display: "flex", flexDirection: "row", gap: "1vh"}}>
 
               <Select 
                 value={networkOptions.find(option => option.value === currentNetwork)}
@@ -177,7 +177,6 @@ const TopBar = ({ className }: TopBarProps) => {
                 />
               <Button onClick={handleRefresh} icon={<Icon name="refresh"/>} disabled={loadingSensors} />
             </div>
-            <p style={{fontSize: "12px"}}>Última actualización: {new Date(lastUpdateDateLocal).toUTCString()}</p>
         </div>
         
         </>

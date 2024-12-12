@@ -12,7 +12,7 @@ const LogoAndTitle = ({column = true, logoSize}: {column?:boolean, logoSize?:str
         <CenteredDiv $column={column}>
           <Logo style={{"width": logoWidth}}/>
           <div>
-            <Title style={{"fontSize": "15px"}}>{t('title')}</Title>
+            <Title style={{"fontSize": "2.2vh"}}>{t('title')}</Title>
           </div>
 
         </CenteredDiv>

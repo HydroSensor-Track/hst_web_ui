@@ -6,7 +6,7 @@ import { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import DataTable from "../components/DataTable";
-import { BackofficeContainer } from "../styled-components/Backoffice";
+import { BackofficeContainer, ErrorMessage } from "../styled-components/Backoffice";
 import { ActionMenu } from "../styled-components/StyledDataTable";
 import Icon from "../components/Icon.tsx";
 import AddUserModal from "../components/AddUserModal";
@@ -23,7 +23,8 @@ const Backoffice = () => {
     const { t } = useTranslation();
     const { openModal, updateOpenModal } = useModal();
     const dispatch = useDispatch<AppDispatch>();
-    const { users, loading } = useSelector((state: RootState) => state.users);
+    const { users, loading, error } = useSelector((state: RootState) => state.users);
+    // TODO: show a message when there are errors
 
     const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
     const [userIdToDelete, setUserIdToDelete] = useState<string | null>(null);
@@ -82,6 +83,7 @@ const Backoffice = () => {
         loading ? <Loading />
             :
             <BackofficeContainer>
+                {error && <ErrorMessage>{t('errorLoadingUsers')}</ErrorMessage>}
                 <DataTable columns={columnsWithActions} rows={rows} />
                 {openModal && <AddUserModal setOpen={updateOpenModal} />}
                 {isModalDeleteOpen && (

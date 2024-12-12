@@ -12,7 +12,7 @@ const querySlice = createSlice({
     name: 'query',
     initialState,
     reducers: {
-        setRed: (state, action: PayloadAction<string>) => {
+        setRed: (state, action: PayloadAction<"delta-parana" | "prevenir">) => {
             state.red = action.payload;
         },
         setUbicacion: (state, action: PayloadAction<string>) => {

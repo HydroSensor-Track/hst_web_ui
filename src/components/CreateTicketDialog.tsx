@@ -5,7 +5,6 @@ import {
   DialogTitle,
   Grid,
   FormControlLabel,
-  SelectChangeEvent,
 } from '@mui/material';
 import {
   StyledDialog,
@@ -14,150 +13,117 @@ import {
   StyledRadioGroup,
   StyledRadio,
 } from '../styled-components/CreateTicketDialog.tsx';
-import StyledSelectComponent from '../styled-components/StyledMuiSelect.tsx';
+import StyledSelectComponent from '../styled-components/StyledMUIComponent.tsx';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
-import { AppDispatch, RootState } from '../redux/store.ts';
+import {AppDispatch, RootState} from '../redux/store.ts';
 import { createTicket } from '../redux/reducers/ticketSlice.ts';
-import { Ticket } from '../interfaces/tickets.ts';
+import { CreateTicket, TicketCategory, TicketCategoryDict, TicketStatus, TicketStatusDict } from '../interfaces/tickets.ts';
+import { NETWORK, Network } from '../interfaces/sensorInfo.ts';
 
-
-interface CreateTicketDialogProps {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: (ticketData: Ticket) => void;
-}
-
-interface TicketErrors {
+type ValidationErrors = {
   description?: string;
   location?: string;
-  sensorId?: string;
-  assignee?: string;
+  sensor?: string;
   category?: string;
 }
 
-const CreateTicketDialog = ({ open, onClose, onSubmit }: CreateTicketDialogProps) => {
+const CreateTicketDialog = ({ open, onClose, onSubmit }) => {
+
   const { t } = useTranslation();
+
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
-  const [sensorId, setSensorId] = useState('');
-  const [assignee, setAssignee] = useState(t('unassigned'));
-  const [category, setCategory] = useState('');
-  const [customCategory, setCustomCategory] = useState('');
-  const [validationErrors, setValidationErrors] = useState<TicketErrors>({});
-  const [projectType, setProjectType] = useState('delta-parana');
+  const [sensor, setSensor] = useState('');
+  const [assignee, setAssignee] = useState<string>(TicketStatusDict[TicketStatus.UNASSIGNED]);
+  const [category, setCategory] = useState<TicketCategory>(TicketCategory.MANTENIMIENTO);
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
+  const [red, setRed] = useState<Network>(NETWORK.DELTA_PARANA);
+
   const [availableSensors, setAvailableSensors] = useState([""]);
   const [availableLocations, setAvailableLocations] = useState([""]);
 
-  const assigneesData = [t('unassigned'), 'User 1', 'User 2', 'User 3']; // TODO: replace with getUsers
+  const users = useSelector((state: RootState) => state.users.users);
+  const current_user = useSelector((state: RootState) => state.users.current_user);
+  const assigneesData = [TicketStatusDict[TicketStatus.UNASSIGNED], ...users.map((user) => {return user.username})];
+
   const networkData = useSelector((state: RootState) => state.sensorsInfo.byLocation);
-  const ticketsData = useSelector((state: RootState) => state.ticket.tickets);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    // Reset states when dialog opens or closes
-    setDescription('');
-    setLocation('');
-    setSensorId('');
-    setAssignee(t('unassigned'));
-    setCategory('');
-    setCustomCategory('');
-    setProjectType('delta-parana');
-  }, [open]);
+
+    setAvailableLocations(Object.keys(networkData[red]))
+    setAvailableSensors([""])
+
+  }, [red, networkData]);
 
   useEffect(() => {
-
-    setAvailableLocations(Object.keys(networkData[projectType]))
-
-  }, [projectType, networkData]);
-
-  useEffect(() => {
-
-    console.log(location)
 
     if (location !== "") {
-      console.log(networkData)
-      setAvailableSensors(networkData[projectType][location].map((sensor) => sensor.id))
+        setAvailableSensors(networkData[red][location].map((sensor) => sensor.id))
     }
 
   }, [location]);
 
-  const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedCategory = event.target.value;
-    setValidationErrors({ ...validationErrors, category: '' });
-    if (selectedCategory === 'custom') {
-      setCategory('');
-    } else {
-      setCategory(selectedCategory);
-      setCustomCategory('');
-    }
-  };
 
   const handleSubmit = () => {
-    let errors: TicketErrors = {};
+    const errors: ValidationErrors = {};
 
-    if (!description) errors.description = t('requiredField');
-    if (!location) errors.location = t('requiredField');
-    if (!sensorId) errors.sensorId = t('requiredField');
-    if (!assignee) errors.assignee = t('requiredField');
-    if (!category && !customCategory) errors.category = t('requiredField');
+    if (!description) errors.description = "Campo obligatorio";
+    if (!location) errors.location = "Campo obligatorio";
+    if (!sensor) errors.sensor = "Campo obligatorio";
+    if (!category) errors.category = "Campo obligatorio";
 
     setValidationErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      const finalCategory = category || customCategory;
 
-      const maxId = ticketsData.reduce(
-        (max: number, ticket: { idTicket: number }) => Math.max(max, ticket.idTicket),
-        0
-      );
-
-      const ticketData: Ticket = {
-        idSensor: parseInt(sensorId),
-        idTicket: maxId, //TODO: Complete with real ID
-        createdDate: new Date().toISOString(),
-        updatedDate: new Date().toISOString(),
-        status: assignee === t('unassigned') ? "UNASSIGNED" : "ASSIGNED",
-        createdBy: "defaultUser", //TODO: Complete with user.currentUser
-        updatedBy: "defaultUser", // TODO: Complete with user.currentUser
-        category: finalCategory,
-        assignee,
-        description,
-        location,
-        projectType
+      const ticketData: CreateTicket = {
+          createdDate: new Date().toISOString(),
+          updatedDate: new Date().toISOString(),
+          status: assignee === TicketStatusDict[TicketStatus.UNASSIGNED] ? TicketStatus.UNASSIGNED : TicketStatus.ASSIGNED,
+          createdBy: current_user.username ? current_user.username : "default",
+          updatedBy: current_user.username ? current_user.username : "default",
+          category: category ? category : TicketCategory.MANTENIMIENTO,
+          assignee: assignee === TicketStatusDict[TicketStatus.UNASSIGNED] ? null : assignee,
+          description,
+          location,
+          red,
+          sensor
       };
+
       console.log("Ticket Data", ticketData);
-      dispatch(createTicket(ticketData));
+      dispatch(createTicket({ticket:ticketData, red:red}));
       onSubmit(ticketData);
       onClose();
-    }
-  };
+        }
+    };
 
 
   return (
     <StyledDialog open={open} onClose={onClose} fullWidth maxWidth="lg">
-      <DialogTitle>{t('createTicket')}</DialogTitle>
+      <DialogTitle>Crear ticket</DialogTitle>
 
       <DialogContent>
         <Grid container spacing={2} style={{ marginTop: '0.5vh' }}>
           {/* Radio Group for Project Type */}
           <Grid item xs={12}>
             <StyledRadioGroup
-              aria-label="projectType"
-              name="projectType"
-              value={projectType}
-              onChange={(e) => setProjectType(e.target.value)}
+              aria-label="red"
+              name="red"
+              value={red}
+              onChange={(e) => setRed(e.target.value as Network)}
               row
             >
               <FormControlLabel
-                value="delta-parana"
+                value={NETWORK.DELTA_PARANA}
                 control={<StyledRadio />}
-                label={t('deltaParana')}
+                label={NETWORK.DELTA_PARANA}
               />
               <FormControlLabel
-                value="prevenir"
+                value={NETWORK.PREVENIR}
                 control={<StyledRadio />}
-                label={t('prevenir')}
+                label={NETWORK.PREVENIR}
               />
             </StyledRadioGroup>
           </Grid>
@@ -167,16 +133,16 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }: CreateTicketDialogProps
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <StyledSelectComponent
-                  label={t('location')}
+                  label="Ubicacion"
                   value={location}
-                  onChange={(e: SelectChangeEvent<unknown>) => {
-                    const value = e.target.value as string;
+                  onChange={(e: { target: { value: string; }; }) => {
+                    const value = e.target.value;
                     setLocation(value);
-                    setSensorId(''); // Clear sensor selection when location changes
+                    setSensor('');
                     setValidationErrors((prev) => ({ ...prev, location: '' }));
                   }}
                   options={availableLocations}
-                  required={true}
+                  required
                 />
                 {validationErrors.location && (
                   <div style={{ color: 'red' }}>{validationErrors.location}</div>
@@ -184,78 +150,57 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }: CreateTicketDialogProps
               </Grid>
               <Grid item xs={12}>
                 <StyledSelectComponent
-                  label={t('sensorId')}
-                  value={sensorId}
-                  onChange={(e: SelectChangeEvent<unknown>) => {
-                    const value = e.target.value as string;
-                    setSensorId(value);
-                    setValidationErrors((prev) => ({ ...prev, sensorId: '' }));
+                  label="Sensor"
+                  value={sensor}
+                  onChange={(e: { target: { value: string; }; }) => {
+                    const value = e.target.value;
+                    setSensor(value);
+                    setValidationErrors((prev) => ({ ...prev, sensor: '' }));
                   }}
                   options={availableSensors}
-                  required={true}
+                  required
                 />
-                {validationErrors.sensorId && (
-                  <div style={{ color: 'red' }}>{validationErrors.sensorId}</div>
-                )}
-              </Grid>
-              <Grid item xs={12}>
-                <StyledSelectComponent
-                  label={t('assignee')}
-                  value={assignee}
-                  onChange={(e: SelectChangeEvent<unknown>) => {
-                    const value = e.target.value as string;
-                    setAssignee(value);
-                    setValidationErrors((prev) => ({ ...prev, assignee: '' }));
-                  }}
-                  options={assigneesData}
-                  required={true}
-                />
-                {validationErrors.assignee && (
-                  <div style={{ color: 'red' }}>{validationErrors.assignee}</div>
+                {validationErrors.sensor && (
+                  <div style={{ color: 'red' }}>{validationErrors.sensor}</div>
                 )}
               </Grid>
             </Grid>
           </Grid>
-
-          {/* Right Section: Radio Group for Categories */}
           <Grid item xs={6}>
-            <StyledRadioGroup
-              aria-label="category"
-              name="category"
-              value={category || 'custom'}
-              onChange={handleCategoryChange}
-            >
-              <FormControlLabel
-                value="MANTENIMIENTO"
-                control={<StyledRadio />}
-                label={t('maintenance')}
-              />
-              <FormControlLabel
-                value="FUERA_DE_SERVICIO"
-                control={<StyledRadio />}
-                label={t('outOfService')}
-              />
-              <FormControlLabel
-                value="custom"
-                control={<StyledRadio />}
-                label={t('customCategory')}
-              />
-              {category === '' && (
-                <StyledTextField
-                  label={t('enterCustomCategory')}
-                  fullWidth
-                  variant="outlined"
-                  value={customCategory}
-                  onChange={(e) => {
-                    setCustomCategory(e.target.value);
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <StyledSelectComponent
+                  label="Asignado"
+                  value={assignee}
+                  onChange={(e: { target: { value: string; }; }) => {
+                    const value = e.target.value;
+                    setAssignee(value);
+                    setValidationErrors((prev) => ({ ...prev, assignee: '' }));
+                  }}
+                  options={assigneesData}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <StyledSelectComponent
+                  label="Categoría"
+                  value={category}
+                  onChange={(e: { target: { value: string; }; }) => {
+                    const key = e.target.value as TicketCategory;
+                    setCategory(key);
                     setValidationErrors((prev) => ({ ...prev, category: '' }));
                   }}
+                  options={Object.entries(TicketCategoryDict).map(([key, value]) => ({
+                    value: key, // Clave que será guardada
+                    label: value, // Valor visible para el usuario
+                  }))}
+                  required
                 />
-              )}
-              {validationErrors.category && (
-                <div style={{ color: 'red' }}>{validationErrors.category}</div>
-              )}
-            </StyledRadioGroup>
+                {validationErrors.category && (
+                  <div style={{ color: 'red' }}>{validationErrors.category}</div>
+                )}
+              </Grid>
+            </Grid>
           </Grid>
 
           {/* Description Input at Bottom */}
@@ -283,10 +228,10 @@ const CreateTicketDialog = ({ open, onClose, onSubmit }: CreateTicketDialogProps
       {/* Action Buttons */}
       <DialogActions>
         <StyledButton onClick={onClose} color="secondary">
-          {t('cancel')}
+          Cancelar
         </StyledButton>
         <StyledButton onClick={handleSubmit} color="primary">
-          {t('create')}
+          Crear
         </StyledButton>
       </DialogActions>
     </StyledDialog>

@@ -52,7 +52,7 @@ const User: React.FC = () => {
         if (editableFieldKey === 'firstName') {
             data = {
                 user_metadata: {
-                    "frist_name": editableField[editableFieldKey] ?? ''
+                    "first_name": editableField[editableFieldKey] ?? ''
                 }
             };
         } else if (editableFieldKey === 'lastName') {
@@ -147,8 +147,6 @@ const User: React.FC = () => {
                             title={cardDataProps.title}
                             value={cardDataProps.value}
                             field={cardDataProps.field as keyof UserInfo}
-                            showHeader={cardDataProps.showHeader}
-                            userInfo={userInfo}
                             handleEditClick={handleEditClick}
                         />
                     )

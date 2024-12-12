@@ -1,14 +1,9 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { NetworkData, LocationData, SensorDeltaInfo, SensorPrevenirInfo } from '../../interfaces/sensorInfo';
-import { getDeltaLocations, getPrevenirLocations, getSensorLatest } from '../../services/sensors_location';
+import { getDeltaLocations, getPrevenirLocations, getSensorLatest } from '../../services/sensors';
 import { sortNetworksByLocation } from '../../utils/functions';
+import { SensorsInfoState } from '../../interfaces/redux';
 
-
-interface SensorsInfoState {
-  byLocation: NetworkData;
-  loading: boolean;
-  error: string | null;
-}
 
 const initialState: SensorsInfoState = {
   byLocation: {"delta-parana": {}, "prevenir": {}},
@@ -16,6 +11,7 @@ const initialState: SensorsInfoState = {
   error: null,
 };
 
+// TODO: Manejar Excepciones y errores
 export const fetchSensorsInfo = createAsyncThunk(
   'locations/fetchSensorsInfo',
   async () => {
@@ -43,6 +39,8 @@ export const fetchSensorsInfo = createAsyncThunk(
         }
       })
     );
+
+
 
     await Promise.all(sensorsPrevenir.map(async (location) => {
       const sensorLatestInfo = await getSensorLatest("prevenir", location)

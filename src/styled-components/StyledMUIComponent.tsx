@@ -1,4 +1,4 @@
-import { Select, FormControl, InputLabel, MenuItem, SelectChangeEvent } from '@mui/material';
+import { Select, FormControl, InputLabel, MenuItem } from '@mui/material';
 import styled from 'styled-components';
 import { useTheme } from "styled-components";
 
@@ -52,21 +52,7 @@ const StyledMenuItem = styled(MenuItem)`
     }
 `;
 
-interface StyledSelectComponentProps {
-    label: string;
-    value: string;
-    onChange: (event: SelectChangeEvent<unknown>) => void;
-    options: string[];
-    required: boolean; // Add the required prop
-}
-
-export default function StyledSelectComponent({
-    label,
-    value,
-    onChange,
-    options,
-    required
-}: StyledSelectComponentProps) {
+export default function StyledSelectComponent({ label, value, onChange, options, disabled }) {
     const theme = useTheme(); // Use the theme to get the colors
 
     return (
@@ -76,6 +62,7 @@ export default function StyledSelectComponent({
                 value={value}
                 onChange={onChange}
                 label={label}
+                disabled={disabled}
                 MenuProps={{
                     PaperProps: {
                         style: {
@@ -84,13 +71,24 @@ export default function StyledSelectComponent({
                         },
                     },
                 }}
-                required={required} // Pass the required prop to the Select component
             >
-                {options.map((option) => (
-                    <StyledMenuItem key={option} value={option}>
-                        {option}
-                    </StyledMenuItem>
-                ))}
+                {options.map((option) => {
+                    // Verificar si la opción es un objeto con clave-valor
+                    if (typeof option === "object" && option !== null && "value" in option && "label" in option) {
+                        return (
+                            <StyledMenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </StyledMenuItem>
+                        );
+                    }
+
+                    // Si no, asumir que es una cadena
+                    return (
+                        <StyledMenuItem key={option} value={option}>
+                            {option}
+                        </StyledMenuItem>
+                    );
+                })}
             </StyledMuiSelect>
         </StyledFormControl>
     );

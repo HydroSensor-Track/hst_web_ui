@@ -9,9 +9,8 @@ function App() {
     const { isLoading, isAuthenticated, error } =
         useAuth0();
 
-
     if (isLoading) {
-        return <Loading />;
+        return <Loading/>;
     }
     if (error) {
         return <div>Oops... {error.message}</div>;
@@ -19,11 +18,12 @@ function App() {
 
     if (isAuthenticated) {
         return (
-            <AuthenticatedApp />
+            <AuthenticatedApp/>
         );
     } else {
-        return <Login />;
+        return <Login/>;
     }
+    
 }
 
 export default App;

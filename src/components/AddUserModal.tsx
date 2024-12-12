@@ -37,6 +37,12 @@ const AddUserModal = ({ setOpen }: Props) => {
         passwordError: undefined,
         confirmPasswordError: undefined
     });
+    const [touchedFields, setTouchedFields] = useState({
+        email: false,
+        userName: false,
+        password: false,
+        confirmPassword: false,
+    });
     const [editableFields, setEditableFields] = useState({
         email: '',
         userName: '',
@@ -53,6 +59,13 @@ const AddUserModal = ({ setOpen }: Props) => {
         setEditableFields(prevState => ({
             ...prevState,
             [property]: value
+        }));
+    };
+
+    const handleBlur = (field: string) => {
+        setTouchedFields(prevState => ({
+            ...prevState,
+            [field]: true
         }));
     };
 
@@ -126,11 +139,6 @@ const AddUserModal = ({ setOpen }: Props) => {
         });
     }, [errors, editableFields]);
 
-    /*
-    TODO: react input disable hide text in password
-    make modal responsive
-    hash password or something like that before sending it to the server -> do not necessarily need to do this due to https
-    */
 
     return (
         <Modal
@@ -142,40 +150,6 @@ const AddUserModal = ({ setOpen }: Props) => {
             cancelText={'cancel'}
             submitText={'save'}
         >
-            <ModalItem>
-                <ModalLabel>{t('emailHeader')}</ModalLabel>
-                <TextInput
-                    type="email"
-                    placeholder={t('enterEmail')}
-                    onChange={(value) => setStateProperty('email', value)}
-                />
-                {errors.emailError && <ModalTextError>{t(errors.emailError)}</ModalTextError>}
-            </ModalItem>
-            <ModalItem>
-                <ModalLabel>{t('userNameHeader')}</ModalLabel>
-                <TextInput
-                    type="string"
-                    placeholder={t('enterUserName')}
-                    onChange={(value) => setStateProperty('userName', value)}
-                />
-                {errors.userNameError && <ModalTextError>{t(errors.userNameError)}</ModalTextError>}
-            </ModalItem>
-            <ModalItem>
-                <ModalLabel>{t('passwordHeader')}</ModalLabel>
-                <PasswordInput
-                    placeholder={t('enterPassword')}
-                    onChange={(value) => setStateProperty('password', value)}
-                />
-                {errors.passwordError && <ModalTextError>{t(errors.passwordError)}</ModalTextError>}
-            </ModalItem>
-            <ModalItem>
-                <ModalLabel>{t('confirmPasswordHeader')}</ModalLabel>
-                <PasswordInput
-                    placeholder={t('enterPassword')}
-                    onChange={(value) => setStateProperty('confirmPassword', value)}
-                />
-                {errors.confirmPasswordError && <ModalTextError>{t(errors.confirmPasswordError)}</ModalTextError>}
-            </ModalItem>
             <ModalItem>
                 <ModalLabel>{t('firstNameHeader')}</ModalLabel>
                 <TextInput
@@ -192,6 +166,45 @@ const AddUserModal = ({ setOpen }: Props) => {
                     onChange={(value) => setStateProperty('lastName', value)}
                 />
             </ModalItem>
+            <ModalItem>
+                <ModalLabel>{t('emailHeader')}</ModalLabel>
+                <TextInput
+                    type="email"
+                    placeholder={t('enterEmail')}
+                    onChange={(value) => setStateProperty('email', value)}
+                    onBlur={() => handleBlur('email')}
+                />
+                {errors.emailError && touchedFields.email && <ModalTextError>{t(errors.emailError)}</ModalTextError>}
+            </ModalItem>
+            <ModalItem>
+                <ModalLabel>{t('userNameHeader')}</ModalLabel>
+                <TextInput
+                    type="string"
+                    placeholder={t('enterUserName')}
+                    onChange={(value) => setStateProperty('userName', value)}
+                    onBlur={() => handleBlur('userName')}
+                />
+                {errors.userNameError && touchedFields.userName && <ModalTextError>{t(errors.userNameError)}</ModalTextError>}
+            </ModalItem>
+            <ModalItem>
+                <ModalLabel>{t('passwordHeader')}</ModalLabel>
+                <PasswordInput
+                    placeholder={t('enterPassword')}
+                    onChange={(value) => setStateProperty('password', value)}
+                    onBlur={() => handleBlur('password')}
+                />
+                {errors.passwordError && touchedFields.password && <ModalTextError>{t(errors.passwordError)}</ModalTextError>}
+            </ModalItem>
+            <ModalItem>
+                <ModalLabel>{t('confirmPasswordHeader')}</ModalLabel>
+                <PasswordInput
+                    placeholder={t('enterPassword')}
+                    onChange={(value) => setStateProperty('confirmPassword', value)}
+                    onBlur={() => handleBlur('confirmPassword')}
+                />
+                {errors.confirmPasswordError && touchedFields.confirmPassword && <ModalTextError>{t(errors.confirmPasswordError)}</ModalTextError>}
+            </ModalItem>
+
         </Modal>
     );
 }

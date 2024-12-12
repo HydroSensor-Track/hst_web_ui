@@ -1,52 +1,62 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "../redux/store.ts";
-import { fetchTickets } from "../redux/reducers/ticketSlice.ts";
-import { fetchAssignees } from '../redux/reducers/assigneeSlice.ts';
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store.ts";
 
 import {
-    TicketsContainer
+    TicketsContainer,
 } from "../styled-components/Tickets.tsx";
 
+import { Ticket, TicketStatus, UpdateTicket } from '../interfaces/tickets.ts';
 import Table from "../components/Table.tsx";
 import Loading from '../components/Loading.tsx';
-import TicketDetailModal from '../components/TicketModal.tsx';
+import UpdateTicketDialog from '../components/UpdateTicketDialog.tsx';
+import DeleteTicketDialog from '../components/DeleteTicketDialog.tsx';
+
 
 const Tickets = () => {
-    const dispatch = useDispatch<AppDispatch>();
     const ticketsData = useSelector((state: RootState) => state.ticket.tickets);
     const loading = useSelector((state: RootState) => state.ticket.loading);
     const error = useSelector((state: RootState) => state.ticket.error);
-    // const assigneesData = useSelector((state: RootState) => state.assignee.assignees);
-    // const locationData = useSelector((state: RootState) => state.sensor.locations);
-
     const [elementsPerPage, setElementsPerPage] = useState(10); // Initial default
     const [openTicketModal, setOpenTicketModal] = useState(false);
-    const [selectedTicketId, setSelectedTicketId] = useState<number | null>(null);
+    const [deleteTicketModal, setDeleteTicketModal] = useState(false);
+    const [selectedTicket, setSelectedTicket] = useState<Ticket>();
 
-    const handleViewDetails = (ticketId: number) => {
-        setSelectedTicketId(ticketId);
+    const handleUpdateTicketSubmit = (ticketData: UpdateTicket) => {
+        console.log("Ticket Updated:", ticketData);
+      };
+    
+      const handleDeleteTicket = (idTicket: string) => {
+        console.log("Ticket Deleted:", idTicket);
+      }
+
+    const handleViewDetails = (ticketId: string) => {
+        const ticket = ticketsData.find((t) => t.idTicket === ticketId)
+        setSelectedTicket(ticket);
         setOpenTicketModal(true);
     };
 
     const handleModalClose = () => {
         setOpenTicketModal(false);
-        setSelectedTicketId(null);
     };
 
-    useEffect(() => {
-        dispatch(fetchTickets());
-        dispatch(fetchAssignees());
-    }, [dispatch]);
+    const handleOpenDeleteTicketModal = () => {
+        setOpenTicketModal(false);
+        setDeleteTicketModal(true)
+    }
+
+    const handleCloseDeleteTicketModal = () => {
+        setDeleteTicketModal(false);
+    }
 
     useEffect(() => {
 
         const calculateRowsPerPage = () => {
-            const rowHeight = window.innerHeight * 0.05;
-            const availableHeight = window.innerHeight * 0.6;
-            const rows = Math.floor(availableHeight / rowHeight);
-            setElementsPerPage(rows > 0 ? rows : 1);
-        };
+        const rowHeight = window.innerHeight*0.05;
+        const availableHeight = window.innerHeight*0.6;
+        const rows = Math.floor(availableHeight / rowHeight);
+        setElementsPerPage(rows > 0 ? rows : 1);
+    };
 
         calculateRowsPerPage();
         window.addEventListener('resize', calculateRowsPerPage);
@@ -63,16 +73,29 @@ const Tickets = () => {
             ) : (
                 <Table
                     data={ticketsData}
-
                     elementsPerPage={elementsPerPage}
-                    errorMessage={error} handleViewDetails={handleViewDetails}
+                    errorMessage={error}
+                    handleViewDetails={handleViewDetails}
                 />
             )}
-            {openTicketModal && (
-                <TicketDetailModal
+            {(openTicketModal && selectedTicket) && (
+                <UpdateTicketDialog
                     open={openTicketModal}
                     onClose={handleModalClose}
-                    ticketId={selectedTicketId}
+                    onDelete={handleOpenDeleteTicketModal}
+                    mode='edit'
+                    initialData={selectedTicket}
+                    onSubmit={handleUpdateTicketSubmit}
+                    disabledEdit={selectedTicket.status === TicketStatus.CLOSED || selectedTicket.status === TicketStatus.DONE ? true : false}
+                />
+            )}
+            {(deleteTicketModal && selectedTicket) && (
+                <DeleteTicketDialog
+                    open={deleteTicketModal}
+                    onClose={handleCloseDeleteTicketModal}
+                    idTicket={selectedTicket.idTicket}
+                    red={selectedTicket.red}
+                    onSubmit={handleDeleteTicket}
                 />
             )}
         </TicketsContainer>

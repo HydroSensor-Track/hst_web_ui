@@ -1,12 +1,5 @@
 import styled from 'styled-components';
-import {
-  TextField,
-  Button,
-  RadioGroup,
-  Radio,
-  FormControl,
-  Dialog,
-} from '@mui/material';
+import { TextField, Button, RadioGroup, Radio, FormControl, Dialog } from '@mui/material';
 
 // Styled Dialog component
 export const StyledDialog = styled(Dialog)`

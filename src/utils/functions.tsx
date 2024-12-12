@@ -8,20 +8,20 @@ export const getLogoAndFontSize = (logoSize?: string) => {
     let fontSize = "";
     switch (logoSize) {
         case "small":
-            size = "30px";
-            fontSize = "10px";
+            size = "2vw";
+            fontSize = "2vw";
             break;
         case "medium":
-            size = "40px";
-            fontSize = "20px";
+            size = "7vh";
+            fontSize = "3vw";
             break;
         case "large":
-            size = "50px";
-            fontSize = "30px";
+            size = "9vh";
+            fontSize = "4vw";
             break;
         default:
-            size = "100px";
-            fontSize = "40px";
+            size = "11vh";
+            fontSize = "5vw";
     }
     return { "logoWidth": size, "fontSize": fontSize };
 }

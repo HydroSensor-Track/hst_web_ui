@@ -25,7 +25,8 @@ const theme = {
     modalBackground: "#000000b9",
     error: "#ff0000",
     success: "#008000",
-    cancel: '#EE4B2B'
+    cancel: '#EE4B2B',
+    darkSideBarBackground: "#0e1920"
     // Add more colors as needed
   },
   sizes: {

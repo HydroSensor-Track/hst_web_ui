@@ -6,6 +6,7 @@ export const StyledButton = styled.button`
       ? props.theme.colors.buttonDisabled
       : props.theme.colors.primary};
   color: white;
+  height: 5vh;
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 4px;
@@ -18,3 +19,4 @@ export const StyledButton = styled.button`
     background-color: ${(props) => (props.disabled ? "#ccc" : "#0056b3")};
   }
 `;
+

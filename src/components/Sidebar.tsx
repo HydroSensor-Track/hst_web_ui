@@ -1,5 +1,5 @@
 // src/components/Sidebar.tsx
-import { List, ListItem } from "@mui/material";
+import { List } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   SidebarContainer,
@@ -27,7 +27,7 @@ const Sidebar = ({ className }: SidebarProps) => {
 
   const handleLogOut = () => {
     // Ask for confirmation before logging out
-    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    const confirmLogout = window.confirm("Quieres cerrar sesión?");
     if (confirmLogout) {
       logout();
     }
@@ -36,43 +36,32 @@ const Sidebar = ({ className }: SidebarProps) => {
   return (
     <SidebarContainer className={className}>
       <LogoAndTitle column={false} logoSize={"medium"} />
+      <div style={{height: "75%"}}>
+        <List>
+          <StyledListItem
+            onClick={() => handleNavigate("/")}
+            className={location.pathname === "/" ? "active" : ""}
+            >
+            <Icon name="dashboard" />
+            {t("dashboard")}
+          </StyledListItem>
+          <StyledListItem
+            onClick={() => handleNavigate("/tickets")}
+            className={location.pathname === "/tickets" ? "active" : ""}
+            >
+            <Icon name="tools" />
+            {t("tickets")}
+          </StyledListItem>
+
+        </List>
+      </div>
       <List>
-        <StyledListItem
-          onClick={() => handleNavigate("/")}
-          className={location.pathname === "/" ? "active" : ""}
-        >
-          <Icon name="dashboard" />
-          {t("dashboard")}
-        </StyledListItem>
-        <StyledListItem
-          onClick={() => handleNavigate("/tickets")}
-          className={location.pathname === "/tickets" ? "active" : ""}
-        >
-          <Icon name="tools" />
-          {t("tickets")}
-        </StyledListItem>
-        <StyledListItem
-          onClick={() => handleNavigate("/notifications")}
-          className={location.pathname === "/notifications" ? "active" : ""}
-        >
-          <Icon name="notifications" />
-          {t("notifications")}
-        </StyledListItem>
-        <StyledListItem
+      <StyledListItem
           onClick={() => handleNavigate("/backoffice")}
           className={location.pathname === "/backoffice" ? "active" : ""}
         >
           <Icon name="backoffice" />
           {t("backoffice")}
-        </StyledListItem>
-      </List>
-      <List>
-        <StyledListItem
-          onClick={() => handleNavigate("/config")}
-          className={location.pathname === "/config" ? "active" : ""}
-        >
-          <Icon name="settings" />
-          {t("configuration")}
         </StyledListItem>
         <StyledListItem onClick={() => handleLogOut()}>
           <Icon name="logout" />

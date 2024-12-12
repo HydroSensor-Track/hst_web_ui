@@ -15,7 +15,7 @@ export const dividerStyles = (theme: DefaultTheme) => ({
 });
 
 export const cardTypographyHeaderStyles = (theme: DefaultTheme) => ({
-    typography: 'h5',
+    typography: 'p',
     color: theme.colors.text
 });
 

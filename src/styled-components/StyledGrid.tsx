@@ -4,7 +4,7 @@ import Sidebar from "../components/Sidebar.tsx";
 
 const StyledGrid = styled.div`
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 25vh 1fr;
   grid-template-rows: ${(props) => props.theme.sizes.topBarHeight} 1fr;
   grid-template-areas:
     "side header"

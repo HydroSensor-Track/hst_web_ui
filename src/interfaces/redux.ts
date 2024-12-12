@@ -1,32 +1,11 @@
-import { SensorInfo } from './sensorInfo';
-import { SensorsTimeInfo } from './sensorTimeMetrics';
 import { Ticket } from './tickets';
 import { Assignee } from './assignee';
 import { UserCompleteInfo, CommonUserInfo, UserPassword } from './userInfo';
+import { NetworkBatteryLevelData, NetworkData, NetworkSignalStrengthData, NetworkWaterLevelData } from './sensorInfo';
 
 export interface AuthState {
     isAuthenticated: boolean;
-}
-
-export interface SensorState {
-    sensors: SensorInfo[];
-    locations: string[];
-    loading: boolean;
-    error: string | null;
-}
-
-export interface SensorTimeMetricsState {
-    levelData: SensorsTimeInfo;
-    signalData: SensorsTimeInfo;
-    batteryData: SensorsTimeInfo;
-    loading: boolean;
-    error: string | null;
-}
-
-export interface TimeMetricsParams {
-    sensorName: string;
-    from: number;
-    to: number;
+    token: string | null;
 }
 
 export interface TicketState {
@@ -44,6 +23,7 @@ export interface AssigneeState {
 export interface UserState {
     users: UserCompleteInfo[];
     user: Partial<UserCompleteInfo>;
+    current_user: Partial<UserCompleteInfo>;
     loading: boolean;
     error: string | null;
 }
@@ -59,3 +39,18 @@ export interface UpdateUserParams {
 }
 
 export type CreateUserParams = CommonUserInfo & UserPassword;
+
+export interface SensorsInfoState {
+    byLocation: NetworkData;
+    loading: boolean;
+    error: string | null;
+  }
+
+export interface SensorsMetricsState {
+    waterLevelData: NetworkWaterLevelData,
+    batteryLevelData: NetworkBatteryLevelData,
+    signalStrengthData: NetworkSignalStrengthData,
+    lastUpdateDate: string | null,
+    loading: boolean;
+    error: string | null;
+  }

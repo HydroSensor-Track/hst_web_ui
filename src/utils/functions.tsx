@@ -1,26 +1,27 @@
 import { TFunction } from "i18next";
 
 import { UserInfo, UserCompleteInfo } from "../interfaces/userInfo";
+import { NetworkData } from "../interfaces/sensorInfo";
 
 export const getLogoAndFontSize = (logoSize?: string) => {
     let size = "";
     let fontSize = "";
     switch (logoSize) {
         case "small":
-            size = "30px";
-            fontSize = "10px";
+            size = "2vw";
+            fontSize = "2vw";
             break;
         case "medium":
-            size = "40px";
-            fontSize = "20px";
+            size = "7vh";
+            fontSize = "3vw";
             break;
         case "large":
-            size = "50px";
-            fontSize = "30px";
+            size = "9vh";
+            fontSize = "4vw";
             break;
         default:
-            size = "100px";
-            fontSize = "40px";
+            size = "11vh";
+            fontSize = "5vw";
     }
     return { "logoWidth": size, "fontSize": fontSize };
 }
@@ -85,3 +86,20 @@ export const getTranslatedValueOrDateString = (
 
     return t(value);
 };
+
+export function sortNetworksByLocation(networks: NetworkData) {
+
+    const sortedNetworks: NetworkData = {};
+  
+    Object.keys(networks).forEach((network) => {
+      const locations = networks[network];
+  
+      // Ordenar las ubicaciones directamente usando Object.fromEntries y Object.entries
+      sortedNetworks[network] = Object.fromEntries(
+        Object.entries(locations).sort(([a], [b]) => a.localeCompare(b))
+      );
+    });
+  
+    return sortedNetworks;
+  }
+  

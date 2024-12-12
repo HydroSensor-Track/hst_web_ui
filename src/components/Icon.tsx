@@ -1,3 +1,4 @@
+
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import TrendingFlatOutlinedIcon from "@mui/icons-material/TrendingFlatOutlined";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
@@ -19,6 +20,9 @@ import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import PasswordRoundedIcon from '@mui/icons-material/PasswordRounded';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 
 interface IconProps {
   name: string;
@@ -49,6 +53,9 @@ const Icon = ({ name, htmlColor }: IconProps) => {
     checkCircle: <CheckCircleOutlineRoundedIcon htmlColor={htmlColor} />,
     cancelCircle: <CancelRoundedIcon htmlColor={htmlColor} />,
     changePassword: <PasswordRoundedIcon />,
+    refresh: <RefreshIcon />,
+    rightArrow: <ArrowRightIcon fontSize="large"/>,
+    leftArrow: <ArrowLeftIcon fontSize="large"/>,
   };
 
   return icons[name] || null;

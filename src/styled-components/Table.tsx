@@ -19,6 +19,8 @@ export const TableContainer = styled.div`
     border-radius: 20px;
 `;
 
+
+
 export const StyledTable = styled.table<StyledTableProps>`
     width: 100%;
     border-collapse: collapse;
@@ -29,7 +31,6 @@ export const StyledTable = styled.table<StyledTableProps>`
       padding: 0.5vh;
       text-align: center;
       font-size: ${(props) => props.theme.sizes.textFontSize};
-      width: ${(props) => props.columnWidth}%;
     }
 
     th {
@@ -43,6 +44,10 @@ export const StyledTable = styled.table<StyledTableProps>`
 
     tr:nth-child(even) td {
       background-color: ${(props) => props.theme.colors.lightGray};
+    }
+
+    th:not([style*="width"]) {
+        width: auto;
     }
 
     a {
@@ -99,15 +104,16 @@ export const Dots = styled.div`
 `;
 export const StyledFilterButton = styled(FilterAltIcon)<{ isActive: boolean }>`
   background: none;
+  position:absolute;
+  right: 0;
   border: none;
   cursor: pointer;
-  font-size: 18px;
-  padding: 0;
-  margin-left: 8px;
+  font-size: 3vh;
   display: flex;
   align-items: center;
   justify-content: center;
   color: ${({ isActive }) => (isActive ? '#007bff' : 'inherit')}; /* Change color when active */
+  
 
   &:hover {
     color: #007bff; /* Customize hover color */

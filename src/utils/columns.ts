@@ -22,7 +22,6 @@ export const getColumns = (t: TFunction<"translation", undefined>): GridColDef[]
             width: 300,
             headerAlign: 'center',
         },
-        { field: 'emailVerified', headerName: t('verified'), width: 100, type: 'boolean', align: 'center' },
         {
             field: 'userName',
             headerName: t('userName'),

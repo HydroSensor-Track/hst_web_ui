@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const BackofficeContainer = styled.div`
     background-color: ${(props) => props.theme.colors.componentBackground};
-    width: 100%;
+    border-radius: 14px;
     overflow-x: auto;
     margin: 0 auto;
     max-width: 100%;
@@ -22,4 +22,8 @@ export const BackofficeContainer = styled.div`
     @media (min-width: 1440px) {
         max-width: 1440px;
     }
+`;
+
+export const ErrorMessage = styled.p`
+    color: ${(props) => props.theme.colors.error};
 `;

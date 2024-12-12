@@ -50,7 +50,7 @@
   "passwordHeader": "Contraseña",
   "firstNameHeader": "Nombre",
   "lastNameHeader": "Apellido",
-  "invalidUserName": "El nombre de usuario debe tener al entre 3 y 15 caracteres, solo puede contener letras, números, guiones y guiones bajos.",
+  "invalidUserName": "Debe tener al entre 3 y 15 caracteres",
   "invalidPassword": "La contraseña debe tener al menos 8 caracteres.",
   "invalidEmail": "El correo electrónico no es válido.",
   "userProfile": "Perfil de usuario",
@@ -71,5 +71,17 @@
   "confirmUserDeleteHeader": "Confirmar eliminación de usuario",
   "deleteUserConfirmation": "¿Estás seguro de que quieres eliminar al usuario?",
   "avoidUserDelete": "No",
-  "confirmUserDelete": "Sí"
+  "confirmUserDelete": "Sí",
+  "deltaParana": "Delta Paraná",
+  "prevenir": "Prevenir",
+  "id": "ID",
+  "inProgress": "En Progreso",
+  "noAssignee": "Sin Responsable",
+  "createdBy": "Creado Por",
+  "updatedBy": "Actualizado Por",
+  "createdDate": "Fecha de Creación",
+  "updatedDate": "Fecha de Actualización",
+  "viewDetails": "Ver Detalles",
+  "errorLoadingUsers": "Error al cargar los usuarios, por favor intente nuevamente.",
+  "errorLoadingUser": "Error al cargar el usuario, por favor intente nuevamente."
 }

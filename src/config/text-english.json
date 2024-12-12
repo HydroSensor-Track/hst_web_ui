@@ -26,7 +26,7 @@
   "ticketTitle": "Title",
   "description": "Description",
   "status": "Status",
-  "assignee" : "Assignee",
+  "assignee": "Assignee",
   "category": "Category",
   "customCategory": "Custom category",
   "enterCustomCategory": "Enter custom category",
@@ -69,5 +69,17 @@
   "confirmUserDeleteHeader": "Confirm user deletion",
   "deleteUserConfirmation": "Are you sure you want to delete the user?",
   "avoidUserDelete": "No",
-  "confirmUserDelete": "Yes"
+  "confirmUserDelete": "Yes",
+  "deltaParana": "Delta Paraná",
+  "prevenir": "Prevenir",
+  "id": "ID",
+  "inProgress": "In Progress",
+  "noAssignee": "No Assignee",
+  "createdBy": "Created By",
+  "updatedBy": "Updated By",
+  "createdDate": "Created Date",
+  "updatedDate": "Updated Date",
+  "viewDetails": "View Details",
+  "errorLoadingUsers": "Error loading users, please try again later.",
+  "errorLoadingUser": "Error loading user, please try again later."
 }

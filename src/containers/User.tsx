@@ -147,6 +147,8 @@ const User: React.FC = () => {
                             title={cardDataProps.title}
                             value={cardDataProps.value}
                             field={cardDataProps.field as keyof UserInfo}
+                            showHeader={cardDataProps.showHeader}
+                            userInfo={userInfo}
                             handleEditClick={handleEditClick}
                         />
                     )
@@ -154,7 +156,7 @@ const User: React.FC = () => {
 
                 <EditFieldDialog
                     open={open}
-                    title="Edit Information"
+                    title="editInformation"
                     handleClose={handleClose}
                     handleSave={handleSave}
                     handleChange={handleChange}

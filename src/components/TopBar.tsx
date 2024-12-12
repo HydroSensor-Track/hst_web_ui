@@ -53,7 +53,22 @@ const titleMappings: Record<string, SectionProps> = {
   },
   "/backoffice": {
     title: "backoffice",
+    buttons: [
+      {
+        label: "addNewUser",
+        icon_name: "addUser",
+      },
+    ],
   },
+  "/users": {
+    title: "userProfile",
+    buttons: [
+      {
+        label: "changePassword",
+        icon_name: "changePassword",
+      },
+    ]
+  }
 };
 
 const TopBar = ({ className }: TopBarProps) => {
@@ -72,13 +87,16 @@ const TopBar = ({ className }: TopBarProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [lastUpdateDateLocal, setUpdateDateLocal] = useState("")
 
-  const section = titleMappings[location.pathname] || { title: "Perfil de usuario" };
+  const locationPath = location.pathname.startsWith("/users/") ?
+    "/users" : location.pathname;
+
+  const section = titleMappings[locationPath] || { title: "Perfil de usuario" };
 
   const buttonHandlers = {
     "createTicket": () => setIsDialogOpen(true),
     "addNewUser": () => updateOpenModal(true),
     "changePassword": () => updateOpenModal(true),
-    "downloadReport": () => {console.log("Download report")}
+    "downloadReport": () => { console.log("Download report") }
     // Add more handlers as needed
   };
 
@@ -87,25 +105,25 @@ const TopBar = ({ className }: TopBarProps) => {
     dispatch(setRed(networkSelected));
 
   };
-  
+
   const handleDownloadReport = async () => {
     try {
-        alert(`Descargando reporte para ${currentNetwork === "delta-parana" ? "Delta Paraná" : "Prevenir"}`);
-        
-        // Esperar a que la acción termine
-        const result = await dispatch(downloadReport({ red: currentNetwork }));
+      alert(`Descargando reporte para ${currentNetwork === "delta-parana" ? "Delta Paraná" : "Prevenir"}`);
 
-        // Verificar si la acción fue exitosa
-        if (result.meta.requestStatus === "fulfilled") {
-            alert("¡Reporte descargado con éxito!");
-        } else {
-            alert(`No se pudo descargar el reporte para ${currentNetwork === "delta-parana" ? "Delta Paraná" : "Prevenir"}. Por favor, inténtalo nuevamente.`);
-        }
+      // Esperar a que la acción termine
+      const result = await dispatch(downloadReport({ red: currentNetwork }));
+
+      // Verificar si la acción fue exitosa
+      if (result.meta.requestStatus === "fulfilled") {
+        alert("¡Reporte descargado con éxito!");
+      } else {
+        alert(`No se pudo descargar el reporte para ${currentNetwork === "delta-parana" ? "Delta Paraná" : "Prevenir"}. Por favor, inténtalo nuevamente.`);
+      }
     } catch (error) {
-        alert(`Ocurrió un error al descargar el reporte para ${currentNetwork === "delta-parana" ? "Delta Paraná" : "Prevenir"}. Por favor, verifica tu conexión e inténtalo de nuevo.`);
-        console.error("Error al descargar:", error);
+      alert(`Ocurrió un error al descargar el reporte para ${currentNetwork === "delta-parana" ? "Delta Paraná" : "Prevenir"}. Por favor, verifica tu conexión e inténtalo de nuevo.`);
+      console.error("Error al descargar:", error);
     }
-};
+  };
 
   useEffect(() => {
 
@@ -134,13 +152,13 @@ const TopBar = ({ className }: TopBarProps) => {
 
   const buttons = section.buttons
     ? section.buttons.map((button) => (
-        <Button
-          key={button.label}
-          label={t(button.label)}
-          icon={<Icon name={button.icon_name} />}
-          onClick={buttonHandlers[button.label] || undefined}
-        />
-      ))
+      <Button
+        key={button.label}
+        label={t(button.label)}
+        icon={<Icon name={button.icon_name} />}
+        onClick={buttonHandlers[button.label] || undefined}
+      />
+    ))
     : useButtonConfig(t, buttonHandlers)[location.pathname] || null;
 
   const handleRefresh = () => {
@@ -162,30 +180,30 @@ const TopBar = ({ className }: TopBarProps) => {
     <StyledTopBar className={className}>
       <NormalTitle>{t(section.title)}</NormalTitle>
 
-      {location.pathname === "/" && (
+      {locationPath === "/" && (
         <>
-        <div  style={{height: '6vh',display: "flex", flexDirection: "column", width: "40%", alignItems: 'center'}}>
-          <div  style={{height: '6vh',display: "flex", flexDirection: "row", gap: "1vh"}}>
+          <div style={{ height: '6vh', display: "flex", flexDirection: "column", width: "40%", alignItems: 'center' }}>
+            <div style={{ height: '6vh', display: "flex", flexDirection: "row", gap: "1vh" }}>
 
-              <Select 
+              <Select
                 value={networkOptions.find(option => option.value === currentNetwork)}
                 options={networkOptions}
                 name="networks"
                 placeholder="Red"
                 onChange={handleNetworkChange}
-                styles={customStyles} 
-                />
-              <Button onClick={handleRefresh} icon={<Icon name="refresh"/>} disabled={loadingSensors} />
+                styles={customStyles}
+              />
+              <Button onClick={handleRefresh} icon={<Icon name="refresh" />} disabled={loadingSensors} />
             </div>
-        </div>
-        
+          </div>
+
         </>
       )}
 
-      {(buttons && titleMappings[location.pathname].title == "dashboard") ?
-       <Button onClick={handleDownloadReport} icon={<Icon name="download"/>} disabled={loadingReport} label={"Descargar reporte " + currentNetwork}/> :
-       <ButtonContainer>{buttons}</ButtonContainer>
-       }
+      {(buttons && section.title == "dashboard") ?
+        <Button onClick={handleDownloadReport} icon={<Icon name="download" />} disabled={loadingReport} label={"Descargar reporte " + currentNetwork} /> :
+        <ButtonContainer>{buttons}</ButtonContainer>
+      }
 
       {/* Create Ticket Dialog */}
       {isDialogOpen && (

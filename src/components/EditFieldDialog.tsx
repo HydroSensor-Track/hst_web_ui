@@ -43,7 +43,7 @@ const EditFieldDialog: React.FC<EditFieldDialogProps> = ({
                     <TextField
                         key={field}
                         margin="dense"
-                        label={field}
+                        label={t(field)}
                         type="text"
                         fullWidth
                         value={(editableField as any)[field]}

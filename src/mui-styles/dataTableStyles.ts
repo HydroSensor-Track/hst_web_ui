@@ -24,6 +24,20 @@ const dataTableStyles = (theme: DefaultTheme) => ({
             width: '100%',
         },
     },
+    '& .MuiDataGrid-booleanCell[data-value="false"]': {
+        color: theme.colors.textLight,
+    },
+    '& .MuiDataGrid-booleanCell[data-value="true"]': {
+        color: theme.colors.text,
+    },
+    "& .MuiDataGrid-sortIcon": {
+        color: theme.colors.text,
+    },
+    '& .MuiTablePagination-actions': {
+        '& .MuiIconButton-root.Mui-disabled': {
+            color: theme.colors.buttonDisabled,
+        }
+    },
 });
 
 export default dataTableStyles;

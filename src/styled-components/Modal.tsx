@@ -17,7 +17,7 @@ export const ModalContent = styled.div`
     background-color: ${(props) => props.theme.colors.componentBackground};
     padding: 6vh;
     border-radius: 10px;
-    width: 80%;
+    width: 60%;
     overflow-y: auto;
 `;
 
@@ -42,7 +42,7 @@ export const ModalItem = styled.div`
 
 export const ModalLabel = styled.label`
     color: ${(props) => props.theme.colors.text};
-    font-size: 2vh;
+    font-size: 2.5vh;
 `;
 
 export const ModalTextError = styled.p`

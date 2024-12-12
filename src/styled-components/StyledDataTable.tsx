@@ -11,7 +11,8 @@ export const AvatarImg = styled.img`
 export const ActionMenu = styled.div`
     display: flex;
     align-items: center;
-
+    margin-top: 0.6vh;
+    gap: 1vh;
 `;
 
 export const ActionImg = styled.img`

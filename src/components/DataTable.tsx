@@ -61,6 +61,7 @@ const DataTable = ({ columns, rows }: Props) => {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
+            disableColumnMenu
             density='standard'// confortable, compact, standard
             onRowSelectionModelChange={handleSelectionChange}
             sx={dataTableStyles(theme)}

@@ -53,8 +53,9 @@ const Backoffice = () => {
         {
             field: 'action',
             headerName: 'Acción',
-            width: 100,
+            width: 150,
             headerAlign: 'center',
+            sortable: false,
             renderCell: (params) => {
                 return (
                     <ActionMenu>

@@ -23,6 +23,13 @@ export const getColumns = (t: TFunction<"translation", undefined>): GridColDef[]
             headerAlign: 'center',
         },
         {
+            field: 'emailVerified',
+            headerName: t('verified'),
+            width: 180,
+            type: 'boolean',
+            align: 'center',
+        },
+        {
             field: 'userName',
             headerName: t('userName'),
             width: 150,
@@ -48,7 +55,7 @@ export const getColumns = (t: TFunction<"translation", undefined>): GridColDef[]
         {
             field: 'lastLogin',
             headerName: t('lastLoginHeader'),
-            width: 200,
+            width: 250,
             headerAlign: 'center',
             type: 'dateTime',
             valueGetter: (params) => params ? new Date(params) : null,
